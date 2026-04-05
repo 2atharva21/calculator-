@@ -1,203 +1,347 @@
-# Installation & Setup Guide
+# Installation Guide
 
-## 🚀 Quick Start (2 Minutes)
+## Overview
 
-### **Option 1: Online (Easiest)**
-1. Download or copy `index.html`
-2. Open in any modern web browser
-3. Start using CALCORA instantly!
-
-**No installation needed. Works offline. Works on any device.**
+NEXUS Calculator can be set up in multiple ways depending on your needs. Choose the method that best suits your use case.
 
 ---
 
-## 💻 Installation Methods
+## Quick Start (2 Minutes)
 
-### **Method 1: Direct Download** ⭐ RECOMMENDED
+### Option 1: Download & Open
+1. Download `index.html` from the GitHub repository
+2. Open the file in your web browser
+3. Start using the calculator immediately
 
-1. **Download the file**
-   - Go to: [GitHub Repository](https://github.com/yourusername/CALCORA)
-   - Click `Code` → `Download ZIP`
-   - Extract the ZIP file
-
-2. **Open in browser**
-   ```bash
-   # macOS
-   open index.html
-   
-   # Windows
-   start index.html
-   
-   # Linux
-   xdg-open index.html
-   ```
-
-3. **Done!** CALCORA is running.
+✅ **No installation, no dependencies, works offline**
 
 ---
 
-### **Method 2: Clone with Git**
+## Installation Methods
+
+### Method 1: Direct Download ⭐ Recommended
+
+**Best for:** Users who want immediate access
+
+```bash
+# 1. Download index.html from GitHub
+# 2. Save to your computer
+# 3. Double-click to open in browser
+```
+
+**Pros:**
+- ✅ Fastest setup
+- ✅ No technical knowledge required
+- ✅ Works offline
+
+**Cons:**
+- ❌ Manual updates needed for new versions
+
+---
+
+### Method 2: Clone with Git
+
+**Best for:** Developers who want latest updates
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/CALCORA.git
-cd CALCORA
+git clone https://github.com/yourusername/nexus-calculator.git
+cd nexus-calculator
 
 # Open in browser
 open index.html          # macOS
-start index.html        # Windows  
+start index.html        # Windows
 xdg-open index.html     # Linux
 ```
 
+**Pros:**
+- ✅ Easy version updates with `git pull`
+- ✅ Contribute changes easily
+
+**Cons:**
+- ⚠️ Requires Git installation
+
 ---
 
-### **Method 3: Use Local Server** (Recommended for Development)
+### Method 3: Local Development Server
 
+**Best for:** Local development and testing
+
+#### Python (Recommended)
 ```bash
 # Python 3
 python -m http.server 8000
 
-# Python 2
-python -m SimpleHTTPServer 8000
-
-# Node.js (if installed)
-npx http-server
-
-# Ruby
-ruby -run -ehttpd . -p8000
-
-# PHP
-php -S localhost:8000
+# Then open browser
+# Visit: http://localhost:8000
 ```
 
-Then open: `http://localhost:8000/index.html`
+#### Node.js
+```bash
+# Install http-server globally (one time)
+npm install -g http-server
+
+# Run http-server
+http-server
+
+# Visit: http://localhost:8080
+```
+
+#### PHP
+```bash
+php -S localhost:8000
+# Visit: http://localhost:8000
+```
+
+#### Ruby
+```bash
+ruby -run -ehttpd . -p 8000
+# Visit: http://localhost:8000
+```
 
 ---
 
-### **Method 4: Deploy Online**
+### Method 4: Deploy Online
 
-#### **GitHub Pages** (Free & Easy)
-1. Push to GitHub repository
-2. Go to Settings → Pages
-3. Select `main` branch
-4. Save and wait 2-3 minutes
-5. Your CALCORA URL: `https://yourusername.github.io/CALCORA`
+#### GitHub Pages (Free)
 
-#### **Netlify** (Free & Fast)
+**Setup:**
+1. Push repository to GitHub
+2. Go to **Settings** → **Pages**
+3. Select branch: `main`
+4. Click **Save**
+
+**Result:** 
+- URL: `https://YOUR_USERNAME.github.io/nexus-calculator`
+- Deployment time: 2-3 minutes
+
+**Pros:** Free, automatic HTTPS, built into GitHub
+
+---
+
+#### Netlify (Free & Recommended)
+
+**Setup:**
 1. Go to [Netlify.com](https://netlify.com)
-2. Drag and drop `index.html`
-3. Get instant live URL
+2. Click **"New site from Git"**
+3. Connect your GitHub repository
+4. Click **Deploy**
 
-#### **Vercel** (Free & Edge Optimized)
-1. Go to [Vercel.com](https://vercel.com)
-2. Import Git repository
-3. Automatic deployments
+**Result:**
+- Automatic URL assigned
+- Automatic deploys on every push
+- Includes HTTPS
 
-#### **Traditional Hosting**
-- FTP/SFTP upload to web server
-- Works with any web hosting provider
+**Pros:** Fastest setup, great performance
 
 ---
 
-## 🔧 System Requirements
+#### Vercel (Free & Fast)
 
-### **Minimum Requirements**
-- Any modern web browser (2019+)
+**Setup:**
+1. Go to [Vercel.com](https://vercel.com)
+2. Click **"New Project"**
+3. Import Git repository
+4. Click **Deploy**
+
+**Result:**
+- Global edge network
+- Automatic deployments
+- Preview URLs for PRs
+
+**Pros:** Edge computing, exceptional speed
+
+---
+
+#### Traditional Web Hosting
+
+**Requirements:**
+- Web server with HTTP support
+- FTP/SFTP access
+
+**Steps:**
+1. Upload `index.html` to your server
+2. Access via browser: `https://yoursite.com/calculator`
+
+**Providers:**
+- AWS, Azure, Google Cloud
+- GoDaddy, Bluehost, Namecheap
+- Any FTP-enabled hosting
+
+---
+
+## System Requirements
+
+### Minimum
+- Modern web browser (2019+)
 - 10 MB disk space
-- No additional software needed
-
-### **Recommended**
-- Chrome, Firefox, Safari, or Edge (latest)
-- Broadband internet (for CDN resources)
 - JavaScript enabled
 
-### **Supported Browsers**
+### Recommended
+- Chrome, Firefox, Safari, or Edge (latest)
+- Desktop or mobile device
+- Internet connection (for updates)
+
+### Browser Support
+
 | Browser | Min Version | Status |
-|---------|-------------|--------|
-| Chrome | 60+ | ✅ Full Support |
-| Firefox | 55+ | ✅ Full Support |
-| Safari | 12+ | ✅ Full Support |
-| Edge | 79+ | ✅ Full Support |
-| Opera | 47+ | ✅ Full Support |
-| IE 11 | - | ⚠️ Not Supported |
+|---------|:----------:|---------|
+| Chrome | 60+ | ✅ Full support |
+| Firefox | 55+ | ✅ Full support |
+| Safari | 12+ | ✅ Full support |
+| Edge | 79+ | ✅ Full support |
+| Opera | 47+ | ✅ Full support |
+| Mobile browsers | 2019+ | ✅ Full support |
+
+**Note:** Internet Explorer 11 is not supported.
 
 ---
 
-## 📱 Mobile Installation
+## Mobile Installation
 
-### **Note on Phone Home Screen**
-You can add CALCORA to your home screen for app-like experience:
+### Add to Home Screen (PWA)
 
-**iPhone/iPad (iOS)**
-```
-1. Open in Safari
-2. Tap Share button
-3. Select "Add to Home Screen"
-4. Choose name and icon
-5. Tap "Add"
-```
+Create a native-like app icon on your mobile device's home screen.
 
-**Android (Chrome)**
-```
-1. Open in Chrome
-2. Tap menu (⋮) button
-3. Select "Install app" or "Add to Home Screen"
-4. Follow prompts
-5. Tap "Install"
+#### iPhone/iPad (iOS)
+
+1. Open NEXUS in **Safari**
+2. Tap the **Share** button (↗️)
+3. Scroll down and tap **"Add to Home Screen"**
+4. Enter a name (defaults to "NEXUS")
+5. Tap **"Add"**
+
+**Result:** App icon appears on home screen, launches full-screen
+
+#### Android (Chrome)
+
+1. Open NEXUS in **Chrome**
+2. Tap the **menu** button (⋮)
+3. Select **"Install app"** or **"Add to Home Screen"**
+4. Tap **"Install"**
+
+**Result:** App installed to home screen with app drawer entry
+
+---
+
+## Offline Setup
+
+If you want to use NEXUS without internet access:
+
+1. Download `index.html`
+2. Open in any browser (no server needed)
+3. All features work completely offline
+
+**Note:** Theme and preferences save to local storage automatically.
+
+---
+
+## Troubleshooting
+
+### "Cannot open index.html in browser"
+
+**Problem:** File opens in text editor instead of browser
+
+**Solution:**
+```bash
+# Right-click file → "Open with" → Select browser
+# OR drag file into browser window
+# OR use terminal:
+open index.html                    # macOS
+start index.html                  # Windows
+xdg-open index.html               # Linux
 ```
 
 ---
 
-## 🔌 Internet & CDN Dependencies
+### "CORS error when running locally"
 
-CALCORA uses these CDNs (optional but recommended):
+**Problem:** Browser blocks local file operations
 
-```html
-<!-- Tailwind CSS (styling framework) -->
-<script src="https://cdn.tailwindcss.com"></script>
+**Solution:** Use a local server (doesn't apply to single HTML file)
 
-<!-- GSAP 3.12.2 (animations library) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+```bash
+# Quick fix: Use Python server
+python -m http.server 8000
+# Then open http://localhost:8000
 ```
-
-### **Offline Mode**
-If you want to use CALCORA completely offline:
-
-1. Download the CDN files locally
-2. Update the HTML to point to local files:
-```html
-<script src="./tailwindcss.min.js"></script>
-<script src="./gsap.min.js"></script>
-```
-
-However, basic calculator works even if CDN fails (no animations/styles).
 
 ---
 
-## ⚙️ Configuration
+### "Buttons not responding on mobile"
 
-### **Change Theme Colors**
-Edit the Tailwind config in HTML (lines 12-23):
+**Problem:** Touch events not working
+
+**Solution:**
+1. Try a different browser
+2. Clear browser cache
+3. Restart the app
+4. Check if JavaScript is enabled
+
+---
+
+### "Calculations give unexpected results"
+
+**Problem:** Math operations producing wrong answers
+
+**Solution:**
+1. JavaScript precision is limited to floating-point
+2. For very large numbers, results may be rounded
+3. This is normal behavior
+
+**Example:**
 ```javascript
-colors: {
-    neon: {
-        cyan: '#00d9ff',        // Change these values
-        pink: '#ff006e',
-        purple: '#b537f2',
-        yellow: '#ffbe0b'
-    }
-}
+0.1 + 0.2 = 0.30000000000000004  // Normal JavaScript behavior
 ```
 
-### **Adjust Sound Settings**
-Default volume: 50%
-Edit line 22 in `CONTRIBUTING.md` or adjust volume slider:
-```javascript
-this.volume = parseFloat(localStorage.getItem('volume')) || 0.5; // 0-1
-```
+---
 
-### **Customize Button Sounds**
-Edit the `playSound()` method (around line 340):
+### "Cannot install to home screen"
+
+**Problem:** "Install app" option doesn't appear
+
+**Causes:**
+- Browser doesn't support PWA
+- Site not served over HTTPS
+- Missing manifest file
+
+**Solution:**
+- Try a different browser
+- Use HTTPS URL for online version
+- Manual PWA installation varies by device
+
+---
+
+## Verification Checklist
+
+After installation, verify everything works:
+
+- [ ] Calculator opens correctly
+- [ ] Basic math works (2 + 2 = 4)
+- [ ] Displays show numbers properly
+- [ ] Buttons are clickable
+- [ ] Theme toggle changes appearance
+- [ ] History panel opens
+- [ ] Scientific mode buttons appear
+- [ ] All operations complete without errors
+
+---
+
+## Next Steps
+
+✅ **Installation complete!**
+
+- 📖 Read [README.md](README.md) for feature overview
+- 🎓 See [DOCS.md](DOCS.md) for detailed documentation
+- 🤝 Join us in [CONTRIBUTING.md](CONTRIBUTING.md) if interested
+
+---
+
+## Need Help?
+
+- 📧 Open an [issue](https://github.com/yourusername/nexus-calculator/issues)
+- 💬 Ask in [discussions](https://github.com/yourusername/nexus-calculator/discussions)
+- 📚 Read [DOCS.md](DOCS.md) for more details
 ```javascript
 playTone(850, 650, 0.12, 0.05);  // startFreq, endFreq, duration, delay
 ```

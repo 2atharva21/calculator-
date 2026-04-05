@@ -1,103 +1,208 @@
-# CALCORA - Advanced Calculator Pro
+# NEXUS Calculator
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Made with ❤️](https://img.shields.io/badge/Made%20with-%E2%9D%A4%EF%B8%8F-red)](https://github.com)
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Platform: Web](https://img.shields.io/badge/Platform-Web-blue)](https://www.w3.org/)
 ![Status: Active](https://img.shields.io/badge/Status-Active-brightgreen)
 
-A **premium, production-grade web calculator** with modern UI design, real-time audio feedback, and lightning-fast performance. Optimized for 60fps animations on budget smartphones with instant touch response. Built with **CSS animations**, **Web Audio API**, and **zero external dependencies**.
+**Advanced web calculator with scientific functions, modern UI, and professional documentation.**
 
-![CALCORA Calculator Preview](https://img.shields.io/badge/Platform-Web-blue?style=flat-square) ![Version](https://img.shields.io/badge/Version-1.0-green?style=flat-square) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?style=flat-square)
+[Quick Start](#getting-started) • [Documentation](DOCS.md) • [Contributing](CONTRIBUTING.md) • [Demo](index.html)
 
----
-
-## 🚀 Features
-
-### **Core Functionality**
-- ✅ **Basic Operations**: Addition, subtraction, multiplication, division, modulo
-- ✅ **Decimal Support**: Full floating-point precision calculations
-- ✅ **Smart Input Handling**: Prevents duplicate operators and invalid inputs
-- ✅ **Clear (AC) & Delete (DEL)**: Full control over entries
-- ✅ **Real-time Calculation**: Instant preview of operations
-
-### **🎨 Premium UI/UX**
-- ✅ **Glassmorphism Design**: Modern frosted glass effect with backdrop blur
-- ✅ **Dynamic Gradients**: Animated background with smooth color transitions
-- ✅ **Neon Glow Effects**: Cyan, pink, purple, and yellow accent colors
-- ✅ **Responsive Layout**: Perfect on mobile, tablet, and desktop
-- ✅ **Dark/Light Theme Toggle**: User preference persistence
-- ✅ **Smooth Animations**: CSS-optimized 60fps guaranteed, even on low-end devices
-
-### **🔊 Advanced Sound System**
-- ✅ **Web Audio API**: Real-time synthesized sound (not pre-recorded)
-- ✅ **Multiple Sound Types**:
-  - Soft click for numbers (850→650Hz)
-  - Distinct operator tone (720→580Hz)
-  - Satisfying result chord (C-E-G harmony)
-  - Error warning tone
-- ✅ **Volume Control**: 0-100% slider with real-time percentage display
-- ✅ **Sound Toggle**: Enable/disable with one tap
-- ✅ **Visual Feedback**: Pulsing sound indicator
-
-### **⚡ Performance-Optimized Animations**
-- ✅ **Button Press**: Instant 120ms scale animation (CSS)
-- ✅ **Ripple Effect**: Lightweight material-inspired ripple (200ms)
-- ✅ **Display Updates**: Smooth 150ms slide transitions
-- ✅ **Touch Response**: Instant interaction (< 16ms latency)
-- ✅ **60fps Guaranteed**: Transform & opacity only (no reflow)
-- ✅ **Mobile First**: Optimized for budget smartphones
-
-### **🧮 Advanced Features**
-- ✅ **Scientific Mode**: sin, cos, tan, √, log, ln, x², ∛
-- ✅ **Memory Functions**: M+, M−, MR, MC
-- ✅ **Calculation History**: Last 30 calculations with click-to-reuse
-- ✅ **Keyboard Support**: Full keyboard input (numbers, operators, Enter, Backspace, Escape)
-- ✅ **LocalStorage Persistence**: Saves theme, settings, history
-- ✅ **Vibration Feedback**: Haptic feedback on mobile devices
-
-### **📱 Mobile Optimizations**
-- ✅ **Touch Optimized**: No tap highlight, smooth scrolling
-- ✅ **Viewport-fit Cover**: Full notch support
-- ✅ **Vibration API**: Haptic feedback on press
-- ✅ **Responsive Buttons**: Scales perfectly on all screen sizes
-- ✅ **Portrait & Landscape**: Adapts to device orientation
-
-### **♿ Accessibility**
-- ✅ **ARIA Labels**: All buttons properly labeled
-- ✅ **Keyboard Navigation**: Full keyboard support
-- ✅ **High Contrast**: Neon colors with high visibility
-- ✅ **Reduced Motion Support**: Respects prefers-reduced-motion
+</div>
 
 ---
 
-## 📦 Tech Stack
+## Overview
+
+NEXUS is a **production-grade web calculator** built with modern web technologies. It provides:
+
+- **Standard & Scientific Calculations** — Basic arithmetic to advanced trigonometric and logarithmic functions
+- **Modern User Interface** — Multiple themes, smooth animations, responsive design
+- **Professional Grade** — Zero dependencies, 60fps performance, full accessibility
+- **Mobile-First** — PWA support, haptic feedback, notch-safe areas
+- **Persistent Storage** — Saves history, theme preference, and memory state
+
+**Perfect for:** Educational use, integration into applications, or everyday calculations.
+
+---
+
+## Quick Start
+
+### 1. Open in Browser
+Simply download `index.html` and open it in any modern web browser. No installation required.
+
+```bash
+# Download from GitHub
+# Open the file in your browser
+# Start calculating immediately
+```
+
+### 2. Use Online
+Visit the demo or host on your server — works everywhere.
+
+### 3. Add to Home Screen
+Create a PWA app icon on your phone's home screen in seconds:
+- **iPhone**: Safari → Share → Add to Home Screen
+- **Android**: Chrome → Menu → Install app
+
+---
+
+## Key Features
+
+### 📊 Calculation Modes
+
+| Feature | Description |
+|---------|-------------|
+| **Standard Mode** | Basic arithmetic operations (+ - × ÷ %) |
+| **Scientific Mode** | Trigonometric, logarithmic, and advanced functions |
+| **Memory Functions** | M+, M−, MR, MC for storing intermediate results |
+| **History Panel** | View and reuse last 20 calculations |
+
+### 🎨 User Experience
+
+| Feature | Details |
+|---------|---------|
+| **5 Themes** | Dark, Light, Ocean, Sunset, Forest |
+| **Responsive** | Works perfectly on mobile, tablet, desktop |
+| **Keyboard Support** | Full keyboard input with standard shortcuts |
+| **Accessibility** | ARIA labels, focus indicators, high contrast |
+| **Animations** | Smooth 60fps, works on budget devices |
+
+### ⚡ Performance
+
+- **Zero Dependencies** — No libraries, pure JavaScript
+- **Lightweight** — ~50KB total (HTML + CSS + JS)
+- **60fps Guaranteed** — CPU-friendly animations
+- **Offline Ready** — Works completely offline
+
+---
+
+## Usage
+
+### Standard Mode
+
+```
+Basic Operations:
+1 + 2 =           → Result: 3
+10 × 5 =          → Result: 50
+100 ÷ 4 =         → Result: 25
+80 - 15 =         → Result: 65
+```
+
+### Scientific Mode
+
+Press **SCI** button to unlock advanced functions:
+
+```
+sin(90°) =        → Result: 1
+√16 =             → Result: 4
+2^3 =             → Result: 8
+log(100) =        → Result: 2
+```
+
+### Memory Operations
+
+```
+5 M+              → Add 5 to memory
+MR                → Recall memory (5)
+10 M−             → Subtract 10 from memory (-5)
+MC                → Clear memory
+```
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `0-9` | Input numbers |
+| `+` `-` `*` `/` | Operators |
+| `Enter` or `=` | Calculate |
+| `Backspace` | Toggle sign (+/−) |
+| `C` | Clear |
+| `H` | Toggle history |
+| `S` | Toggle scientific mode |
+| `.` | Decimal point |
+
+---
+
+## Installation
+
+See [INSTALLATION.md](INSTALLATION.md) for detailed setup instructions including:
+- Direct download
+- Git clone
+- Local server setup
+- Deployment options (GitHub Pages, Netlify, Vercel)
+
+---
+
+## Technology Stack
 
 | Technology | Purpose |
 |-----------|---------|
-| **HTML5** | Semantic markup & structure |
-| **CSS3** | Modern animations & effects (transform & opacity only) |
-| **JavaScript (ES6+)** | Logic & lightweight interactions |
-| **Web Audio API** | Real-time sound synthesis |
-| **LocalStorage API** | Data persistence |
-| **No External Libraries** | Zero dependencies for maximum performance |
+| **HTML5** | Semantic structure |
+| **CSS3** | Modern styling & animations |
+| **JavaScript (ES6+)** | Calculation logic |
+| **localStorage** | Data persistence |
+| **Vibration API** | Haptic feedback |
+
+**No external dependencies** — everything is built-in.
 
 ---
 
-## 🎯 Quick Start
+## Browser Support
 
-### **Online (No Installation)**
-1. Open `index.html` in any modern web browser
-2. Start calculating immediately
+| Browser | Minimum Version | Status |
+|---------|-----------------|--------|
+| Chrome | 60+ | ✅ Full support |
+| Firefox | 55+ | ✅ Full support |
+| Safari | 12+ | ✅ Full support |
+| Edge | 79+ | ✅ Full support |
+| Mobile browsers | 2019+ | ✅ Full support |
 
-### **Local Setup**
-```bash
-# Clone or download the repository
-git clone https://github.com/yourusername/CALCORA.git
-cd CALCORA
+---
 
-# Open in your browser
-open index.html          # macOS
-start index.html        # Windows
-xdg-open index.html     # Linux
+## Documentation
+
+- **[Getting Started](DOCS.md)** — Introduction and quick start
+- **[Installation Guide](INSTALLATION.md)** — Multiple setup methods
+- **[Contributing Guide](CONTRIBUTING.md)** — How to help
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** — Community standards
+
+---
+
+## Common Tasks
+
+### I want to use this calculator
+→ See [Quick Start](#quick-start)
+
+### I want to deploy this online
+→ See [INSTALLATION.md](INSTALLATION.md#deployment)
+
+### I found a bug
+→ Open an [Issue](https://github.com/yourusername/nenxus-calculator/issues)
+
+### I want to contribute
+→ Read [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) file for details.
+
+---
+
+## Support
+
+- 📖 **Documentation**: See [DOCS.md](DOCS.md)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/yourusername/nexus-calculator/issues)
+- 💬 **Questions**: [GitHub Discussions](https://github.com/yourusername/nexus-calculator/discussions)
+- 📧 **Contact**: [Your Email]
+
+---
+
+**Made with ❤️ by [Your Name]**
 ```
 
 ### **Browser Support**

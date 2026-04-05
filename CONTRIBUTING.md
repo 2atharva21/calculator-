@@ -1,153 +1,468 @@
-# Contributing to CALCORA
+# Contributing to NEXUS Calculator
 
-Thank you for your interest in contributing to CALCORA! We welcome contributions of all kinds - bug reports, feature requests, documentation improvements, and code contributions.
-
-## 📋 Code of Conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Thank you for your interest in contributing! We welcome contributions of all kinds.
 
 ---
 
-## 🚀 Ways You Can Contribute
+## Table of Contents
 
-### **1. Report Bugs** 🐛
-Found a bug? Help us fix it!
+1. [Code of Conduct](#code-of-conduct)
+2. [How to Contribute](#how-to-contribute)
+3. [Development Setup](#development-setup)
+4. [Coding Guidelines](#coding-guidelines)
+5. [Testing](#testing)
+6. [Submitting Changes](#submitting-changes)
+7. [FAQ](#faq)
 
-1. Check existing [Issues](https://github.com/yourusername/CALCORA/issues) first
-2. Provide a clear description with:
-   - Browser and OS version
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Screenshots if possible
-3. Use the bug report template
+---
 
-### **2. Suggest Features** 💡
-Have an idea? We'd love to hear it!
+## Code of Conduct
 
-1. Check [Discussions](https://github.com/yourusername/CALCORA/discussions) first
-2. Describe the use case and benefits
-3. Provide examples if possible
-4. Use the feature request template
+All contributors must follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). This includes:
 
-### **3. Improve Documentation** 📚
-Help us document CALCORA better!
+- Being respectful and inclusive
+- No harassment or discrimination
+- Constructive feedback only
+- Report violations to [Your Email]
 
-- Fix typos or unclear explanations
-- Add examples or tutorials
+---
+
+## How to Contribute
+
+### Option 1: Report Issues
+
+Found a bug? Have a suggestion?
+
+1. **Search First**
+   - Check [existing issues](https://github.com/yourusername/nexus-calculator/issues)
+   - Avoid creating duplicates
+
+2. **Create Issue**
+   - Click "New Issue"
+   - Choose template: Bug or Feature
+   - Fill in all fields
+   - Include examples/screenshots
+
+3. **Example Bug Report**
+   ```markdown
+   **Title:** Keyboard shortcut 'S' not toggling scientific mode
+   
+   **Browser:** Chrome 120.0
+   **OS:** Windows 11
+   **Steps to reproduce:**
+   1. Open calculator
+   2. Press 'S' key
+   3. Scientific buttons don't appear
+   
+   **Expected:** Scientific mode toggles
+   **Actual:** No response
+   ```
+
+---
+
+### Option 2: Improve Documentation
+
+Help make NEXUS easier to understand!
+
+**What to improve:**
+- Fix typos or grammar
+- Clarify unclear explanations
+- Add examples
 - Translate documentation
-- Improve code comments
+- Add troubleshooting tips
 
-### **4. Submit Code** 💻
-Ready to code? Let's make CALCORA better together!
+**How to contribute:**
+1. Find file to improve (README.md, DOCS.md, etc.)
+2. Click edit icon (pencil)
+3. Make changes
+4. Create pull request
+5. We'll review and merge!
 
 ---
 
-## 🔧 Setting Up Development Environment
+### Option 3: Submit Code
 
-### **Prerequisites**
+Want to add features or fix bugs?
+
+**What we accept:**
+- ✅ Bug fixes with tests
+- ✅ New features discussed first
+- ✅ Performance improvements
+- ✅ Accessibility enhancements
+- ✅ Code quality improvements
+
+**What we don't accept:**
+- ❌ External dependencies (keep zero-dependency)
+- ❌ Breaking changes without discussion
+- ❌ Undocumented changes
+- ❌ Features without tests
+
+---
+
+## Development Setup
+
+### Prerequisites
+
 - Git
-- A code editor (VS Code, Sublime, etc.)
-- A modern web browser
-- Node.js (optional, for advanced development)
+- Code editor (VS Code recommended)
+- Web browser
+- 10 minutes of free time
 
-### **Local Setup**
+### Steps
+
+#### 1. Fork Repository
 
 ```bash
-# 1. Fork the repository on GitHub
-# 2. Clone your fork
-git clone https://github.com/YOUR_USERNAME/CALCORA.git
-cd CALCORA
+# Visit https://github.com/yourusername/nexus-calculator
+# Click "Fork" button (top right)
+# This creates YOUR copy
+```
 
-# 3. Create a feature branch
-git checkout -b feature/your-feature-name
+#### 2. Clone Your Fork
 
-# 4. Open in your browser
-open index.html
+```bash
+git clone https://github.com/YOUR_USERNAME/nexus-calculator.git
+cd nexus-calculator
+```
 
-# 5. Make your changes and test
+#### 3. Create Feature Branch
+
+```bash
+# Never commit to main!
+git checkout -b feature/awesome-feature
+# OR for bug fixes
+git checkout -b fix/button-not-working
+```
+
+#### 4. Open in Editor
+
+```bash
+# VS Code
+code .
+
+# Other editors: just open the folder
+```
+
+#### 5. Test Your Changes
+
+```bash
+# Open index.html in browser
+# Test all functionality
+# Test on mobile (DevTools device emulation)
 ```
 
 ---
 
-## 📝 Development Guidelines
+## Coding Guidelines
 
-### **Code Style**
+### JavaScript Style
 
 ```javascript
-// ✅ DO: Use ES6+ syntax, meaningful names, clear structure
+// ✅ DO: Clear, meaningful names
 class CalculatorLogic {
     constructor() {
-        this.currentValue = '0';
+        this.displayValue = '0';
+        this.previousValue = null;
         this.operation = null;
     }
     
-    calculate() {
-        // Clear logic with comments
+    append(digit) {
+        // Handle decimal point logic
+        if (digit === '.' && this.displayValue.includes('.')) {
+            return; // Prevent multiple decimals
+        }
+        this.displayValue += digit;
     }
 }
 
-// ❌ DON'T: Avoid var, use short cryptic names, complex nesting
-var cv = '0', o = null;
+// ❌ DON'T: Cryptic, unclear code
+class Calc {
+    constructor() {
+        this.dv = '0'; // Hard to understand
+        this.pv = null;
+        this.op = null;
+    }
+    
+    a(d) { // "a" = what?
+        this.dv += d;
+    }
+}
 ```
 
-### **Comments & Documentation**
+### Comments & Documentation
 
 ```javascript
 // ✅ DO: Explain WHY, not WHAT
-// Prevent duplicate operators from breaking calculation chain
-if (this.operation && !this.shouldResetDisplay) {
-    this.calculate();
+// Prevent division by zero error - show friendly message
+if (divisor === 0) {
+    this.displayValue = 'ERROR';
+    this.errorState = true;
+    return;
 }
 
+// ✅ DO: Document complex logic
+// Convert degrees to radians for trigonometric functions
+// because Math.sin() expects radians, not degrees
+const radians = angle * (Math.PI / 180);
+
 // ❌ DON'T: State the obvious
-// Set operation
-this.operation = op;
+// Set operation to add
+this.operation = '+';
+
+// ❌ DON'T: Comment bad code - fix it instead
+if ((a===b&&c!=d)||e==f&&(g<h)) { // This is confusing!
 ```
 
-### **Testing Checklist**
+### CSS Best Practices
 
-Before submitting, test on:
-- [ ] Desktop Chrome
-- [ ] Desktop Firefox
-- [ ] Mobile Chrome
-- [ ] Mobile Safari (iOS)
-- [ ] Dark and light modes
-- [ ] Sound ON and OFF
-- [ ] Keyboard input
+```css
+/* ✅ DO: Use CSS variables for theming */
+:root {
+    --operator-bg: #FF9500;
+    --operator-hover: #FFB84D;
+}
+
+/* ✅ DO: Animations only use transform & opacity */
+.btn:active {
+    transform: scale(0.95);      /* Fast, GPU-accelerated */
+    opacity: 0.9;
+}
+
+/* ❌ DON'T: Animate other properties */
+.btn:active {
+    width: 90px;                 /* Slow, CPU-heavy */
+    box-shadow: 0 0 20px red;    /* Causes reflow */
+}
+```
+
+### HTML
+
+```html
+<!-- ✅ DO: Semantic markup with ARIA labels -->
+<button 
+    class="btn btn-operator" 
+    data-operator="+" 
+    aria-label="Add"
+    title="Addition (+)">
+    +
+</button>
+
+<!-- ❌ DON'T: Generic divs without accessibility -->
+<div onclick="handleAddition()">+</div>
+```
+
+---
+
+## Testing
+
+### Browser Compatibility
+
+Test your changes in:
+
+- [ ] Chrome (latest)
+- [ ] Firefox (latest)
+- [ ] Safari (latest)
+- [ ] Edge (latest)
+
+### Mobile Testing
+
+```
+- [ ] Android (Chrome)
+- [ ] iOS (Safari)
+- [ ] Portrait orientation
+- [ ] Landscape orientation
 - [ ] Touch input
-- [ ] Landscape and portrait orientations
+- [ ] Landscape orientation
+```
 
-### **Performance Optimization Rules**
+### Feature Testing
 
-**Critical**: All contributions must maintain 60fps performance on budget devices.
+```
+Before submitting code, verify:
 
-- ✅ **DO**: Use CSS transforms and opacity ONLY
-  ```css
-  /* Good: GPU-accelerated */
-  transform: scale(0.95);
-  opacity: 0.8;
-  ```
+Standard Mode:
+- [ ] Basic operations (+ − × ÷)
+- [ ] Decimal point works
+- [ ] Clear button resets
+- [ ] Sign toggle works
+- [ ] Keyboard input works
 
-- ❌ **DON'T**: Animate other properties
-  ```css
-  /* Bad: CPU-heavy */
-  width: 100px;
-  height: 100px;
-  box-shadow: 0 0 20px red;
-  ```
+Scientific Mode:  
+- [ ] Toggle SCI button shows/hides functions
+- [ ] Trigonometric functions work
+- [ ] Memory functions work
+- [ ] History displays correctly
+- [ ] Angle mode toggle works
 
-- ✅ **DO**: Use CSS animations/transitions
-  ```css
-  transition: transform 150ms ease-out;
-  ```
+UI:
+- [ ] Theme toggle cycles all themes
+- [ ] Animations are smooth
+- [ ] Display updates correctly
+- [ ] No console errors
+- [ ] Responsive on all sizes
+```
 
-- ❌ **DON'T**: Use JavaScript animation libraries
-  ```javascript
-  // No GSAP, jQuery, etc. - too heavy!
-  ```
+### Accessibility Testing
 
-- ✅ **DO**: Minimize DOM operations
-  ```javascript
+```
+- [ ] Tab key navigates all buttons
+- [ ] Focus indicators visible
+- [ ] Screen reader friendly (text labels)
+- [ ] Sufficient color contrast
+- [ ] Respects prefers-reduced-motion
+```
+
+---
+
+## Submitting Changes
+
+### Step 1: Commit Your Changes
+
+```bash
+# Stage changes
+git add .
+
+# Commit with descriptive message
+git commit -m "Add factorial function to scientific mode
+
+This allows users to calculate n! directly.
+- Added factorial() method to CalculatorLogic
+- Added ! button to scientific panel
+- Button triggers factorial calculation
+- Tested on mobile and desktop"
+```
+
+**Commit message tips:**
+- First line: Short summary (50 chars max)
+- Blank line
+- Detailed explanation (what, why, how)
+- Reference issues: "Fixes #123"
+
+### Step 2: Push to Your Fork
+
+```bash
+git push origin feature/awesome-feature
+```
+
+### Step 3: Create Pull Request
+
+1. Visit your fork on GitHub
+2. Click "Compare & pull request"
+3. Fill in title and description
+4. Submit PR
+
+### Step 4: PR Template
+
+```markdown
+## Description
+Brief description of what changed and why.
+
+## Related Issues
+Fixes #123
+Related to #456
+
+## Changes Made
+- Added new function X
+- Fixed bug in Y
+- Updated documentation
+
+## Testing
+- [x] Tested on Chrome
+- [x] Tested on Mobile
+- [x] Tested scientific mode
+- [x] No console errors
+
+## Screenshots (if applicable)
+[Paste screenshots here]
+```
+
+---
+
+## Code Review Process
+
+1. **We review your PR**
+   - Verify tests pass
+   - Check code style
+   - Review logic
+
+2. **We may request changes**
+   - Update your code
+   - Push new commits
+   - We re-review
+
+3. **PR approved!**
+   - We merge to main
+   - Your changes go live
+   - You're credited
+
+---
+
+## FAQ
+
+### Q: Where should I report bugs?
+
+A: Create an [issue on GitHub](https://github.com/yourusername/nexus-calculator/issues) with:
+- Browser/OS version
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshots if helpful
+
+---
+
+### Q: How long do reviews take?
+
+A: Usually 2-7 days depending on complexity. We review in order received.
+
+---
+
+### Q: Can I add external libraries?
+
+A: No, NEXUS must stay at zero dependencies for performance and simplicity. Suggest alternatives if needed.
+
+---
+
+### Q: What if my PR gets rejected?
+
+A: No problem! We can:
+1. Discuss improvements needed
+2. Suggest changes
+3. Submit new version
+4. All feedback is constructive!
+
+---
+
+### Q: Do I get paid for contributions?
+
+A: NEXUS is open-source volunteer project. Recognition and portfolio building are rewards!
+
+---
+
+### Q: Can I translate the app?
+
+A: Absolutely! Create README or DOCS in your language. Currently we support English, so translations welcome!
+
+---
+
+## Recognition
+
+Contributors are recognized in:
+- README.md contributors section
+- GitHub contributors graph
+- Release notes
+
+---
+
+## Questions?
+
+- 📧 Email: [Your Email]
+- 💬 [GitHub Discussions](https://github.com/yourusername/nexus-calculator/discussions)
+- 🐛 [GitHub Issues](https://github.com/yourusername/nexus-calculator/issues)
+
+---
+
+## Thank You! 
+
+Your contributions make NEXUS better for everyone. We appreciate your time and effort! 🎉
   // Batch updates
   element.classList.remove('old');
   element.classList.add('new');

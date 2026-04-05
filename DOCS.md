@@ -1,103 +1,444 @@
-# 📚 CALCORA Documentation Index
+# Documentation
 
-Welcome to the CALCORA GitHub repository! Here you'll find all the documentation you need to use, contribute, and understand the project.
-
----
-
-## 📖 Getting Started
-
-### **For Users** 👥
-Start here if you want to use CALCORA:
-
-1. **[README.md](README.md)** - Main project overview
-   - Features overview
-   - Quick start guide
-   - Technology stack
-   - How to use the calculator
-   - Browser support
-
-2. **[INSTALLATION.md](INSTALLATION.md)** - Setup instructions
-   - Multiple installation methods
-   - System requirements
-   - Mobile setup (home screen)
-   - Troubleshooting guide
-   - CDN dependencies
-
-3. **[Features Guide](README.md#🎮-how-to-use)** - Detailed feature documentation
-   - Basic calculations
-   - Keyboard shortcuts
-   - Scientific functions
-   - Memory operations
-   - History panel
-   - Sound/theme controls
+Welcome to the NEXUS Calculator documentation. This guide covers everything you need to know.
 
 ---
 
-## 👨‍💻 For Contributors
+## Table of Contents
 
-### **Contributing Guidelines**
-Want to help improve CALCORA?
-
-1. **[CONTRIBUTING.md](CONTRIBUTING.md)** - Complete contribution guide
-   - Ways to contribute
-   - Development setup
-   - Code style guidelines
-   - Testing checklist
-   - Git workflow
-   - Pull request process
-
-2. **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Community standards
-   - Our pledge
-   - Expected behavior
-   - Unacceptable behavior
-   - Enforcement & reporting
-   - How to report issues
-
-3. **[Issue & PR Templates](.github/)**
-   - Bug report template
-   - Feature request template
-   - Pull request template
+1. [Getting Started](#getting-started)
+2. [Features Guide](#features-guide)
+3. [API Reference](#api-reference)
+4. [Keyboard Shortcuts](#keyboard-shortcuts)
+5. [FAQ](#faq)
+6. [Troubleshooting](#troubleshooting)
 
 ---
 
-## 📋 Repository Structure
+## Getting Started
+
+### First Time Users
+
+1. **Download or Open**
+   - Download `index.html` from GitHub
+   - Open in any modern web browser
+   - No installation needed
+
+2. **Basic Calculation**
+   - Type numbers using buttons or keyboard
+   - Press operator button (+, −, ×, ÷)
+   - Enter second number
+   - Press **=** to get result
+
+### Visual Tour
 
 ```
-CALCORA/
-├── index.html                 # Main application (all code in one file)
-├── README.md                  # Project overview & features
-├── INSTALLATION.md            # Setup & installation guide
-├── CONTRIBUTING.md            # Contribution guidelines★ START HERE FOR CONTRIBUTING
-├── CODE_OF_CONDUCT.md         # Community standards
-├── LICENSE                    # MIT License
-├── .gitignore                 # Git ignore rules
-└── .github/
-    ├── pull_request_template.md      # PR template
-    └── ISSUE_TEMPLATE/
-        ├── bug_report.md             # Bug report template
-        └── feature_request.md        # Feature request template
+┌─────────────────────────────────┐
+│  Display: 0                     │   ← Shows current input/result
+├─────────────────────────────────┤
+│  ┌──────┬──────┬──────┬──────┐  │
+│  │  C   │ +/−  │  %   │  ÷   │  │   ← Basic operations
+│  ├──────┼──────┼──────┼──────┤  │
+│  │  7   │  8   │  9   │  ×   │  │   ← Number pad
+│  ├──────┼──────┼──────┼──────┤  │
+│  │  4   │  5   │  6   │  −   │  │
+│  ├──────┼──────┼──────┼──────┤  │
+│  │  1   │  2   │  3   │  +   │  │
+│  ├──────┼──────┼──────┼──────┤  │
+│  │    0     │  .   │  =   │  │   ← Result button
+│  └──────┴──────┴──────┴──────┘  │
+└─────────────────────────────────┘
 ```
 
 ---
 
-## 🎯 Common Tasks
+## Features Guide
 
-### **🔹 I want to use CALCORA**
-1. Read [README.md](README.md) quick start
-2. Follow [INSTALLATION.md](INSTALLATION.md)
-3. Open `index.html` in browser
-4. Start calculating! 🎉
+### Standard Mode
 
-### **🔹 I found a bug**
-1. Search [existing issues](https://github.com/yourusername/CALCORA/issues)
-2. Use [bug report template](.github/ISSUE_TEMPLATE/bug_report.md)
-3. Provide browser, OS, steps to reproduce
-4. Attach screenshots if helpful
+The main calculator interface with all essential operations.
 
-### **🔹 I have a feature idea**
-1. Check [discussions](https://github.com/yourusername/CALCORA/discussions)
-2. Use [feature request template](.github/ISSUE_TEMPLATE/feature_request.md)
-3. Describe use case and benefits
+#### Basic Operations
+
+```
+Operation          Syntax              Result
+─────────────────────────────────────────────
+Addition           5 + 3 =             8
+Subtraction        10 − 2 =            8
+Multiplication     4 × 5 =             20
+Division           20 ÷ 4 =            5
+Percentage         50 % of 100 =       50
+Toggle Sign        5 → +/− →           −5
+```
+
+#### Examples
+
+```
+Example 1: Calculate 15% of 200
+─────────────────────────────────
+1. Enter: 200
+2. Press: ×
+3. Enter: 15
+4. Press: %
+5. Result: 30
+
+Example 2: Convert temperature
+─────────────────────────────────
+Celsius to Fahrenheit: (°C × 9/5) + 32
+32 × 9 ÷ 5 + 32 = 89.6°F
+```
+
+---
+
+### Scientific Mode
+
+Press **SCI** button to unlock advanced functions.
+
+#### Trigonometric Functions
+
+```
+Function   Input (Degrees)  Result
+─────────────────────────────────
+sin()      sin(90°)  =      1
+cos()      cos(0°)   =      1
+tan()      tan(45°)  =      1
+```
+
+**Note:** Toggle **DEG/RAD** to switch between degrees and radians.
+
+#### Exponential & Logarithmic
+
+```
+Function   Input            Result
+─────────────────────────────────
+√          √16      =       4
+x²         3²       =       9
+log()      log(100) =       2
+ln()       ln(e)    =       1
+e^x        e^1      =       2.718
+```
+
+#### Other Functions
+
+```
+Function   Input       Result
+─────────────────────────────────
+1/x        1/5    =    0.2
+n!         5!     =    120
+π          π      =    3.14159...
+e          e      =    2.71828...
+x^y        2^3    =    8
+```
+
+---
+
+### Memory Functions
+
+Store and recall values easily.
+
+| Function | Name | Use Case |
+|----------|------|----------|
+| **M+** | Memory Add | Add current value to memory |
+| **M−** | Memory Subtract | Subtract current value from memory |
+| **MR** | Memory Recall | Retrieve stored value |
+| **MC** | Memory Clear | Clear stored value |
+
+**Example: Calculate multi-step problem**
+
+```
+Problem: Calculate (5 + 3) × (12 − 7)
+─────────────────────────────────────
+
+Step 1: 5 + 3 = 8
+        Press M+ (memory: 8)
+
+Step 2: 12 − 7 = 5
+        Press * MR =
+        Result: 40
+```
+
+---
+
+### History Panel
+
+Keep track of all your calculations.
+
+**Access:**
+- Click the "📋 History" panel
+- Press **H** key
+- Calculations appear as you compute
+
+**Features:**
+- Shows last 20 calculations
+- Click any item to reuse result
+- Automatically saves to device
+- Format: `number operator number = result`
+
+**Keyboard:** Press **H** to toggle
+
+---
+
+### Themes
+
+Choose from 5 beautiful themes by clicking the emoji button (🌙):
+
+| Theme | Colors | Best For |
+|-------|--------|----------|
+| **Dark** 🌙 | Black & orange | Night use, OLED phones |
+| **Light** ☀️ | White & orange | Bright environments |
+| **Ocean** 🌊 | Blues & cyan | Professional look |
+| **Sunset** 🌅 | Oranges & reds | Warm, friendly feel |
+| **Forest** 🌲 | Greens | Nature-inspired |
+
+**Saved Automatically:** Your theme preference persists across sessions.
+
+---
+
+## API Reference
+
+### Calculator Logic Methods
+
+For developers integrating NEXUS into their applications:
+
+```javascript
+// Access the calculator logic
+const logic = app.logic;
+
+// Basic operations
+logic.append(value)           // Add digit/decimal
+logic.setOperation(op)        // Set operator (+, −, ×, ÷, %)
+logic.calculate()             // Compute result
+logic.clear()                 // Reset calculator
+
+// Scientific functions
+logic.sqrt()                  // Square root
+logic.square()                // x²
+logic.sine() / .cosine() / .tangent()  // Trig functions
+logic.logarithm() / .naturalLog()      // Logarithms
+logic.factorial()             // n!
+logic.pi() / .euler()         // Constants
+
+// Memory functions
+logic.memoryAdd()             // M+
+logic.memorySubtract()        // M−
+logic.memoryRecall()          // MR
+logic.memoryClear()           // MC
+logic.getMemoryValue()        // Get M value
+
+// Settings
+logic.toggleAngleMode()       // Switch DEG/RAD
+logic.getHistory()            // Get all calculations
+```
+
+### Themes
+
+```javascript
+// Access theme system
+app.applyTheme('dark')        // 'dark', 'light', 'ocean', 'sunset', 'forest'
+app.toggleScientificMode()    // Show/hide scientific buttons
+```
+
+---
+
+## Keyboard Shortcuts
+
+### Number Input
+
+| Key | Action |
+|-----|--------|
+| `0-9` | Enter digits |
+| `.` | Decimal point |
+| `+` | Addition |
+| `-` | Subtraction |
+| `*` | Multiplication |
+| `/` | Division |
+| `^` | Power (scientific mode) |
+
+### Operations
+
+| Key | Action |
+|-----|--------|
+| `Enter` or `=` | Calculate result |
+| `Backspace` | Toggle sign (+/−) |
+| `c` | Clear |
+| `%` | Percentage |
+
+### Interface
+
+| Key | Action |
+|-----|--------|
+| `h` | Toggle history |
+| `s` | Toggle scientific mode |
+
+### Example
+
+```
+Calculate 2^3 using keyboard:
+─────────────────────────────
+2 → ^ → 3 → Enter → Result: 8
+```
+
+---
+
+## FAQ
+
+### General Questions
+
+**Q: Is NEXUS free?**
+A: Yes, completely free and open-source under MIT license.
+
+**Q: Can I use NEXUS offline?**
+A: Yes, it works 100% offline with no internet required.
+
+**Q: Can I install NEXUS on my phone?**
+A: Yes, add to home screen for PWA experience (takes 10 seconds).
+
+**Q: Does NEXUS save my data?**
+A: Yes, history and theme preference save to device (localStorage).
+
+**Q: Can I use NEXUS in my project/app?**
+A: Yes, MIT license allows commercial use. Just include license credit.
+
+---
+
+### Technical Questions
+
+**Q: What browsers are supported?**
+A: Chrome 60+, Firefox 55+, Safari 12+, Edge 79+, and all modern browsers.
+
+**Q: Is NEXUS fast on slow devices?**
+A: Yes, optimized for 60fps on budget smartphones (2019+).
+
+**Q: How accurate are calculations?**
+A: JavaScript precision (floating-point). Rounds to 8 decimal places.
+
+**Q: What if I find a bug?**
+A: Report it on [GitHub Issues](https://github.com/yourusername/nexus-calculator/issues)
+
+---
+
+### Usage Questions
+
+**Q: How do I calculate percentages?**
+A: Enter base number → % → percentage value → operator result
+Example: 200 × 15% = 30
+
+**Q: How do I use scientific functions?**
+A: Press SCI button to show scientific functions, then click desired function.
+
+**Q: How do I change themes?**
+A: Click the emoji button (🌙☀️🌊🌅🌲) to cycle through themes.
+
+**Q: Can I use the same value in multiple calculations?**
+A: Yes, use Memory functions (M+, M−, MR, MC) or History panel.
+
+---
+
+## Troubleshooting
+
+### Issue: Calculator appears frozen
+
+**Solution:**
+1. Refresh browser (Ctrl+R or Cmd+R)
+2. Clear cache: Browser Settings → Clear Cache
+3. Open in different browser
+4. Check if JavaScript is enabled
+
+---
+
+### Issue: Buttons not responding
+
+**Solution:**
+1. On mobile: Try landscape orientation
+2. Close other browser tabs
+3. Restart browser
+4. Hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+
+---
+
+### Issue: Math results seem wrong
+
+**Example:**
+```
+0.1 + 0.2 = 0.30000000000000004
+```
+
+**Explanation:**
+This is normal JavaScript behavior due to floating-point precision.
+Not a bug, it's how computers store decimal numbers.
+
+**Solution:**
+Results are rounded to 8 decimal places for display accuracy.
+
+---
+
+### Issue: History not saving
+
+**Solution:**
+1. Check if localStorage is enabled in browser
+2. Private/Incognito mode disables storage
+3. Use normal browsing mode
+
+---
+
+### Issue: Haptic feedback not working
+
+**Solution:**
+1. Enable vibration in device settings
+2. Try different app: Does vibration work elsewhere?
+3. Some devices/browsers don't support vibration API
+
+---
+
+### Issue: PWA installation failing
+
+**Solution:**
+1. Site must be served over HTTPS
+2. Try different browser
+3. Local file (file://) won't show install option
+4. Use online hosted version instead
+
+---
+
+## Advanced Topics
+
+### Extending NEXUS
+
+NEXUS is built with modular code. To add new functions:
+
+1. Edit `CalculatorLogic` class methods
+2. Add new button in scientific functions section
+3. Update `setupEventListeners()` to handle new button
+4. Rest is automatic!
+
+### Hosting Your Version
+
+1. Fork on GitHub
+2. Customize (add features, change colors)
+3. Deploy to GitHub Pages / Netlify / Vercel
+4. Share your version!
+
+---
+
+## Related Resources
+
+- 📖 [README.md](README.md) — Feature overview
+- 💾 [INSTALLATION.md](INSTALLATION.md) — Setup guide
+- 🤝 [CONTRIBUTING.md](CONTRIBUTING.md) — How to contribute
+- 📋 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — Community standards
+
+---
+
+## Support
+
+- 🐛 **Report Bugs:** [GitHub Issues](https://github.com/yourusername/nexus-calculator/issues)
+- 💬 **Ask Questions:** [GitHub Discussions](https://github.com/yourusername/nexus-calculator/discussions)
+- 📧 **Contact:** [Your Email]
+
+---
+
+**Last Updated:** April 5, 2026
+**Version:** 1.0+
 4. Provide mockups or examples
 
 ### **🔹 I want to contribute code**
