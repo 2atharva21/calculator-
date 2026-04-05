@@ -59,7 +59,7 @@
         .calculator-container {
             background: var(--secondary-bg);
             border-radius: 40px;
-            padding: 30px;
+            padding: 35px 30px 30px 30px;
             max-width: 360px;
             width: 100%;
             position: relative;
@@ -70,64 +70,78 @@
         /* Header with microphone icon */
         .calculator-header {
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: 25px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
         }
 
         .mic-button {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: var(--display-text);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            padding: 0;
-            opacity: 0.6;
-            transition: opacity 200ms ease;
+            padding: 12px;
+            opacity: 0.7;
+            transition: all 200ms ease;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .mic-button:hover {
             opacity: 1;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         /* Display */
         .display {
             background: transparent;
             text-align: right;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            padding: 30px 0;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
         .display-calculation {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--display-text);
-            opacity: 0.6;
-            margin-bottom: 8px;
-            min-height: 20px;
+            opacity: 0.5;
+            margin-bottom: 15px;
+            min-height: 18px;
+            letter-spacing: 0.5px;
         }
 
         .display-value {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: var(--display-text);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             word-break: break-all;
             will-change: opacity, transform;
+            line-height: 1.1;
         }
 
         /* Button grid */
         .button-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            grid-auto-rows: minmax(60px, auto);
+            gap: 16px;
+            grid-auto-rows: minmax(65px, auto);
         }
 
         /* Buttons */
         .btn {
             padding: 20px;
             border: none;
-            border-radius: 22px;
+            border-radius: 24px;
             font-size: 1.4rem;
             font-weight: 600;
             cursor: pointer;
@@ -137,7 +151,7 @@
             background: var(--button-bg);
             color: var(--button-text);
             touch-action: manipulation;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -146,13 +160,13 @@
 
         .btn:hover {
             background: var(--button-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .btn:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(0px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         /* Operator buttons */
@@ -340,20 +354,21 @@
         /* Mobile optimization */
         @media (max-width: 768px) {
             .calculator-container {
-                padding: 20px;
+                padding: 25px;
                 border-radius: 35px;
                 width: 100%;
                 max-width: 420px;
-                padding-left: max(20px, env(safe-area-inset-left));
-                padding-right: max(20px, env(safe-area-inset-right));
+                padding-left: max(25px, env(safe-area-inset-left));
+                padding-right: max(25px, env(safe-area-inset-right));
             }
 
             .display-value {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
-            .display-calculation {
-                font-size: 0.85rem;
+            .display {
+                margin-bottom: 30px;
+                padding: 25px 0;
             }
 
             .btn {
@@ -572,7 +587,13 @@
                         '/': '÷',
                         '%': '%'
                     };
-                    return `${this.previousValue} ${operatorSymbols[this.operation]}`;
+                    const formatNumber = (num) => {
+                        const str = num.toString();
+                        const parts = str.split('.');
+                        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        return parts.join('.');
+                    };
+                    return `${formatNumber(this.previousValue)} ${operatorSymbols[this.operation]}`;
                 }
                 return '';
             }
@@ -715,10 +736,18 @@
                 const display = document.getElementById('displayValue');
                 const calculation = document.getElementById('displayCalculation');
 
-                display.textContent = this.logic.displayValue.length > 15 
+                // Format number with commas for display
+                const formatNumber = (num) => {
+                    const parts = num.split('.');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    return parts.join('.');
+                };
+
+                const displayText = this.logic.displayValue.length > 15 
                     ? this.logic.displayValue.substring(0, 15) + '...'
                     : this.logic.displayValue;
 
+                display.textContent = formatNumber(displayText);
                 calculation.textContent = this.logic.getCalculationDisplay();
             }
 
