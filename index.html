@@ -1023,9 +1023,6 @@
         <!-- Mode Toggle -->
         <button class="btn btn-mode-toggle" id="modeToggle" aria-label="Scientific mode" title="Toggle Scientific mode (S)">SCI</button>
 
-        <!-- Voice Input Button -->
-        <button class="btn btn-mode-toggle" id="voiceButton" aria-label="Voice input" title="Start voice input">🎤</button>
-
         <!-- Scientific Buttons (Hidden by default) -->
         <div id="scientificButtons">
             <!-- Row 1: Trigonometric -->
@@ -1492,13 +1489,9 @@
             constructor() {
                 this.logic = new CalculatorLogic();
                 this.scientificMode = false;
-                this.isListening = false;
-                this.recognition = null;
-                this.recognitionState = 'idle'; // idle, starting, listening, stopping
                 this.setupEventListeners();
                 this.setupThemeToggle();
                 this.loadPreferences();
-                this.initializeVoiceInput();
                 this.updateDisplay();
             }
 
@@ -1616,15 +1609,6 @@
                     });
                 }
 
-                // Voice input button
-                const voiceButton = document.getElementById('voiceButton');
-                if (voiceButton) {
-                    voiceButton.addEventListener('click', (e) => {
-                        animateButton(e.target);
-                        this.startVoiceInput();
-                    });
-                }
-
                 // Number buttons
                 document.querySelectorAll('[data-number]').forEach(btn => {
                     btn.addEventListener('click', (e) => {
@@ -1730,9 +1714,6 @@
                         historyPanel.classList.toggle('show');
                     } else if (e.key.toLowerCase() === 's') {
                         this.toggleScientificMode();
-                    } else if (e.key.toLowerCase() === 'v') {
-                        // V for Voice input
-                        this.startVoiceInput();
                     }
                     this.updateDisplay();
                 });
@@ -1958,130 +1939,6 @@
             vibrateError() {
                 if (!navigator.vibrate) return;
                 navigator.vibrate([30, 20, 30]);
-            }
-
-            // Voice input functionality
-            initializeVoiceInput() {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!SpeechRecognition) {
-                    console.log('Speech Recognition API not available');
-                    return;
-                }
-
-                this.recognition = new SpeechRecognition();
-                this.recognition.continuous = false;
-                this.recognition.interimResults = false;
-                this.recognition.lang = 'en-US';
-
-                this.recognition.onstart = () => {
-                    console.log('Voice input started');
-                    this.recognitionState = 'listening';
-                    this.isListening = true;
-                    this.announceToScreenReader('Listening for voice input');
-                };
-
-                this.recognition.onresult = (event) => {
-                    let transcript = '';
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        transcript += event.results[i][0].transcript;
-                    }
-                    if (transcript) {
-                        this.vibrateSuccess();
-                        this.processVoiceInput(transcript);
-                    }
-                };
-
-                this.recognition.onerror = (event) => {
-                    console.error('Speech recognition error:', event.error);
-                    this.recognitionState = 'idle';
-                    this.isListening = false;
-                    if (event.error !== 'aborted') {
-                        this.vibrateError();
-                        this.announceToScreenReader(`Voice input error: ${event.error}`);
-                    }
-                };
-
-                this.recognition.onend = () => {
-                    console.log('Voice input ended');
-                    this.recognitionState = 'idle';
-                    this.isListening = false;
-                };
-            }
-
-            startVoiceInput() {
-                if (!this.recognition) return;
-                
-                // If already in the process of starting/listening, ignore
-                if (this.recognitionState === 'starting' || this.recognitionState === 'listening') {
-                    return;
-                }
-
-                // If stopping, wait and retry
-                if (this.recognitionState === 'stopping') {
-                    setTimeout(() => this.startVoiceInput(), 100);
-                    return;
-                }
-
-                // Ready to start
-                this.recognitionState = 'starting';
-                try {
-                    this.recognition.start();
-                } catch (e) {
-                    console.error('Error starting recognition:', e);
-                    this.recognitionState = 'idle';
-                    this.announceToScreenReader('Voice input unavailable');
-                }
-            }
-
-            processVoiceInput(transcript) {
-                const voiceMap = {
-                    'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
-                    'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9',
-                    'plus': '+', 'minus': '-', 'times': '*', 'multiplied': '*',
-                    'divided by': '/', 'divide': '/', 'point': '.', 'dot': '.',
-                    'equals': '=', 'clear': 'clear', 'delete': 'backspace'
-                };
-
-                const lowerTranscript = transcript.toLowerCase();
-
-                // Check for special commands first
-                if (lowerTranscript.includes('clear') || lowerTranscript.includes('reset')) {
-                    this.logic.clear();
-                    this.updateDisplay();
-                    this.announceToScreenReader('Calculator cleared');
-                    return;
-                }
-                if (lowerTranscript.includes('delete') || lowerTranscript.includes('backspace')) {
-                    this.logic.backspace();
-                    this.updateDisplay();
-                    this.announceToScreenReader('Last digit deleted');
-                    return;
-                }
-
-                // Process the voice input by converting words to symbols
-                let processedInput = lowerTranscript;
-                for (const [word, symbol] of Object.entries(voiceMap)) {
-                    if (symbol !== 'clear' && symbol !== 'backspace') {
-                        processedInput = processedInput.replace(new RegExp(word, 'g'), symbol);
-                    }
-                }
-
-                // Execute the processed input
-                if (processedInput && processedInput !== lowerTranscript) {
-                    for (const char of processedInput) {
-                        if (char === '.') {
-                            this.logic.addDecimal();
-                        } else if ('+-*/%'.includes(char)) {
-                            this.logic.setOperation(char);
-                        } else if (char === '=' || lowerTranscript.includes('equals')) {
-                            this.logic.calculate();
-                        } else if ('0123456789'.includes(char)) {
-                            this.logic.append(char);
-                        }
-                    }
-                    this.updateDisplay();
-                    this.announceToScreenReader(`Voice input: ${transcript}`);
-                }
             }
 
             // Screen reader announcement functionality
