@@ -697,10 +697,9 @@
                     }
                 };
 
-                // Add touch feedback with improved haptics
+                // Add touch feedback with improved haptics (non-blocking)
                 document.querySelectorAll('.btn').forEach(btn => {
-                    btn.addEventListener('touchstart', (e) => {
-                        e.preventDefault();
+                    btn.addEventListener('touchstart', () => {
                         if (btn.classList.contains('btn-operator')) {
                             vibratePattern('operator');
                         } else if (btn.classList.contains('btn-equals')) {
@@ -708,19 +707,7 @@
                         } else {
                             vibratePattern('click');
                         }
-                    }, { passive: false });
-                });
-
-                // Prevent double tap zoom on buttons
-                let lastTouchEnd = 0;
-                document.querySelectorAll('.btn').forEach(btn => {
-                    btn.addEventListener('touchend', (e) => {
-                        const now = Date.now();
-                        if (now - lastTouchEnd <= 300) {
-                            e.preventDefault();
-                        }
-                        lastTouchEnd = now;
-                    }, false);
+                    }, true);
                 });
             }
 
