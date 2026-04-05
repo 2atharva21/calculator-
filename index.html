@@ -350,8 +350,8 @@
 
         body {
             background-color: var(--primary-bg);
-            min-height: 100vh;
-            min-height: 100dvh;
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -365,13 +365,6 @@
             transition: background-color 400ms ease, color 400ms ease;
         }
 
-        body::before {
-            content: '';
-            display: block;
-            height: max(48px, calc(48px + env(safe-area-inset-top)));
-            width: 100%;
-        }
-
         /* Mobile App Status Bar */
         .mobile-status-bar {
             position: fixed;
@@ -380,57 +373,60 @@
             right: 0;
             background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.95) 100%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: max(8px, env(safe-area-inset-top)) 16px;
+            padding: max(6px, env(safe-area-inset-top)) 12px;
             z-index: 999;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: max(48px, calc(48px + env(safe-area-inset-top)));
+            height: max(44px, calc(44px + env(safe-area-inset-top)));
             box-sizing: border-box;
         }
 
         /* Calculator container */
         .calculator-container {
             background: var(--secondary-bg);
-            border-radius: 40px;
-            padding: 35px 30px 30px 30px;
+            border-radius: 32px;
+            padding: 16px 12px 18px 12px;
             max-width: 360px;
-            width: 100%;
+            width: calc(100% - 16px);
+            height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 8px);
             position: relative;
             z-index: 1;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            margin: auto 20px;
-            flex: 1;
+            margin: calc(max(44px, calc(44px + env(safe-area-inset-top))) + 4px) auto env(safe-area-inset-bottom) auto;
+            flex: 0 1 auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         /* Display */
         .display {
             background: transparent;
             text-align: right;
-            margin-bottom: 40px;
-            padding: 30px 0;
-            min-height: 140px;
+            margin-bottom: 12px;
+            padding: 16px 8px;
+            flex: 0.35 1 auto;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
+            min-height: 80px;
         }
 
         .display-calculation {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--display-text);
             opacity: 0.5;
-            margin-bottom: 15px;
-            min-height: 18px;
+            margin-bottom: 8px;
+            min-height: 16px;
             letter-spacing: 0.5px;
+            line-height: 1;
         }
 
         .display-value {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 700;
             color: var(--display-text);
             letter-spacing: 1.5px;
@@ -443,17 +439,18 @@
         .button-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(5, auto);
-            gap: 16px;
-            align-items: stretch;
+            grid-auto-rows: 1fr;
+            gap: 10px;
+            flex: 0.65 1 auto;
+            min-height: 240px;
         }
 
         /* Buttons */
         .btn {
-            padding: 20px;
+            padding: 0;
             border: none;
-            border-radius: 24px;
-            font-size: 1.4rem;
+            border-radius: 18px;
+            font-size: 1.3rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -466,7 +463,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 75px;
             opacity: 0;
             animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
@@ -948,10 +944,7 @@
         /* Mobile touch optimization */
         @supports (padding: max(0px)) {
             body {
-                padding-left: max(20px, env(safe-area-inset-left));
-                padding-right: max(20px, env(safe-area-inset-right));
-                padding-top: max(20px, env(safe-area-inset-top));
-                padding-bottom: max(20px, env(safe-area-inset-bottom));
+                padding: 0;
             }
         }
 
@@ -970,28 +963,26 @@
         /* Mobile optimization */
         @media (max-width: 768px) {
             .calculator-container {
-                padding: 25px;
-                border-radius: 35px;
-                width: 100%;
-                max-width: 420px;
-                padding-left: max(25px, env(safe-area-inset-left));
-                padding-right: max(25px, env(safe-area-inset-right));
+                padding: 14px 10px 16px 10px;
+                border-radius: 28px;
+                width: calc(100% - 12px);
+                height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 6px);
+                max-width: 95vw;
             }
 
             .display-value {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
 
             .display {
-                margin-bottom: 30px;
-                padding: 25px 0;
+                margin-bottom: 10px;
+                padding: 12px 6px;
+                min-height: 70px;
             }
 
             .btn {
-                padding: 18px;
-                font-size: 1.2rem;
-                border-radius: 18px;
-                min-height: 70px;
+                font-size: 1.1rem;
+                border-radius: 16px;
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             }
 
@@ -1000,74 +991,61 @@
             }
 
             .button-grid {
-                gap: 14px;
-            }
-
-            .theme-toggle {
-                top: max(15px, env(safe-area-inset-top));
-                right: max(15px, env(safe-area-inset-right));
-                padding: 8px 14px;
-                min-width: 42px;
-                min-height: 42px;
+                gap: 9px;
             }
         }
 
         /* Extra small phones */
         @media (max-width: 380px) {
             .calculator-container {
-                padding: 16px;
-                border-radius: 28px;
+                padding: 12px 8px 14px 8px;
+                border-radius: 24px;
+            }
+
+            .display-value {
+                font-size: 2.2rem;
+            }
+
+            .display {
+                padding: 10px 4px;
+                min-height: 60px;
+            }
+
+            .btn {
+                font-size: 0.95rem;
+                border-radius: 14px;
+            }
+
+            .button-grid {
+                gap: 8px;
+            }
+        }
+
+        /* Landscape orientation */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .calculator-container {
+                padding: 10px 8px 12px 8px;
+                max-width: 95vw;
+                height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 4px);
             }
 
             .display-value {
                 font-size: 1.8rem;
             }
 
-            .btn {
-                padding: 14px;
-                font-size: 1rem;
-                min-height: 60px;
-                border-radius: 16px;
-            }
-
-            .button-grid {
-                gap: 10px;
-            }
-        }
-
-        /* Landscape orientation */
-        @media (max-height: 600px) and (orientation: landscape) {
-            body {
-                padding: 10px;
-                padding-left: max(10px, env(safe-area-inset-left));
-                padding-right: max(10px, env(safe-area-inset-right));
-            }
-
-            .calculator-container {
-                padding: 15px;
-                max-width: 600px;
-            }
-
-            .display-value {
-                font-size: 1.5rem;
+            .display {
+                padding: 8px 4px;
+                margin-bottom: 8px;
+                min-height: 50px;
             }
 
             .btn {
-                padding: 12px;
-                font-size: 0.95rem;
-                min-height: 55px;
+                font-size: 0.9rem;
+                border-radius: 14px;
             }
 
             .button-grid {
-                gap: 10px;
-            }
-
-            .theme-toggle {
-                top: max(10px, env(safe-area-inset-top));
-                right: max(10px, env(safe-area-inset-right));
-                padding: 8px 12px;
-                font-size: 0.95rem;
-                border-radius: 12px;
+                gap: 8px;
             }
         }
     </style>
