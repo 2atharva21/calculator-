@@ -137,16 +137,45 @@
             --button-text: #ffffff;
         }
 
-        /* Light Ocean */
-        body[data-theme="ocean"].light-theme {
-            --primary-bg: #e3f2fd;
-            --secondary-bg: #b3e5fc;
-            --button-bg: #81d4fa;
-            --button-hover: #4fc3f7;
-            --operator-bg: #0288d1;
-            --operator-hover: #0277bd;
-            --display-text: #01579b;
-            --button-text: #ffffff;
+        /* Theme-specific improvements */
+        body[data-theme="light"] .theme-toggle {
+            background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%);
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        body[data-theme="light"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(255, 140, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        body[data-theme="ocean"] .theme-toggle {
+            background: linear-gradient(135deg, #1b5e7f 0%, #2a7ba8 100%);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        body[data-theme="ocean"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.4);
+        }
+
+        body[data-theme="sunset"] .theme-toggle {
+            background: linear-gradient(135deg, #5a3a2a 0%, #7a4a3a 100%);
+            border-color: rgba(255, 107, 53, 0.2);
+        }
+
+        body[data-theme="sunset"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(255, 107, 53, 0.3);
+            border-color: rgba(255, 107, 53, 0.4);
+        }
+
+        body[data-theme="forest"] .theme-toggle {
+            background: linear-gradient(135deg, #3a5a3a 0%, #4a7a4a 100%);
+            border-color: rgba(77, 179, 128, 0.2);
+        }
+
+        body[data-theme="forest"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(77, 179, 128, 0.3);
+            border-color: rgba(77, 179, 128, 0.4);
         }
 
         body {
@@ -166,6 +195,7 @@
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
+            transition: background-color 400ms ease, color 400ms ease;
         }
 
         /* Calculator container */
@@ -377,33 +407,75 @@
             }
         }
 
-        /* Theme toggle */
+        /* Theme toggle - Modern Professional Design */
         .theme-toggle {
             position: fixed;
             top: max(20px, env(safe-area-inset-top));
             right: max(20px, env(safe-area-inset-right));
-            background: var(--button-bg);
-            border: none;
-            border-radius: 16px;
-            padding: 12px 18px;
+            background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 10px 18px;
             cursor: pointer;
             z-index: 100;
-            font-size: 1.3rem;
-            transition: all 150ms ease;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
             color: var(--display-text);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             touch-action: manipulation;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 48px;
+            min-height: 44px;
+            font-weight: 600;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .theme-toggle:hover {
-            background: var(--button-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(135deg, var(--button-hover) 0%, rgba(255, 255, 255, 0.15) 100%);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255, 149, 0, 0.25);
+            border-color: rgba(255, 149, 0, 0.3);
         }
 
         .theme-toggle:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--operator-bg);
+            outline-offset: 2px;
+        }
+
+        .theme-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.3rem;
+            width: 24px;
+            height: 24px;
+        }
+
+        .theme-toggle:hover .theme-icon {
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        /* Theme icon rotation animation */
+        @keyframes rotate-icon {
+            0% {
+                transform: rotateY(0deg) scale(1);
+            }
+            50% {
+                transform: rotateY(90deg) scale(0.8);
+            }
+            100% {
+                transform: rotateY(0deg) scale(1);
+            }
         }
 
         /* Display animation */
@@ -556,6 +628,10 @@
             .theme-toggle {
                 top: max(15px, env(safe-area-inset-top));
                 right: max(15px, env(safe-area-inset-right));
+                padding: 8px 14px;
+                min-width: 42px;
+                min-height: 42px;
+            }
                 padding: 10px 14px;
                 font-size: 1.1rem;
                 border-radius: 14px;
@@ -633,7 +709,9 @@
     <div id="memoryDisplay"></div>
 
     <!-- Theme toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle themes">🌙</button>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme: Dark, Light, Ocean, Sunset, Forest" aria-label="Toggle themes">
+        <span class="theme-icon" id="themeIcon">🌙</span>
+    </button>
 
     <!-- Main calculator -->
     <div class="calculator-container">
@@ -1148,6 +1226,9 @@
                     const currentIndex = themes.indexOf(currentTheme);
                     const nextTheme = themes[(currentIndex + 1) % themes.length];
                     
+                    // Add brief haptic feedback
+                    this.vibrateSuccess();
+                    
                     this.applyTheme(nextTheme);
                     localStorage.setItem('calculator-theme', nextTheme);
                 });
@@ -1162,7 +1243,26 @@
                     'sunset': '🌅',
                     'forest': '🌲'
                 };
-                document.getElementById('themeToggle').textContent = themeIcons[themeName] || '🌙';
+                const themeLabels = {
+                    'dark': 'Dark',
+                    'light': 'Light',
+                    'ocean': 'Ocean',
+                    'sunset': 'Sunset',
+                    'forest': 'Forest'
+                };
+                const themeIcon = document.getElementById('themeIcon');
+                const themeButton = document.getElementById('themeToggle');
+                
+                if (themeIcon) {
+                    themeIcon.textContent = themeIcons[themeName] || '🌙';
+                    themeIcon.style.animation = 'none';
+                    void themeIcon.offsetWidth; // Trigger reflow to restart animation
+                    themeIcon.style.animation = 'rotate-icon 400ms ease-out';
+                }
+                
+                if (themeButton) {
+                    themeButton.title = `Toggle theme (${themeLabels[themeName]} mode active)`;
+                }
             }
 
             toggleScientificMode() {
