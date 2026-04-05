@@ -117,13 +117,45 @@ Before submitting, test on:
 - [ ] Touch input
 - [ ] Landscape and portrait orientations
 
-### **Performance Considerations**
+### **Performance Optimization Rules**
 
-- Use CSS transforms and opacity for animations (GPU-accelerated)
-- Minimize DOM manipulation
-- Batch style updates
-- Avoid layout thrashing
-- Use requestAnimationFrame for custom animations
+**Critical**: All contributions must maintain 60fps performance on budget devices.
+
+- ✅ **DO**: Use CSS transforms and opacity ONLY
+  ```css
+  /* Good: GPU-accelerated */
+  transform: scale(0.95);
+  opacity: 0.8;
+  ```
+
+- ❌ **DON'T**: Animate other properties
+  ```css
+  /* Bad: CPU-heavy */
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 0 20px red;
+  ```
+
+- ✅ **DO**: Use CSS animations/transitions
+  ```css
+  transition: transform 150ms ease-out;
+  ```
+
+- ❌ **DON'T**: Use JavaScript animation libraries
+  ```javascript
+  // No GSAP, jQuery, etc. - too heavy!
+  ```
+
+- ✅ **DO**: Minimize DOM operations
+  ```javascript
+  // Batch updates
+  element.classList.remove('old');
+  element.classList.add('new');
+  ```
+
+- ✅ **DO**: Keep animations under 250ms
+- ✅ **DO**: Test on low-end phones (Galaxy J2, Moto E, etc.)
+- ✅ **DO**: Verify 60fps with Chrome DevTools (Rendering tab)
 
 ### **Accessibility**
 
@@ -210,23 +242,26 @@ Once approved, project maintainers will merge your PR. You're now a CALCORA cont
 ## 📂 Project Structure
 
 ```
-index.html          # Main application file
-├── <head>          # Meta, Tailwind, GSAP, styles
+index.html          # Main application file (~35KB, all-in-one)
+├── <head>          # Meta, styles (no external dependencies)
 ├── <body>
-│   ├── animated-bg # Gradient background
+│   ├── Background  # Animated gradient orbs
 │   ├── Header      # App name, controls
 │   ├── Calculator  # Main UI with buttons/display
-│   └── <script>    # All JavaScript classes
-│       ├── SoundEngine     # Web Audio API
-│       ├── AnimationEngine # GSAP animations
+│   └── <script>    # Lightweight JavaScript classes
+│       ├── SoundEngine     # Web Audio API for sound
+│       ├── AnimationEngine # CSS-based animations
 │       ├── CalculatorLogic # Math operations
-│       ├── ThemeManager    # Dark/light theme
-│       └── CalculatorApp   # Main app class
+│       └── CalculatorApp   # Main app controller
 
-README.md           # Documentation
-LICENSE             # MIT License
+README.md           # Full project documentation
+INSTALLATION.md     # Setup instructions & performance details
 CONTRIBUTING.md     # This file
+LICENSE             # MIT License
+DOCS.md             # Documentation index
 ```
+
+**Zero Dependencies**: No CDN libraries - everything is native HTML/CSS/JS
 
 ---
 
