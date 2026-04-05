@@ -456,7 +456,7 @@
             font-size: 1.4rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 150ms ease;
+            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
             background: var(--button-bg);
@@ -467,17 +467,32 @@
             align-items: center;
             justify-content: center;
             min-height: 75px;
+            opacity: 0;
+            animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+
+        .btn:nth-child(1) { animation-delay: 30ms; }
+        .btn:nth-child(2) { animation-delay: 50ms; }
+        .btn:nth-child(3) { animation-delay: 70ms; }
+        .btn:nth-child(4) { animation-delay: 90ms; }
+        .btn:nth-child(5) { animation-delay: 60ms; }
+        .btn:nth-child(6) { animation-delay: 80ms; }
+        .btn:nth-child(7) { animation-delay: 100ms; }
+        .btn:nth-child(8) { animation-delay: 120ms; }
+        .btn:nth-child(9) { animation-delay: 90ms; }
+        .btn:nth-child(10) { animation-delay: 110ms; }
+        .btn:nth-child(11) { animation-delay: 130ms; }
+        .btn:nth-child(12) { animation-delay: 150ms; }
 
         .btn:hover {
             background: var(--button-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .btn:active {
-            transform: translateY(0px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         /* Operator buttons */
@@ -485,12 +500,27 @@
             background: linear-gradient(135deg, var(--operator-bg), #FFA500);
             color: #ffffff;
             font-weight: 700;
+            position: relative;
+        }
+
+        .btn-operator::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 200ms ease;
         }
 
         .btn-operator:hover {
             background: linear-gradient(135deg, var(--operator-hover), #FFB84D);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 24px rgba(255, 149, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 14px 28px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-operator:hover::before {
+            opacity: 1;
         }
 
         /* Equals button */
@@ -501,30 +531,51 @@
             grid-row: span 2;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             min-height: auto;
+            position: relative;
+        }
+
+        .btn-equals::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 200ms ease;
         }
 
         .btn-equals:hover {
             background: linear-gradient(135deg, var(--operator-hover), #FFB84D);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(255, 149, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 14px 28px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-equals:hover::before {
+            opacity: 1;
         }
 
         /* Clear button */
         .btn-clear {
             background: var(--button-bg);
+            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-clear:hover {
             background: var(--button-hover);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         /* Backspace button - +/− symbol */
         .btn-backspace {
             background: var(--button-bg);
+            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-backspace:hover {
             background: var(--button-hover);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         /* Scientific buttons */
@@ -532,15 +583,24 @@
             background: var(--button-bg);
             font-size: 0.9rem;
             font-weight: 600;
+            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-scientific:hover {
             background: var(--button-hover);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
 
         .btn-scientific.btn-operator {
             background: linear-gradient(135deg, var(--operator-bg), #FFA500);
             font-size: 0.85rem;
+        }
+
+        .btn-scientific.btn-operator:hover {
+            background: linear-gradient(135deg, var(--operator-hover), #FFB84D);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         /* Memory buttons */
@@ -549,12 +609,28 @@
             color: #ffffff;
             font-weight: 700;
             font-size: 0.85rem;
+            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .btn-memory::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05));
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 200ms ease;
         }
 
         .btn-memory:hover {
             background: linear-gradient(135deg, #ab47bc, #8e24aa);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 24px rgba(156, 39, 176, 0.3);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(156, 39, 176, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-memory:hover::after {
+            opacity: 1;
         }
 
         /* Mode and angle toggle buttons */
@@ -562,10 +638,13 @@
             background: var(--button-bg);
             font-weight: 700;
             font-size: 0.85rem;
+            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-mode-toggle:hover, [data-action="angle"]:hover {
             background: var(--button-hover);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
 
         /* Memory display */
@@ -776,13 +855,25 @@
             animation: slideUp 150ms ease-out;
         }
 
+        /* Button entrance animation */
+        @keyframes buttonEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(12px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         /* Button click animations */
         @keyframes buttonPulse {
             0% {
                 transform: scale(1);
             }
             50% {
-                transform: scale(0.92);
+                transform: scale(0.94);
             }
             100% {
                 transform: scale(1);
@@ -807,15 +898,15 @@
         @keyframes operatorPulse {
             0% {
                 transform: scale(1);
-                box-shadow: 0 10px 24px rgba(255, 149, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                box-shadow: 0 12px 24px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
             50% {
-                transform: scale(0.88);
-                box-shadow: 0 4px 8px rgba(255, 149, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                transform: scale(0.92);
+                box-shadow: 0 6px 12px rgba(255, 149, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
             100% {
                 transform: scale(1);
-                box-shadow: 0 10px 24px rgba(255, 149, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                box-shadow: 0 12px 24px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
         }
 
@@ -823,7 +914,7 @@
             0% {
                 width: 0;
                 height: 0;
-                opacity: 0.8;
+                opacity: 0.5;
             }
             100% {
                 width: 300px;
@@ -833,12 +924,12 @@
         }
 
         .btn.active-click {
-            animation: buttonPulse 350ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: buttonPulse 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-operator.active-click,
         .btn-equals.active-click {
-            animation: operatorPulse 350ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: operatorPulse 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn.success-click {
@@ -848,9 +939,10 @@
         .ripple-effect {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 70%, transparent);
             pointer-events: none;
-            animation: ripple 400ms ease-out;
+            animation: ripple 300ms ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
         }
 
         /* Mobile touch optimization */
