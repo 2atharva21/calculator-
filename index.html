@@ -2,506 +2,394 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0e27">
-    <title>Modern Calculator - Premium Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f172a">
+    <title>NEXUS Calculator - Premium Web App</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: {
+                            cyan: '#00d9ff',
+                            pink: '#ff006e',
+                            purple: '#b537f2',
+                            green: '#00ff00',
+                            yellow: '#ffbe0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        :root {
-            --primary-bg: #0a0e27;
-            --secondary-bg: #1a1f3a;
-            --accent-1: #00d4ff;
-            --accent-2: #ff006e;
-            --accent-3: #ffbe0b;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a9c9;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap');
 
-        body.light-mode {
-            --primary-bg: #f5f7fa;
-            --secondary-bg: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --glass-bg: rgba(255, 255, 255, 0.9);
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
+        body {
+            font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--primary-bg) 0%, #1a0033 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 15px;
-            transition: background 0.3s ease;
-        }
-
-        body.light-mode {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-        }
-
-        .container {
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 420px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #1a1a2e);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
         }
 
-        /* Header with Controls */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 8px;
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .header-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: 0.5px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .control-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .control-btn:hover {
-            background: var(--accent-1);
-            color: var(--primary-bg);
-            transform: scale(1.05);
-        }
-
-        .control-btn.active {
-            background: var(--accent-1);
-            color: var(--primary-bg);
-        }
-
-        /* Main Calculator */
-        .calculator {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Display */
-        .display-container {
-            margin-bottom: 24px;
-            text-align: right;
-        }
-
-        .display-history {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            min-height: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .display {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 110, 0.1));
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            font-size: 42px;
-            font-weight: 600;
-            color: var(--accent-1);
-            word-wrap: break-word;
-            word-break: break-all;
-            min-height: 60px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0.5;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Button Grid */
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        button {
-            padding: 18px;
-            font-size: 18px;
-            font-weight: 600;
-            border: none;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        /* Button Types */
-        .btn-number {
+        .glass.premium {
             background: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
-        .btn-operator {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
-            color: var(--accent-1);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .btn-equals {
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 190, 11, 0.1));
-            color: var(--accent-2);
-            border: 1px solid rgba(255, 0, 110, 0.5);
-            grid-column: span 2;
-        }
-
-        .btn-equals:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
-        }
-
-        .btn-clear {
-            background: linear-gradient(135deg, rgba(255, 190, 11, 0.2), rgba(255, 0, 110, 0.1));
-            color: var(--accent-3);
-            border: 1px solid rgba(255, 190, 11, 0.3);
-        }
-
-        /* Button Hover & Active */
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-        }
-
-        button:active {
-            transform: scale(0.95) translateY(0);
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 212, 255, 0.3);
-        }
-
-        .btn-number:active {
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* History Panel */
-        .history-panel {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 16px;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: none;
-        }
-
-        .history-panel.active {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .history-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-
-        .history-item {
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .history-item:hover {
-            background: rgba(0, 212, 255, 0.2);
-            color: var(--accent-1);
-        }
-
-        /* Scrollbar */
-        .history-panel::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .history-panel::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
-
-        .history-panel::-webkit-scrollbar-thumb {
-            background: rgba(0, 212, 255, 0.3);
-            border-radius: 3px;
-        }
-
-        .history-panel::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 212, 255, 0.5);
-        }
-
-        /* Media Queries */
-        @media (max-width: 480px) {
-            .container {
-                max-width: 100%;
-            }
-
-            .calculator {
-                padding: 20px;
-                border-radius: 24px;
-            }
-
-            .display {
-                font-size: 36px;
-                padding: 16px;
-            }
-
-            button {
-                padding: 16px;
-                font-size: 16px;
-                border-radius: 12px;
-            }
-
-            .buttons-grid {
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .display {
-                font-size: 28px;
-                padding: 12px;
-                min-height: 50px;
-            }
-
-            button {
-                padding: 14px;
-                font-size: 14px;
-            }
-
-            .buttons-grid {
-                gap: 8px;
-            }
-
-            .calculator {
-                padding: 16px;
-            }
-        }
-
-        /* Ripple Effect */
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
+        /* Button Ripple */
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
             transform: scale(0);
-            animation: ripple 0.6s ease-out;
             pointer-events: none;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 217, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 217, 255, 0.6);
+        }
+
+        .transition-smooth {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Button Styles */
+        .btn-number, .btn-operator, .btn-clear, .btn-equals, .btn-function {
+            @apply rounded-xl font-semibold transition-smooth relative overflow-hidden cursor-pointer;
+            min-height: 3rem;
+        }
+
+        .btn-number {
+            @apply bg-slate-700/20 hover:bg-slate-700/40 active:bg-slate-700/60 border border-slate-600/30;
+            @apply text-white;
+        }
+
+        .btn-operator {
+            @apply bg-neon-cyan/10 hover:bg-neon-cyan/20 border border-neon-cyan/40;
+            @apply text-neon-cyan;
+        }
+
+        .btn-clear {
+            @apply bg-neon-yellow/10 hover:bg-neon-yellow/20 border border-neon-yellow/40;
+            @apply text-neon-yellow;
+        }
+
+        .btn-equals {
+            @apply bg-gradient-to-r from-neon-pink/20 to-neon-yellow/10 hover:from-neon-pink/30 border border-neon-pink/40;
+            @apply text-neon-pink;
+        }
+
+        .btn-function {
+            @apply bg-neon-purple/10 hover:bg-neon-purple/20 border border-neon-purple/40;
+            @apply text-neon-purple text-sm;
+        }
+
+        @media (max-width: 480px) {
+            .calculator-grid {
+                gap: 0.5rem !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- Header with Controls -->
-        <div class="header">
-            <div class="header-title">Calculator</div>
-            <div class="controls">
-                <button class="control-btn" id="historyBtn" title="History">📋</button>
-                <button class="control-btn" id="soundBtn" class="active" title="Sound">🔊</button>
-                <button class="control-btn" id="themeBtn" title="Theme">🌙</button>
+<body class="bg-slate-950 text-white">
+    <div class="animated-bg"></div>
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="container mx-auto max-w-md">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-transparent">
+                    NEXUS
+                </h1>
+                <div class="flex gap-3">
+                    <button id="historyBtn" class="glass p-3 rounded-full transition-smooth hover:scale-110 active:scale-95" 
+                            title="Calculation History" aria-label="History">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </button>
+                    <button id="soundBtn" class="glass p-3 rounded-full transition-smooth hover:scale-110 active:scale-95" 
+                            title="Toggle Sound" aria-label="Sound">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13.5 4.06c0-1.336-1.616-2.318-2.798-1.553L5.683 6H2a2 2 0 00-2 2v6a2 2 0 002 2h3.683l5.019 3.485c1.182.765 2.798-.217 2.798-1.553V4.06z"/>
+                        </svg>
+                    </button>
+                    <button id="themeBtn" class="glass p-3 rounded-full transition-smooth hover:scale-110 active:scale-95" 
+                            title="Toggle Theme" aria-label="Theme">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0119.8-4.3M22 4.5a10 10 0 01-19.8 15.2"/>
+                        </svg>
+                    </button>
+                    <button id="scientificBtn" class="glass p-3 rounded-full transition-smooth hover:scale-110 active:scale-95" 
+                            title="Scientific Mode" aria-label="Scientific">
+                        <span class="text-sm font-bold">f(x)</span>
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <!-- History Panel -->
-        <div class="history-panel" id="historyPanel">
-            <div class="history-title">History</div>
-            <div id="historyList"></div>
-        </div>
-
-        <!-- Calculator -->
-        <div class="calculator">
-            <!-- Display -->
-            <div class="display-container">
-                <div class="display-history" id="displayHistory"></div>
-                <div class="display" id="display">0</div>
+            <!-- History Panel -->
+            <div id="historyPanel" class="glass premium rounded-3xl p-4 mb-4 max-h-48 overflow-y-auto hidden">
+                <h3 class="text-sm font-semibold text-cyan-400 mb-3 uppercase tracking-wider">History</h3>
+                <div id="historyList" class="space-y-2">
+                    <!-- History items here -->
+                </div>
             </div>
 
-            <!-- Buttons -->
-            <div class="buttons-grid">
-                <button class="btn-clear" data-action="clear">AC</button>
-                <button class="btn-clear" data-action="delete">DEL</button>
-                <button class="btn-operator" data-operator="%">%</button>
-                <button class="btn-operator" data-operator="/">÷</button>
+            <!-- Memory Indicator -->
+            <div id="memoryIndicator" class="text-center text-xs text-cyan-400 mb-2 hidden" style="letter-spacing: 0.1em;">
+                Memory: <span id="memoryValue">0</span>
+            </div>
 
-                <button class="btn-number" data-number="7">7</button>
-                <button class="btn-number" data-number="8">8</button>
-                <button class="btn-number" data-number="9">9</button>
-                <button class="btn-operator" data-operator="*">×</button>
+            <!-- Main Calculator -->
+            <div class="glass premium rounded-3xl p-6 backdrop-blur-xl">
+                <!-- Display -->
+                <div class="mb-6">
+                    <div id="displayHistory" class="text-right text-sm text-gray-400 min-h-[20px] mb-2 overflow-hidden text-ellipsis whitespace-nowrap"></div>
+                    <div class="bg-gradient-to-br from-cyan-400/10 to-pink-500/10 rounded-2xl p-4 border border-cyan-400/30 backdrop-blur">
+                        <div id="display" class="text-right text-5xl font-light text-cyan-400 break-all overflow-hidden max-h-24">
+                            0
+                        </div>
+                    </div>
+                </div>
 
-                <button class="btn-number" data-number="4">4</button>
-                <button class="btn-number" data-number="5">5</button>
-                <button class="btn-number" data-number="6">6</button>
-                <button class="btn-operator" data-operator="-">−</button>
+                <!-- Standard Buttons Grid -->
+                <div class="calculator-grid grid grid-cols-4 gap-3 mb-4">
+                    <button class="btn-clear" data-action="clear" aria-label="All Clear">AC</button>
+                    <button class="btn-clear" data-action="delete" aria-label="Delete">DEL</button>
+                    <button class="btn-operator" data-operator="%">%</button>
+                    <button class="btn-operator" data-operator="/">÷</button>
 
-                <button class="btn-number" data-number="1">1</button>
-                <button class="btn-number" data-number="2">2</button>
-                <button class="btn-number" data-number="3">3</button>
-                <button class="btn-operator" data-operator="+">+</button>
+                    <button class="btn-number" data-number="7">7</button>
+                    <button class="btn-number" data-number="8">8</button>
+                    <button class="btn-number" data-number="9">9</button>
+                    <button class="btn-operator" data-operator="*">×</button>
 
-                <button class="btn-number" data-number="0" style="grid-column: span 2;">0</button>
-                <button class="btn-number" data-number=".">.</button>
-                <button class="btn-equals" data-action="equals">=</button>
+                    <button class="btn-number" data-number="4">4</button>
+                    <button class="btn-number" data-number="5">5</button>
+                    <button class="btn-number" data-number="6">6</button>
+                    <button class="btn-operator" data-operator="-">−</button>
+
+                    <button class="btn-number" data-number="1">1</button>
+                    <button class="btn-number" data-number="2">2</button>
+                    <button class="btn-number" data-number="3">3</button>
+                    <button class="btn-operator" data-operator="+">+</button>
+
+                    <button class="btn-number col-span-2" data-number="0">0</button>
+                    <button class="btn-number" data-number=".">.</button>
+                    <button class="btn-equals col-span-1" data-action="equals">=</button>
+                </div>
+
+                <!-- Memory Buttons -->
+                <div id="memoryButtons" class="grid grid-cols-4 gap-3 hidden">
+                    <button class="btn-function" data-action="memAdd">M+</button>
+                    <button class="btn-function" data-action="memSubtract">M−</button>
+                    <button class="btn-function" data-action="memRecall">MR</button>
+                    <button class="btn-function" data-action="memClear">MC</button>
+                </div>
+
+                <!-- Scientific Buttons -->
+                <div id="scientificButtons" class="grid grid-cols-4 gap-3 hidden mt-4">
+                    <button class="btn-function" data-function="sin">sin</button>
+                    <button class="btn-function" data-function="cos">cos</button>
+                    <button class="btn-function" data-function="tan">tan</button>
+                    <button class="btn-function" data-function="sqrt">√</button>
+                    <button class="btn-function" data-function="log">log</button>
+                    <button class="btn-function" data-function="ln">ln</button>
+                    <button class="btn-function" data-function="pow">x²</button>
+                    <button class="btn-function" data-function="cbrt">∛</button>
+                </div>
+            </div>
+
+            <!-- Volume Control -->
+            <div class="mt-4 glass rounded-xl p-4">
+                <label for="volumeControl" class="text-xs uppercase tracking-wider text-gray-400 block mb-2">Volume</label>
+                <input type="range" id="volumeControl" min="0" max="100" value="50" class="w-full">
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== STATE MANAGEMENT ====================
-        class Calculator {
+        // Sound Engine with Web Audio API
+        class SoundEngine {
             constructor() {
-                this.display = document.getElementById('display');
-                this.displayHistory = document.getElementById('displayHistory');
-                this.historyList = document.getElementById('historyList');
-                this.soundBtn = document.getElementById('soundBtn');
-                this.themeBtn = document.getElementById('themeBtn');
-                this.historyBtn = document.getElementById('historyBtn');
-                this.historyPanel = document.getElementById('historyPanel');
-
-                this.currentValue = '0';
-                this.previousValue = '';
-                this.operation = null;
-                this.shouldResetDisplay = false;
-                this.history = JSON.parse(localStorage.getItem('calcHistory')) || [];
-                this.soundEnabled = JSON.parse(localStorage.getItem('soundEnabled')) !== false;
-                this.isDarkMode = JSON.parse(localStorage.getItem('isDarkMode')) !== false;
-
+                this.audioContext = null;
+                this.masterGain = null;
+                this.enabled = localStorage.getItem('soundEnabled') !== 'false';
+                this.volume = parseFloat(localStorage.getItem('volume')) || 0.5;
                 this.init();
             }
 
             init() {
-                this.setupEventListeners();
-                this.applyTheme();
-                this.updateSoundButton();
-                this.initAudio();
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.masterGain = this.audioContext.createGain();
+                    this.masterGain.connect(this.audioContext.destination);
+                    this.masterGain.gain.value = this.volume;
+                } catch (e) {
+                    console.warn('AudioContext not available');
+                }
             }
 
-            setupEventListeners() {
-                // Number buttons
-                document.querySelectorAll('[data-number]').forEach(btn => {
-                    btn.addEventListener('click', (e) => this.handleNumber(e.target.dataset.number));
-                });
+            setVolume(value) {
+                this.volume = value;
+                if (this.masterGain) this.masterGain.gain.value = value;
+                localStorage.setItem('volume', value);
+            }
 
-                // Operator buttons
-                document.querySelectorAll('[data-operator]').forEach(btn => {
-                    btn.addEventListener('click', (e) => this.handleOperator(e.target.dataset.operator));
-                });
+            playSound(type) {
+                if (!this.enabled || !this.audioContext) return;
+                const ctx = this.audioContext;
+                const now = ctx.currentTime;
 
-                // Action buttons
-                document.querySelectorAll('[data-action]').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const action = e.target.dataset.action;
-                        if (action === 'equals') this.handleEquals();
-                        else if (action === 'clear') this.handleClear();
-                        else if (action === 'delete') this.handleDelete();
-                    });
-                });
+                if (type === 'click') {
+                    this.playTone(800, 600, 0.1, 0.1);
+                } else if (type === 'operator') {
+                    this.playTone(650, 550, 0.12, 0.15);
+                } else if (type === 'equals') {
+                    this.playChord([523.25, 659.25, 783.99], 0.15, 0.2);
+                } else if (type === 'error') {
+                    this.playTone(300, 200, 0.2, 0.1);
+                }
+            }
 
-                // Control buttons
-                this.soundBtn.addEventListener('click', () => this.toggleSound());
-                this.themeBtn.addEventListener('click', () => this.toggleTheme());
-                this.historyBtn.addEventListener('click', () => this.toggleHistory());
+            playTone(startFreq, endFreq, duration, delay = 0) {
+                const ctx = this.audioContext;
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
 
-                // Keyboard support
-                window.addEventListener('keydown', (e) => this.handleKeyboard(e));
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(startFreq, now + delay);
+                osc.frequency.exponentialRampToValueAtTime(endFreq, now + delay + duration);
+                gain.gain.setValueAtTime(0.1, now + delay);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + delay + duration);
+                osc.start(now + delay);
+                osc.stop(now + delay + duration);
+            }
 
-                // Add ripple effect to all buttons
-                document.querySelectorAll('button').forEach(btn => {
-                    btn.addEventListener('click', (e) => this.createRipple(e));
+            playChord(frequencies, duration, delay = 0) {
+                frequencies.forEach((freq, idx) => {
+                    this.playTone(freq, freq * 0.7, duration, delay + idx * 0.03);
                 });
             }
 
-            handleNumber(num) {
-                this.playSound('click');
+            toggle() {
+                this.enabled = !this.enabled;
+                localStorage.setItem('soundEnabled', this.enabled);
+                return this.enabled;
+            }
+        }
 
+        // Animation Engine using GSAP
+        class AnimationEngine {
+            static buttonPress(element) {
+                gsap.to(element, { scale: 0.95, duration: 0.1, overwrite: 'auto' });
+                gsap.to(element, { scale: 1, duration: 0.3, delay: 0.1, ease: 'back.out', overwrite: 'auto' });
+            }
+
+            static ripple(element, x, y) {
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                const rect = element.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (x - rect.left - size / 2) + 'px';
+                ripple.style.top = (y - rect.top - size / 2) + 'px';
+                element.appendChild(ripple);
+
+                gsap.to(ripple, {
+                    scale: 4, opacity: 0, duration: 0.6, ease: 'power2.out',
+                    onComplete: () => ripple.remove()
+                });
+            }
+
+            static slideUpNumber(element) {
+                gsap.fromTo(element, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+            }
+
+            static panelSlide(panel, isOpen) {
+                if (isOpen) {
+                    gsap.fromTo(panel, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: 'back.out' });
+                } else {
+                    gsap.to(panel, { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' });
+                }
+            }
+
+            static pageLoad(element) {
+                gsap.fromTo(element, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out' });
+            }
+        }
+
+        // Calculator Logic
+        class CalculatorLogic {
+            constructor() {
+                this.currentValue = '0';
+                this.previousValue = '';
+                this.operation = null;
+                this.shouldResetDisplay = false;
+            }
+
+            appendNumber(num) {
                 if (num === '.' && this.currentValue.includes('.')) return;
                 if (this.shouldResetDisplay) {
                     this.currentValue = num === '.' ? '0.' : num;
@@ -513,108 +401,66 @@
                         this.currentValue += num;
                     }
                 }
-
-                this.updateDisplay();
+                if (this.currentValue.length > 16) this.currentValue = this.currentValue.slice(0, 16);
             }
 
-            handleOperator(op) {
-                this.playSound('click');
-
-                if (this.operation && !this.shouldResetDisplay) {
-                    this.handleEquals();
-                }
-
+            setOperation(op) {
+                if (this.operation && !this.shouldResetDisplay) this.calculate();
                 this.previousValue = this.currentValue;
                 this.operation = op;
                 this.shouldResetDisplay = true;
-                this.displayHistory.textContent = `${this.previousValue} ${this.getOpDisplay(op)}`;
             }
 
-            handleEquals() {
-                this.playSound('equals');
+            calculate() {
+                if (!this.operation || this.shouldResetDisplay) return null;
+                const prev = parseFloat(this.previousValue);
+                const current = parseFloat(this.currentValue);
+                let result;
 
-                if (this.operation && !this.shouldResetDisplay) {
-                    const result = this.calculate(
-                        parseFloat(this.previousValue),
-                        parseFloat(this.currentValue),
-                        this.operation
-                    );
-
-                    const expression = `${this.previousValue} ${this.getOpDisplay(this.operation)} ${this.currentValue}`;
-                    this.addToHistory(expression, result);
-
-                    this.currentValue = this.formatResult(result);
-                    this.previousValue = '';
-                    this.operation = null;
-                    this.shouldResetDisplay = true;
-                    this.displayHistory.textContent = '';
-                    this.updateDisplay();
+                switch (this.operation) {
+                    case '+': result = prev + current; break;
+                    case '-': result = prev - current; break;
+                    case '*': result = prev * current; break;
+                    case '/': result = current !== 0 ? prev / current : null; break;
+                    case '%': result = prev % current; break;
+                    default: return null;
                 }
+
+                if (result === null) return null;
+                this.currentValue = this.formatNumber(result);
+                this.previousValue = '';
+                this.operation = null;
+                this.shouldResetDisplay = true;
+                return result;
             }
 
-            handleClear() {
-                this.playSound('click');
+            formatNumber(num) {
+                if (!isFinite(num)) return '0';
+                return parseFloat(num.toFixed(10)).toString();
+            }
+
+            clear() {
                 this.currentValue = '0';
                 this.previousValue = '';
                 this.operation = null;
                 this.shouldResetDisplay = false;
-                this.displayHistory.textContent = '';
-                this.updateDisplay();
             }
 
-            handleDelete() {
-                this.playSound('click');
+            delete() {
                 if (this.currentValue.length > 1) {
                     this.currentValue = this.currentValue.slice(0, -1);
                 } else {
                     this.currentValue = '0';
                 }
-                this.updateDisplay();
             }
 
-            handleKeyboard(e) {
-                if (e.key >= '0' && e.key <= '9') this.handleNumber(e.key);
-                else if (e.key === '.') this.handleNumber('.');
-                else if (e.key === '+' || e.key === '-') this.handleOperator(e.key);
-                else if (e.key === '*') this.handleOperator('*');
-                else if (e.key === '/') {
-                    e.preventDefault();
-                    this.handleOperator('/');
-                }
-                else if (e.key === 'Enter' || e.key === '=') {
-                    e.preventDefault();
-                    this.handleEquals();
-                }
-                else if (e.key === 'Backspace') this.handleDelete();
-                else if (e.key === 'Escape') this.handleClear();
+            getDisplayValue() {
+                return this.currentValue;
             }
 
-            calculate(prev, current, op) {
-                switch (op) {
-                    case '+':
-                        return prev + current;
-                    case '-':
-                        return prev - current;
-                    case '*':
-                        return prev * current;
-                    case '/':
-                        return current === 0 ? 0 : prev / current;
-                    case '%':
-                        return prev % current;
-                    default:
-                        return current;
-                }
-            }
-
-            formatResult(num) {
-                if (!isFinite(num)) return '0';
-                return parseFloat(num.toFixed(10)).toString();
-            }
-
-            updateDisplay() {
-                this.display.textContent = this.currentValue.length > 12
-                    ? this.currentValue.substring(0, 12) + '...'
-                    : this.currentValue;
+            getHistoryDisplay() {
+                if (this.operation) return `${this.previousValue} ${this.getOpDisplay(this.operation)}`;
+                return '';
             }
 
             getOpDisplay(op) {
@@ -622,130 +468,253 @@
                 return opMap[op] || op;
             }
 
-            addToHistory(expression, result) {
-                this.history.unshift({ expression, result });
-                if (this.history.length > 20) this.history.pop();
+            applyScienceFunction(func) {
+                const num = parseFloat(this.currentValue);
+                let result;
+
+                switch (func) {
+                    case 'sin': result = Math.sin(num * Math.PI / 180); break;
+                    case 'cos': result = Math.cos(num * Math.PI / 180); break;
+                    case 'tan': result = Math.tan(num * Math.PI / 180); break;
+                    case 'sqrt': result = Math.sqrt(num); break;
+                    case 'log': result = Math.log10(num); break;
+                    case 'ln': result = Math.log(num); break;
+                    case 'pow': result = num * num; break;
+                    case 'cbrt': result = Math.cbrt(num); break;
+                    default: return;
+                }
+                this.currentValue = this.formatNumber(result);
+            }
+        }
+
+        // Theme Manager
+        class ThemeManager {
+            constructor() {
+                this.isDarkMode = localStorage.getItem('isDarkMode') !== 'false';
+                this.apply();
+            }
+
+            toggle() {
+                this.isDarkMode = !this.isDarkMode;
+                localStorage.setItem('isDarkMode', this.isDarkMode);
+                this.apply();
+            }
+
+            apply() {
+                if (!this.isDarkMode) {
+                    document.body.classList.add('light-mode');
+                } else {
+                    document.body.classList.remove('light-mode');
+                }
+            }
+        }
+
+        // Main App
+        class CalculatorApp {
+            constructor() {
+                this.logic = new CalculatorLogic();
+                this.sound = new SoundEngine();
+                this.theme = new ThemeManager();
+                this.history = JSON.parse(localStorage.getItem('calcHistory')) || [];
+                this.memory = parseFloat(localStorage.getItem('calcMemory')) || 0;
+                this.scientificMode = false;
+                this.initializeElements();
+                this.setupEventListeners();
+                this.setupPageAnimation();
+            }
+
+            initializeElements() {
+                this.display = document.getElementById('display');
+                this.displayHistory = document.getElementById('displayHistory');
+                this.historyPanel = document.getElementById('historyPanel');
+                this.historyList = document.getElementById('historyList');
+                this.historyBtn = document.getElementById('historyBtn');
+                this.soundBtn = document.getElementById('soundBtn');
+                this.themeBtn = document.getElementById('themeBtn');
+                this.scientificBtn = document.getElementById('scientificBtn');
+                this.memoryIndicator = document.getElementById('memoryIndicator');
+                this.memoryValue = document.getElementById('memoryValue');
+                this.memoryButtons = document.getElementById('memoryButtons');
+                this.scientificButtons = document.getElementById('scientificButtons');
+                this.volumeControl = document.getElementById('volumeControl');
+                this.updateDisplay();
+                this.updateSoundButton();
+            }
+
+            setupEventListeners() {
+                document.querySelectorAll('[data-number]').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleNumberClick(e.target, e.target.dataset.number));
+                });
+
+                document.querySelectorAll('[data-operator]').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleOperatorClick(e.target, e.target.dataset.operator));
+                });
+
+                document.querySelectorAll('[data-action]').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleActionClick(e.target, e.target.dataset.action));
+                });
+
+                document.querySelectorAll('[data-function]').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleFunctionClick(e.target, e.target.dataset.function));
+                });
+
+                this.soundBtn.addEventListener('click', () => this.toggleSound());
+                this.themeBtn.addEventListener('click', () => this.toggleTheme());
+                this.historyBtn.addEventListener('click', () => this.toggleHistory());
+                this.scientificBtn.addEventListener('click', () => this.toggleScientific());
+
+                this.volumeControl.addEventListener('input', (e) => {
+                    this.sound.setVolume(e.target.value / 100);
+                });
+
+                window.addEventListener('keydown', (e) => this.handleKeyboard(e));
+
+                document.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('touchstart', () => {
+                        if (navigator.vibrate) navigator.vibrate(10);
+                    });
+                });
+            }
+
+            setupPageAnimation() {
+                AnimationEngine.pageLoad(document.querySelector('.container'));
+            }
+
+            handleNumberClick(btn, num) {
+                AnimationEngine.buttonPress(btn);
+                AnimationEngine.ripple(btn, event.clientX, event.clientY);
+                this.sound.playSound('click');
+                this.logic.appendNumber(num);
+                this.updateDisplay();
+            }
+
+            handleOperatorClick(btn, op) {
+                AnimationEngine.buttonPress(btn);
+                AnimationEngine.ripple(btn, event.clientX, event.clientY);
+                this.sound.playSound('operator');
+                this.logic.setOperation(op);
+                this.updateDisplay();
+            }
+
+            handleActionClick(btn, action) {
+                AnimationEngine.buttonPress(btn);
+                AnimationEngine.ripple(btn, event.clientX, event.clientY);
+                this.sound.playSound('click');
+
+                if (action === 'clear') {
+                    this.logic.clear();
+                } else if (action === 'delete') {
+                    this.logic.delete();
+                } else if (action === 'equals') {
+                    const result = this.logic.calculate();
+                    if (result !== null) {
+                        this.addToHistory(this.logic.previousValue, this.logic.operation, this.logic.currentValue);
+                        this.sound.playSound('equals');
+                    } else {
+                        this.sound.playSound('error');
+                    }
+                }
+                this.updateDisplay();
+            }
+
+            handleFunctionClick(btn, func) {
+                AnimationEngine.buttonPress(btn);
+                this.sound.playSound('click');
+                this.logic.applyScienceFunction(func);
+                this.updateDisplay();
+            }
+
+            handleKeyboard(e) {
+                if (e.key >= '0' && e.key <= '9') this.logic.appendNumber(e.key);
+                else if (e.key === '.') this.logic.appendNumber('.');
+                else if (e.key === '+' || e.key === '-') this.logic.setOperation(e.key);
+                else if (e.key === '*') { e.preventDefault(); this.logic.setOperation('*'); }
+                else if (e.key === '/') { e.preventDefault(); this.logic.setOperation('/'); }
+                else if (e.key === 'Enter' || e.key === '=') {
+                    e.preventDefault();
+                    const result = this.logic.calculate();
+                    if (result !== null) {
+                        this.addToHistory(this.logic.previousValue, this.logic.operation, this.logic.currentValue);
+                        this.sound.playSound('equals');
+                    }
+                }
+                else if (e.key === 'Backspace') this.logic.delete();
+                else if (e.key === 'Escape') this.logic.clear();
+                this.updateDisplay();
+            }
+
+            toggleSound() {
+                const enabled = this.sound.toggle();
+                this.updateSoundButton();
+                this.sound.playSound('click');
+            }
+
+            updateSoundButton() {
+                this.soundBtn.textContent = this.sound.enabled ? '🔊' : '🔇';
+                this.soundBtn.classList.toggle('text-cyan-400', this.sound.enabled);
+            }
+
+            toggleTheme() {
+                this.theme.toggle();
+                this.sound.playSound('click');
+            }
+
+            toggleHistory() {
+                const isOpen = !this.historyPanel.classList.contains('hidden');
+                if (isOpen) {
+                    this.historyPanel.classList.add('hidden');
+                } else {
+                    this.historyPanel.classList.remove('hidden');
+                }
+                this.renderHistory();
+            }
+
+            toggleScientific() {
+                this.scientificMode = !this.scientificMode;
+                this.scientificButtons.classList.toggle('hidden', !this.scientificMode);
+                this.memoryButtons.classList.toggle('hidden', !this.scientificMode);
+                this.scientificBtn.classList.toggle('text-cyan-400', this.scientificMode);
+                this.sound.playSound('click');
+            }
+
+            addToHistory(prev, op, curr) {
+                const opDisplay = this.logic.getOpDisplay(op);
+                const expression = `${prev} ${opDisplay} ${curr}`;
+                this.history.unshift({ expression, result: this.logic.currentValue });
+                if (this.history.length > 30) this.history.pop();
                 localStorage.setItem('calcHistory', JSON.stringify(this.history));
                 this.renderHistory();
             }
 
             renderHistory() {
-                this.historyList.innerHTML = this.history.map((item, index) => `
-                    <div class="history-item" onclick="calculator.loadFromHistory(${index})">
-                        <span>${item.expression}</span>
-                        <span style="color: var(--accent-1); font-weight: 600;">${item.result}</span>
+                this.historyList.innerHTML = this.history.map((item, idx) => `
+                    <div class="p-2 bg-gradient-to-r from-cyan-400/10 to-transparent rounded-lg cursor-pointer hover:from-cyan-400/20 transition-smooth"
+                         onclick="app.loadFromHistory(${idx})">
+                        <div class="text-xs text-gray-400">${item.expression}</div>
+                        <div class="text-sm text-cyan-400 font-semibold">${item.result}</div>
                     </div>
                 `).join('');
             }
 
             loadFromHistory(index) {
-                this.currentValue = this.history[index].result.toString();
-                this.shouldResetDisplay = true;
+                this.logic.currentValue = this.history[index].result;
+                this.logic.shouldResetDisplay = true;
                 this.updateDisplay();
                 this.toggleHistory();
             }
 
-            toggleSound() {
-                this.soundEnabled = !this.soundEnabled;
-                localStorage.setItem('soundEnabled', this.soundEnabled);
-                this.updateSoundButton();
-                this.playSound('click');
-            }
-
-            updateSoundButton() {
-                this.soundBtn.textContent = this.soundEnabled ? '🔊' : '🔇';
-                this.soundBtn.classList.toggle('active', this.soundEnabled);
-            }
-
-            toggleTheme() {
-                this.isDarkMode = !this.isDarkMode;
-                localStorage.setItem('isDarkMode', this.isDarkMode);
-                this.applyTheme();
-                this.playSound('click');
-            }
-
-            applyTheme() {
-                if (this.isDarkMode) {
-                    document.body.classList.remove('light-mode');
-                    this.themeBtn.textContent = '🌙';
-                } else {
-                    document.body.classList.add('light-mode');
-                    this.themeBtn.textContent = '☀️';
-                }
-            }
-
-            toggleHistory() {
-                this.historyPanel.classList.toggle('active');
-                this.renderHistory();
-            }
-
-            // ==================== AUDIO ====================
-            initAudio() {
-                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-
-            playSound(type) {
-                if (!this.soundEnabled) return;
-
-                const ctx = this.audioContext;
-                const now = ctx.currentTime;
-
-                if (type === 'click') {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-
-                    osc.frequency.setValueAtTime(800, now);
-                    osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
-
-                    gain.gain.setValueAtTime(0.1, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-
-                    osc.start(now);
-                    osc.stop(now + 0.1);
-                } else if (type === 'equals') {
-                    for (let i = 0; i < 2; i++) {
-                        const osc = ctx.createOscillator();
-                        const gain = ctx.createGain();
-
-                        osc.connect(gain);
-                        gain.connect(ctx.destination);
-
-                        osc.frequency.setValueAtTime(600 + i * 200, now);
-                        osc.frequency.exponentialRampToValueAtTime(400 + i * 150, now + 0.15);
-
-                        gain.gain.setValueAtTime(0.1, now + i * 0.08);
-                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.15);
-
-                        osc.start(now + i * 0.08);
-                        osc.stop(now + i * 0.08 + 0.15);
-                    }
-                }
-            }
-
-            // ==================== VISUAL EFFECTS ====================
-            createRipple(e) {
-                const btn = e.currentTarget;
-                const ripple = document.createElement('span');
-                const rect = btn.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
-
-                btn.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 600);
+            updateDisplay() {
+                const value = this.logic.getDisplayValue();
+                this.display.textContent = value.length > 12 ? value.substring(0, 12) + '...' : value;
+                this.displayHistory.textContent = this.logic.getHistoryDisplay();
+                AnimationEngine.slideUpNumber(this.display);
             }
         }
 
-        // ==================== INITIALIZATION ====================
-        const calculator = new Calculator();
+        let app;
+        document.addEventListener('DOMContentLoaded', () => {
+            app = new CalculatorApp();
+        });
     </script>
 </body>
 </html>
