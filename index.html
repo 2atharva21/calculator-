@@ -8,6 +8,70 @@
     <meta name="theme-color" content="#1a1a1a">
     <title>NEXUS - Premium Calculator</title>
     <style>
+        .history-panel {
+            position: fixed;
+            bottom: max(20px, env(safe-area-inset-bottom));
+            left: max(20px, env(safe-area-inset-left));
+            max-width: 300px;
+            max-height: 300px;
+            background: var(--secondary-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 15px;
+            overflow-y: auto;
+            z-index: 50;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .history-panel.show {
+            display: block;
+        }
+
+        .history-title {
+            font-size: 0.9rem;
+            color: var(--display-text);
+            opacity: 0.7;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .history-item {
+            font-size: 0.8rem;
+            color: var(--display-text);
+            opacity: 0.6;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: opacity 150ms ease;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item:hover {
+            opacity: 1;
+        }
+
+        .history-empty {
+            font-size: 0.8rem;
+            color: var(--display-text);
+            opacity: 0.4;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .display.error-state .display-value {
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--operator-bg);
+            outline-offset: 2px;
+        }
+        
         * {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -432,8 +496,14 @@
     </style>
 </head>
 <body>
+    <!-- History Panel -->
+    <div class="history-panel" id="historyPanel" role="region" aria-label="Calculation history">
+        <div class="history-title">History</div>
+        <div id="historyList" class="history-empty">No history</div>
+    </div>
+
     <!-- Theme toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">🌙</button>
 
     <!-- Main calculator -->
     <div class="calculator-container">
@@ -446,33 +516,33 @@
         <!-- Button grid -->
         <div class="button-grid">
             <!-- Row 1 -->
-            <button class="btn btn-clear" data-action="clear">C</button>
-            <button class="btn btn-backspace" data-action="backspace">+/−</button>
-            <button class="btn btn-operator" data-operator="%">%</button>
-            <button class="btn btn-operator" data-operator="/">÷</button>
+            <button class="btn btn-clear" data-action="clear" aria-label="Clear" title="Clear all (C)">C</button>
+            <button class="btn btn-backspace" data-action="backspace" aria-label="Toggle sign" title="Toggle positive/negative (+/−)">+/−</button>
+            <button class="btn btn-operator" data-operator="%" aria-label="Percentage" title="Calculate percentage (%)">%</button>
+            <button class="btn btn-operator" data-operator="/" aria-label="Divide" title="Divide (÷)">÷</button>
 
             <!-- Row 2 -->
-            <button class="btn" data-number="7">7</button>
-            <button class="btn" data-number="8">8</button>
-            <button class="btn" data-number="9">9</button>
-            <button class="btn btn-operator" data-operator="*">×</button>
+            <button class="btn" data-number="7" aria-label="Seven" title="7">7</button>
+            <button class="btn" data-number="8" aria-label="Eight" title="8">8</button>
+            <button class="btn" data-number="9" aria-label="Nine" title="9">9</button>
+            <button class="btn btn-operator" data-operator="*" aria-label="Multiply" title="Multiply (×)">×</button>
 
             <!-- Row 3 -->
-            <button class="btn" data-number="4">4</button>
-            <button class="btn" data-number="5">5</button>
-            <button class="btn" data-number="6">6</button>
-            <button class="btn btn-operator" data-operator="-">−</button>
+            <button class="btn" data-number="4" aria-label="Four" title="4">4</button>
+            <button class="btn" data-number="5" aria-label="Five" title="5">5</button>
+            <button class="btn" data-number="6" aria-label="Six" title="6">6</button>
+            <button class="btn btn-operator" data-operator="-" aria-label="Subtract" title="Subtract (−)">−</button>
 
             <!-- Row 4 -->
-            <button class="btn" data-number="1">1</button>
-            <button class="btn" data-number="2">2</button>
-            <button class="btn" data-number="3">3</button>
-            <button class="btn btn-operator" data-operator="+">+</button>
+            <button class="btn" data-number="1" aria-label="One" title="1">1</button>
+            <button class="btn" data-number="2" aria-label="Two" title="2">2</button>
+            <button class="btn" data-number="3" aria-label="Three" title="3">3</button>
+            <button class="btn btn-operator" data-operator="+" aria-label="Add" title="Add (+)">+</button>
 
             <!-- Row 5 -->
-            <button class="btn" data-number="0" style="grid-column: span 2;">0</button>
-            <button class="btn" data-number=".">.</button>
-            <button class="btn btn-equals" data-action="equals">=</button>
+            <button class="btn" data-number="0" style="grid-column: span 2;" aria-label="Zero" title="0">0</button>
+            <button class="btn" data-number="." aria-label="Decimal point" title="Decimal (.)">.</button>
+            <button class="btn btn-equals" data-action="equals" aria-label="Equals" title="Calculate result (=)">=</button>
         </div>
     </div>
 
@@ -484,6 +554,19 @@
                 this.previousValue = null;
                 this.operation = null;
                 this.waitingForNewValue = false;
+                this.history = [];
+                this.errorState = false;
+            }
+
+            addToHistory(calculation) {
+                this.history.unshift(calculation);
+                if (this.history.length > 10) {
+                    this.history.pop();
+                }
+            }
+
+            getHistory() {
+                return this.history;
             }
 
             append(value) {
@@ -496,11 +579,7 @@
                 return this.displayValue;
             }
 
-            setOperation(op) {
-                if (this.operation !== null && !this.waitingForNewValue) {
-                    this.calculate();
-                }
-                this.previousValue = parseFloat(this.displayValue);
+            setOperation(op) {\n                if (this.errorState) {\n                    this.clear();\n                    return op;\n                }\n                if (this.operation !== null && !this.waitingForNewValue) {\n                    this.calculate();\n                }\n                this.previousValue = parseFloat(this.displayValue);
                 this.operation = op;
                 this.waitingForNewValue = true;
                 return op;
@@ -511,16 +590,40 @@
 
                 const current = parseFloat(this.displayValue);
                 let result = 0;
+                let error = false;
 
                 switch (this.operation) {
-                    case '+': result = this.previousValue + current; break;
-                    case '-': result = this.previousValue - current; break;
-                    case '*': result = this.previousValue * current; break;
-                    case '/': result = current !== 0 ? this.previousValue / current : 0; break;
-                    case '%': result = this.previousValue % current; break;
+                    case '+':
+                        result = this.previousValue + current;
+                        break;
+                    case '-':
+                        result = this.previousValue - current;
+                        break;
+                    case '*':
+                        result = this.previousValue * current;
+                        break;
+                    case '/':
+                        if (current === 0) {
+                            this.displayValue = 'ERROR';
+                            this.errorState = true;
+                            error = true;
+                        } else {
+                            result = this.previousValue / current;
+                        }
+                        break;
+                    case '%':
+                        // Proper percentage calculation: what percentage is current of previous
+                        result = (current / this.previousValue) * 100;
+                        break;
                 }
 
-                this.displayValue = String(Math.round(result * 100000000) / 100000000);
+                if (!error) {
+                    this.displayValue = String(Math.round(result * 100000000) / 100000000);
+                    this.errorState = false;
+                    // Add to history
+                    this.addToHistory(`${this.previousValue} ${this.operation} ${current} = ${this.displayValue}`);
+                }
+                
                 this.operation = null;
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -531,6 +634,7 @@
                 this.previousValue = null;
                 this.operation = null;
                 this.waitingForNewValue = false;
+                this.errorState = false;
             }
 
             backspace() {
@@ -659,6 +763,10 @@
                         this.logic.backspace();
                     } else if (e.key.toLowerCase() === 'c') {
                         this.logic.clear();
+                    } else if (e.key.toLowerCase() === 'h') {
+                        // Toggle history panel
+                        const historyPanel = document.getElementById('historyPanel');
+                        historyPanel.classList.toggle('show');
                     }
                     this.updateDisplay();
                 });
@@ -697,6 +805,7 @@
             }
 
             updateDisplay() {
+                const displayElement = document.getElementById('display');
                 const display = document.getElementById('displayValue');
                 const calculation = document.getElementById('displayCalculation');
 
@@ -707,12 +816,47 @@
                     return parts.join('.');
                 };
 
-                const displayText = this.logic.displayValue.length > 15 
-                    ? this.logic.displayValue.substring(0, 15) + '...'
-                    : this.logic.displayValue;
+                // Handle error state
+                if (this.logic.errorState) {
+                    displayElement.classList.add('error-state');
+                    display.textContent = 'ERROR';
+                    calculation.textContent = 'Cannot divide by zero';
+                } else {
+                    displayElement.classList.remove('error-state');
+                    const displayText = this.logic.displayValue.length > 15 
+                        ? this.logic.displayValue.substring(0, 15) + '...'
+                        : this.logic.displayValue;
 
-                display.textContent = formatNumber(displayText);
-                calculation.textContent = this.logic.getCalculationDisplay();
+                    display.textContent = formatNumber(displayText);
+                    calculation.textContent = this.logic.getCalculationDisplay();
+                }
+
+                // Update history panel
+                this.updateHistoryPanel();
+            }
+
+            updateHistoryPanel() {
+                const historyList = document.getElementById('historyList');
+                const history = this.logic.getHistory();
+
+                if (history.length === 0) {
+                    historyList.innerHTML = '<div class="history-empty">No history</div>';
+                } else {
+                    historyList.innerHTML = history.map(item => 
+                        `<div class="history-item" title="Click to copy">${item}</div>`
+                    ).join('');
+
+                    // Add click handlers to history items
+                    document.querySelectorAll('.history-item').forEach((item, index) => {
+                        item.addEventListener('click', () => {
+                            const value = history[index].split(' = ')[1];
+                            if (value) {
+                                this.logic.displayValue = value;
+                                this.updateDisplay();
+                            }
+                        });
+                    });
+                }
             }
 
             createRipple(element) {
