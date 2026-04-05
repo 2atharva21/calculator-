@@ -213,64 +213,134 @@ this.operation = '+';
 if ((a===b&&c!=d)||e==f&&(g<h)) { // This is confusing!
 ```
 
-### CSS Best Practices
+### Multi-Sensory Feedback Integration
+
+Every calculator interaction needs synchronized visual, audio, and haptic feedback:
+
+```javascript
+// ✅ GOOD: Complete feedback for premium feel
+numberBtn.addEventListener('click', () => {
+    // Visual: immediate button compression
+    button.classList.add('active');  // scale: 0.92 (120ms)
+    
+    // Audio: 800Hz click tone (80ms)
+    app.playSound('click');
+    
+    // Haptic: light vibration pattern
+    app.vibrateClick();  // [12, 8]ms
+});
+
+operatorBtn.addEventListener('click', () => {
+    app.playSound('operator');   // 600Hz tone (100ms)
+    app.vibrateOperator();       // [15, 10, 15]ms
+});
+
+equalsBtn.addEventListener('click', () => {
+    app.playSound('equals');     // 1kHz→1.2kHz chime (150ms)
+    app.vibrateEquals();         // [20, 10, 20, 10, 20]ms celebration
+    display.classList.add('bounce');  // 400ms bounce animation
+});
+
+// ❌ BAD: Missing multi-sensory feedback
+button.addEventListener('click', () => {
+    logic.append(value);  // No audio, haptic, or visual feedback!
+});
+```
+
+### CSS Best Practices for Premium Quality
 
 ```css
-/* ✅ DO: Use CSS variables for theming */
+/* ✅ DO: Use CSS variables for consistency and theming */
 :root {
-    --operator-bg: #FF9500;
-    --operator-hover: #FFB84D;
+    --operator-color: #ff9f0a;
+    --operator-hover: #ffb84d;
+    --operator-glow: rgba(255, 140, 0, 0.4);
+    --button-scale-active: 0.92;
+    --button-press-duration: 120ms;
 }
 
-/* ✅ DO: Animations only use transform & opacity (GPU-accelerated) */
+/* ✅ DO: Use ONLY transform/opacity for 60fps animations */
 .btn:active {
-    transform: scale(0.95);      /* Fast, smooth, 60fps */
-    opacity: 0.9;
+    transform: scale(0.92);  /* Compress on press */
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);  /* Depressed look */
+    transition: all 120ms ease-in;
 }
 
-/* ✅ DO: Use cubic-bezier for spring-like easing */
+.btn:hover {
+    transform: translateY(-6px) scale(1.05);  /* Lift and enlarge */
+    transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);  /* Spring easing */
+}
+
+/* ✅ DO: Use spring easing for premium feel */
 .btn {
     transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ✅ DO: Keep animations under 400ms for responsiveness */
+/* ✅ DO: Stagger entrance animations (30ms per button) */
 @keyframes buttonEntrance {
-    0% { opacity: 0; transform: translateY(10px) scale(0.96); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
+
+.btn-1 { animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) 0ms forwards; }
+.btn-2 { animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) 30ms forwards; }
+.btn-3 { animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) 60ms forwards; }
+/* ... stagger continues by 30ms for all 21 buttons */
+
+/* ✅ DO: GPU acceleration for smooth performance */
 .btn {
-    animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;  /* Smoother on mobile */
 }
 
-/* ❌ DON'T: Animate size, box-shadow, or position */
+/* ✅ DO: Match operator glow specifications exactly */
+.operator {
+    background: linear-gradient(145deg, #ff9f0a, #ff7a00);
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.4),  /* Subtle glow */
+                0 6px 14px rgba(0, 0, 0, 0.6);    /* Depth shadow */
+}
+
+.operator:hover {
+    box-shadow: 0 0 12px rgba(255, 140, 0, 0.6),  /* Enhanced glow */
+                0 8px 18px rgba(0, 0, 0, 0.7);
+}
+
+/* ❌ AVOID: Animating CPU-heavy properties (causes stutter) */
 .btn:active {
-    width: 90px;                 /* Slow, CPU-heavy, causes reflow */
-    height: 75px;                /* Expensive layout recalculation */
-    box-shadow: 0 0 20px red;    /* Causes repainting */
+    width: 90px;                 /* Reflow - expensive! */
+    height: 75px;                /* Reflow - expensive! */
+    padding: 10px;               /* Reflow - expensive! */
+    margin: 5px;                 /* Reflow - expensive! */
 }
 
-/* ❌ DON'T: Use ease-in-out for button interactions */
-.btn:hover {
-    transition: all 200ms ease-in-out;  /* Feels sluggish */
+/* ❌ AVOID: Box-shadow, border in animations (costly repainting) */
+.btn:active {
+    box-shadow: 0 0 20px red;    /* Expensive repainting */
+    border: 2px solid blue;      /* Layout change */
+    background: #ffaa00;         /* Expensive repainting */
 }
 
-/* ❌ DON'T: Animations over 500ms for user interactions */
+/* ❌ AVOID: Animations over 400ms (feels unresponsive) */
 @keyframes tooSlow {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    /* Users perceive this as laggy */
+    animation-duration: 800ms;  /* Wrong! Keep under 400ms */
 }
-.btn { animation: tooSlow 1000ms ease-out; }  /* Too slow */
 ```
 
-**Animation Performance Guidelines:**
-- ✅ Use `transform` (scale, translate, rotate) — GPU accelerated
-- ✅ Use `opacity` changes — GPU accelerated
-- ✅ Keep durations 150-400ms — feels responsive
-- ✅ Use `cubic-bezier(0.34, 1.56, 0.64, 1)` — spring-like easing
-- ✅ Will-change on animated elements (minimal use)
-- ❌ Avoid animating: width, height, left, top, box-shadow
-- ❌ Avoid: ease-in-out (feels sluggish), steps() on buttons
-- ❌ Avoid: animations over 500ms for interactions
+**Animation Specifications (DO NOT CHANGE):**
+- Button Press: 120ms scale(0.92) + inset shadow
+- Hover: 150ms translateY(-6px) + scale(1.05)
+- Entrance: 400ms total, staggered 30ms per button
+- Ripple: 300ms radial expansion
+- Success Bounce: 400ms (1.0 → 1.15 → 0.95 → 1.0)
+- Error Shake: 400ms (±4px, 3 oscillations)
+- Operator Glow: 0 0 8px rgba(255,140,0,0.4) + 0 6px 14px shadow
 
 ### HTML
 

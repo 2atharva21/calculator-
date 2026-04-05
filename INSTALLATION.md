@@ -214,28 +214,91 @@ ruby -run -ehttpd . -p 8000
 
 ## Mobile Installation
 
-### Add to Home Screen (PWA)
+### Add to Home Screen (PWA - Progressive Web App)
 
-Create a native-like app icon on your mobile device's home screen.
+Create a native-like app on your mobile device's home screen with full premium features.
 
-#### iPhone/iPad (iOS)
+#### iPhone/iPad (iOS 11+)
 
-1. Open NEXUS in **Safari**
-2. Tap the **Share** button (↗️)
+1. Open NEXUS Calculator in **Safari**
+2. Tap the **Share** button (↗️ at bottom)
 3. Scroll down and tap **"Add to Home Screen"**
-4. Enter a name (defaults to "NEXUS")
-5. Tap **"Add"**
+4. Choose a name (default: "NEXUS Calculator")
+5. Tap **"Add"** (top right)
 
-**Result:** App icon appears on home screen, launches full-screen
+**Result:** 
+- App icon on home screen
+- Launches full-screen (browser UI hidden)
+- All features work including audio and haptic
+- Saves theme preference automatically
 
-#### Android (Chrome)
+**Note:** iOS haptic uses device vibration motor (if supported)
 
-1. Open NEXUS in **Chrome**
-2. Tap the **menu** button (⋮)
+#### Android (Chrome/Firefox)
+
+1. Open NEXUS Calculator in **Chrome** or **Firefox**
+2. Tap the **menu** button (⋮ three dots)
 3. Select **"Install app"** or **"Add to Home Screen"**
-4. Tap **"Install"**
+4. Tap **"Install"** to confirm
+5. App added to home screen + app drawer
 
-**Result:** App installed to home screen with app drawer entry
+**Result:**
+- Native app icon on home screen
+- Launches full-screen
+- All features work including haptic vibration
+- Respects OS mute switch for audio
+
+**Pro Tip:** Pin the app in your app drawer for quick access
+
+#### Samsung One UI (Android)
+
+1. Open NEXUS in **Samsung Internet** or **Chrome**
+2. Tap **menu** (⋮) → **"Add page to"** → **"Home screen"**
+3. Confirm placement
+4. App ready to use
+
+**Full Feature Support:**
+- ✅ Haptic feedback (vibration patterns)
+- ✅ Audio feedback (Web Audio API)
+- ✅ All 12 themes
+- ✅ 60fps animations
+- ✅ Offline functionality
+- ✅ Theme preference persistence
+
+### Testing Premium Features on Mobile
+
+After installation, test that all multi-sensory feedback works:
+
+**Audio Testing:**
+1. Tap any number button → Should hear 800Hz click tone
+2. Tap an operator button → Should hear 600Hz operator tone
+3. Tap equals → Should hear 1kHz→1.2kHz chime
+4. Try invalid operation (e.g., divide by zero) → Should hear error buzzer (300→200Hz descending)
+
+**If audio is silent:**
+- Check device volume is unmuted
+- Check if system mute switch is OFF (iOS)
+- Some websites block audio until first user gesture
+- Try refreshing and tapping again
+
+**Haptic Testing:**
+1. Tap a number button → Should feel light tap vibration [12,8]ms
+2. Tap an operator → Should feel medium pulse [15,10,15]ms
+3. Tap equals → Should feel strong celebration [20,10,20,10,20]ms
+4. Try divide by zero → Should feel error warning [30,20,30]ms
+
+**If haptic isn't working:**
+- Ensure device supports vibration (most Android/iOS devices do)
+- Check device vibration is enabled in Settings
+- Try a different button
+- Reload the app and try again
+
+**Animation Testing:**
+- On page load: All buttons should "wave in" with staggered 30ms delays (400ms total)
+- On button hover: Button should lift up 6px with spring-like easing
+- On button press: Button should compress (scale 0.92) with 120ms transition
+- On ripple: After clicking, see expanding circle ripple (300ms animation)
+- Calculator result: Should bounce when you press equals
 
 ---
 
@@ -329,28 +392,194 @@ python -m http.server 8000
 
 ## Verification Checklist
 
-After installation, verify everything works:
+After installation, verify everything works (including premium features):
 
+**Basic Functionality:**
 - [ ] Calculator opens correctly
 - [ ] Basic math works (2 + 2 = 4)
 - [ ] Displays show numbers properly
-- [ ] Buttons are clickable
-- [ ] Theme toggle changes appearance
-- [ ] History panel opens
-- [ ] Scientific mode buttons appear
-- [ ] All operations complete without errors
+- [ ] Buttons are clickable and responsive
+
+**Premium Features:**
+- [ ] Audio feedback plays (click, operator, equals, error tones)
+- [ ] Haptic vibration works (on supported devices)
+- [ ] Animations are smooth (60fps) and not stuttering
+- [ ] Button press animation visible (scale down 120ms)
+- [ ] Hover effect lifts buttons (6px translateY)
+- [ ] Ripple effect appears on click (300ms expansion)
+- [ ] Entrance animation staggered on load
+
+**Theme & Settings:**
+- [ ] Theme toggle cycles through 12 themes
+- [ ] Theme changes persist after reload
+- [ ] High contrast readable on all themes
+- [ ] History panel opens and saves calculations
+
+**Scientific Mode:**
+- [ ] Scientific mode buttons visible when SCI pressed
+- [ ] Trigonometric functions work correctly
+- [ ] DEG/RAD toggle functions
 
 ---
 
-## Next Steps
+## Testing Premium Features (Detailed)
 
-✅ **Installation complete!**
+### Audio Testing
 
-- 📖 Read [README.md](README.md) for feature overview
-- 🎓 See [DOCS.md](DOCS.md) for detailed documentation
-- 🤝 Join us in [CONTRIBUTING.md](CONTRIBUTING.md) if interested
+Open browser Developer Tools (F12) to check console for audio warnings:
+
+```javascript
+// Test all audio tones
+app.playSound('click');      // Should hear 800Hz beep
+app.playSound('operator');   // Should hear 600Hz tone
+app.playSound('equals');     // Should hear 1kHz→1.2kHz chime
+app.playSound('error');      // Should hear 300→200Hz buzzer
+```
+
+**Expected Results:**
+- Click: Short, crisp 800Hz beep lasting 80ms
+- Operator: Mid-range 600Hz tone lasting 100ms
+- Equals: Ascending chime from 1kHz to 1.2kHz lasting 150ms
+- Error: Descending buzzer from 300Hz to 200Hz lasting 120ms
+
+**Troubleshooting:**
+- Volume appears muted? Check system volume and mute switch
+- Still no sound? Try clicking a button first (some browsers require user gesture)
+- Different browser? Try Chrome, Firefox, or Safari
+
+### Haptic Testing
+
+Test vibration patterns by opening console and executing:
+
+```javascript
+// Test all haptic patterns
+app.vibrateClick();       // Light: [12, 8]ms
+app.vibrateOperator();    // Medium: [15, 10, 15]ms
+app.vibrateSuccess();     // Triple: [8, 6, 8]ms
+app.vibrateEquals();      // Strong: [20, 10, 20, 10, 20]ms
+app.vibrateError();       // Intense: [30, 20, 30]ms
+```
+
+**Expected Sensations:**
+- Click: Quick tap (20ms total)
+- Operator: Slightly stronger pulse (40ms total)
+- Success: Triple quick pulses (22ms total)
+- Equals: Long celebration with 3 strong pulses (80ms total)
+- Error: Strong warning (80ms total)
+
+**Device Requirements:**
+- Android devices: Full support (vibration motor)
+- iPhone 6S+: Full support (Haptic Engine)
+- Older devices: May have limited haptic support
+- Desktops: No haptic (graceful degradation)
+
+### Animation Verification (Chrome DevTools)
+
+1. Open **Developer Tools** (F12)
+2. Go to **Performance** tab
+3. Click **Record**
+4. Use calculator for 5 seconds
+5. Stop recording
+6. Check **FPS meter** (should stay at 60fps)
+
+**Expected Results:**
+- FPS should never drop below 55fps on any device
+- No red bars in flame graph (indicates jank)
+- CPU usage stays under 15% during interactions
+
+**If FPS drops:**
+- Test on same browser with cache cleared
+- Try a different device
+- Check if other apps are consuming resources
+- Report issue if consistently below 60fps
 
 ---
+
+## Deployment Best Practices
+
+### Before Deploying Online
+
+1. **Performance Check**
+   ```bash
+   # Run lighthouse audit in Chrome DevTools
+   # Target: Score 90+ for Performance
+   ```
+
+2. **Browser Compatibility**
+   - Test on Chrome, Firefox, Safari, Edge
+   - Test on Android and iOS
+   - Test on old browsers (IE11 gracefully degrades)
+
+3. **Mobile Testing**
+   - Test touch responsiveness
+   - Verify haptic (if device supports)
+   - Verify audio (respect mute switch)
+   - Test home screen install (PWA)
+
+4. **File Sizes**
+   - Total: Under 50KB (currently ~50KB)
+   - Gzipped: Under 15KB (if served with gzip)
+
+### GitHub Pages Deployment
+
+```bash
+# 1. Push to main branch
+git add .
+git commit -m "Ready for deployment"
+git push origin main
+
+# 2. Enable Pages in repository settings
+# Settings → Pages → Source: main branch
+
+# 3. Site published to:
+# https://USERNAME.github.io/nexus-calculator
+```
+
+### Netlify One-Click Deploy
+
+```bash
+# 1. Connect GitHub repository
+# Netlify automatically deploys on every push
+
+# 2. Custom domain (optional)
+# Settings → Domain management → Add domain
+
+# 3. Automatic HTTPS enabled
+```
+
+### Vercel Deployment
+
+```bash
+# 1. Connect GitHub
+# https://vercel.com/import
+
+# 2. Automatic preview URLs for PRs
+# 3. Global edge network for fast delivery
+```
+
+### Traditional Hosting (FTP)
+
+```bash
+# 1. Upload index.html via FTP
+# 2. Verify HTTPS enabled
+# 3. Test all features on live domain
+# 4. Monitor performance with analytics
+```
+
+### Performance Optimization for Deployment
+
+```html
+<!-- Add to index.html for faster loading -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="index.html" as="document">
+
+<!-- Enable compression on server -->
+<!-- Configure gzip compression in web server -->
+```
+
+---
+
+
 
 ## Need Help?
 
