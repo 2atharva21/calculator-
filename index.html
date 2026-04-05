@@ -646,6 +646,9 @@
         <!-- Mode Toggle -->
         <button class="btn btn-mode-toggle" id="modeToggle" aria-label="Scientific mode" title="Toggle Scientific mode (S)">SCI</button>
 
+        <!-- Voice Input Button -->
+        <button class="btn btn-mode-toggle" id="voiceButton" aria-label="Voice input" title="Start voice input">🎤</button>
+
         <!-- Scientific Buttons (Hidden by default) -->
         <div id="scientificButtons">
             <!-- Row 1: Trigonometric -->
@@ -725,17 +728,51 @@
                 this.memory = 0;
                 this.angleMode = 'deg'; // 'deg' or 'rad'
                 this.scientificMode = false;
+                this.lastResult = 0;      // For ANS button
+                this.loadHistory();       // Load saved history
+            }
+
+            // Format number with proper rounding for floating-point precision
+            formatNumber(num) {
+                if (num === Infinity) return 'Infinity';
+                if (num === -Infinity) return '-Infinity';
+                if (isNaN(num)) return 'NaN';
+                // Round to 10 significant figures to fix floating-point errors
+                const rounded = Math.round(num * 10000000000) / 10000000000;
+                // Use scientific notation for very large/small numbers
+                if (Math.abs(rounded) > 1e10) return rounded.toExponential(8);
+                if (Math.abs(rounded) < 1e-8 && rounded !== 0) return rounded.toExponential(8);
+                return String(rounded);
             }
 
             addToHistory(calculation) {
                 this.history.unshift(calculation);
-                if (this.history.length > 20) {
+                if (this.history.length > 50) {
                     this.history.pop();
                 }
+                localStorage.setItem('calculator-history', JSON.stringify(this.history));
+            }
+
+            loadHistory() {
+                const saved = localStorage.getItem('calculator-history');
+                if (saved) try { this.history = JSON.parse(saved); } catch (e) { this.history = []; }
             }
 
             getHistory() {
                 return this.history;
+            }
+
+            clearHistory() {
+                this.history = [];
+                localStorage.removeItem('calculator-history');
+            }
+
+            getStatistics() {
+                if (this.history.length === 0) return { count: 0, sum: 0, avg: 0, min: 0, max: 0 };
+                const numbers = this.history.map(item => parseFloat(item.split('=')[1])).filter(n => !isNaN(n));
+                if (numbers.length === 0) return { count: 0, sum: 0, avg: 0, min: 0, max: 0 };
+                const sum = numbers.reduce((a, b) => a + b, 0);
+                return { count: numbers.length, sum: this.formatNumber(sum), avg: this.formatNumber(sum / numbers.length), min: this.formatNumber(Math.min(...numbers)), max: this.formatNumber(Math.max(...numbers)) };
             }
 
             // Memory functions
@@ -780,10 +817,10 @@
             sqrt() {
                 const num = parseFloat(this.displayValue);
                 if (num < 0) {
-                    this.displayValue = 'ERROR';
+                    this.displayValue = 'ERROR: Negative sqrt';
                     this.errorState = true;
                 } else {
-                    this.displayValue = String(Math.sqrt(num));
+                    this.displayValue = this.formatNumber(Math.sqrt(num));
                     this.addToHistory(`√${num} = ${this.displayValue}`);
                 }
                 this.waitingForNewValue = true;
@@ -792,7 +829,7 @@
 
             square() {
                 const num = parseFloat(this.displayValue);
-                this.displayValue = String(num * num);
+                this.displayValue = this.formatNumber(num * num);
                 this.addToHistory(`${num}² = ${this.displayValue}`);
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -801,10 +838,10 @@
             reciprocal() {
                 const num = parseFloat(this.displayValue);
                 if (num === 0) {
-                    this.displayValue = 'ERROR';
+                    this.displayValue = 'ERROR: 1/0';
                     this.errorState = true;
                 } else {
-                    this.displayValue = String(1 / num);
+                    this.displayValue = this.formatNumber(1 / num);
                     this.addToHistory(`1/${num} = ${this.displayValue}`);
                 }
                 this.waitingForNewValue = true;
@@ -814,7 +851,7 @@
             sine() {
                 const num = parseFloat(this.displayValue);
                 const radians = this.convertToRadians(num);
-                this.displayValue = String(Math.round(Math.sin(radians) * 100000000) / 100000000);
+                this.displayValue = this.formatNumber(Math.sin(radians));
                 this.addToHistory(`sin(${num}${this.angleMode === 'deg' ? '°' : ' rad'}) = ${this.displayValue}`);
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -823,7 +860,7 @@
             cosine() {
                 const num = parseFloat(this.displayValue);
                 const radians = this.convertToRadians(num);
-                this.displayValue = String(Math.round(Math.cos(radians) * 100000000) / 100000000);
+                this.displayValue = this.formatNumber(Math.cos(radians));
                 this.addToHistory(`cos(${num}${this.angleMode === 'deg' ? '°' : ' rad'}) = ${this.displayValue}`);
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -832,7 +869,7 @@
             tangent() {
                 const num = parseFloat(this.displayValue);
                 const radians = this.convertToRadians(num);
-                this.displayValue = String(Math.round(Math.tan(radians) * 100000000) / 100000000);
+                this.displayValue = this.formatNumber(Math.tan(radians));
                 this.addToHistory(`tan(${num}${this.angleMode === 'deg' ? '°' : ' rad'}) = ${this.displayValue}`);
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -841,10 +878,10 @@
             logarithm() {
                 const num = parseFloat(this.displayValue);
                 if (num <= 0) {
-                    this.displayValue = 'ERROR';
+                    this.displayValue = 'ERROR: log(≤0)';
                     this.errorState = true;
                 } else {
-                    this.displayValue = String(Math.log10(num));
+                    this.displayValue = this.formatNumber(Math.log10(num));
                     this.addToHistory(`log(${num}) = ${this.displayValue}`);
                 }
                 this.waitingForNewValue = true;
@@ -854,10 +891,10 @@
             naturalLog() {
                 const num = parseFloat(this.displayValue);
                 if (num <= 0) {
-                    this.displayValue = 'ERROR';
+                    this.displayValue = 'ERROR: ln(≤0)';
                     this.errorState = true;
                 } else {
-                    this.displayValue = String(Math.log(num));
+                    this.displayValue = this.formatNumber(Math.log(num));
                     this.addToHistory(`ln(${num}) = ${this.displayValue}`);
                 }
                 this.waitingForNewValue = true;
@@ -866,7 +903,7 @@
 
             exponential() {
                 const num = parseFloat(this.displayValue);
-                this.displayValue = String(Math.exp(num));
+                this.displayValue = this.formatNumber(Math.exp(num));
                 this.addToHistory(`e^${num} = ${this.displayValue}`);
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -874,7 +911,7 @@
 
             power(exponent) {
                 const base = parseFloat(this.displayValue);
-                this.displayValue = String(Math.pow(base, exponent));
+                this.displayValue = this.formatNumber(Math.pow(base, exponent));
                 this.addToHistory(`${base}^${exponent} = ${this.displayValue}`);
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -883,7 +920,7 @@
             factorial() {
                 const num = parseInt(this.displayValue);
                 if (num < 0) {
-                    this.displayValue = 'ERROR';
+                    this.displayValue = 'ERROR: Negative!';
                     this.errorState = true;
                 } else if (num === 0 || num === 1) {
                     this.displayValue = '1';
@@ -892,7 +929,7 @@
                     for (let i = 2; i <= num; i++) {
                         result *= i;
                     }
-                    this.displayValue = String(result);
+                    this.displayValue = this.formatNumber(result);
                     this.addToHistory(`${num}! = ${this.displayValue}`);
                 }
                 this.waitingForNewValue = true;
@@ -900,13 +937,13 @@
             }
 
             pi() {
-                this.displayValue = String(Math.PI);
+                this.displayValue = this.formatNumber(Math.PI);
                 this.waitingForNewValue = true;
                 return this.displayValue;
             }
 
             euler() {
-                this.displayValue = String(Math.E);
+                this.displayValue = this.formatNumber(Math.E);
                 this.waitingForNewValue = true;
                 return this.displayValue;
             }
@@ -950,42 +987,83 @@
                 let result = 0;
                 let error = false;
 
-                switch (this.operation) {
-                    case '+':
-                        result = this.previousValue + current;
-                        break;
-                    case '-':
-                        result = this.previousValue - current;
-                        break;
-                    case '*':
-                        result = this.previousValue * current;
-                        break;
-                    case '/':
-                        if (current === 0) {
-                            this.displayValue = 'ERROR';
-                            this.errorState = true;
-                            error = true;
-                        } else {
-                            result = this.previousValue / current;
-                        }
-                        break;
-                    case '%':
-                        result = (current / this.previousValue) * 100;
-                        break;
-                    case '^':
-                        result = Math.pow(this.previousValue, current);
-                        break;
-                }
+                try {
+                    switch (this.operation) {
+                        case '+':
+                            result = this.previousValue + current;
+                            break;
+                        case '-':
+                            result = this.previousValue - current;
+                            break;
+                        case '*':
+                            result = this.previousValue * current;
+                            break;
+                        case '/':
+                            if (current === 0) {
+                                this.displayValue = 'ERROR: Division by 0';
+                                this.errorState = true;
+                                error = true;
+                            } else {
+                                result = this.previousValue / current;
+                            }
+                            break;
+                        case '%':
+                            result = (current / this.previousValue) * 100;
+                            break;
+                        case '^':
+                            if (this.previousValue === 0 && current < 0) {
+                                this.displayValue = 'ERROR: 0^negative';
+                                this.errorState = true;
+                                error = true;
+                            } else {
+                                result = Math.pow(this.previousValue, current);
+                            }
+                            break;
+                    }
 
-                if (!error) {
-                    this.displayValue = String(Math.round(result * 100000000) / 100000000);
-                    this.errorState = false;
-                    this.addToHistory(`${this.previousValue} ${this.operation} ${current} = ${this.displayValue}`);
+                    if (!error) {
+                        this.displayValue = this.formatNumber(result);
+                        this.errorState = false;
+                        this.lastResult = result;
+                        this.addToHistory(`${this.previousValue} ${this.operation} ${current} = ${this.displayValue}`);
+                    }
+                } catch (e) {
+                    this.displayValue = 'ERROR: ' + e.message;
+                    this.errorState = true;
                 }
                 
                 this.operation = null;
                 this.waitingForNewValue = true;
                 return this.displayValue;
+            }
+
+            // Use last result (ANS button)
+            useLastResult() {
+                this.displayValue = this.formatNumber(this.lastResult);
+                this.waitingForNewValue = true;
+            }
+
+            // Unit conversion
+            convertUnits(fromUnit, toUnit, value) {
+                const conversions = {
+                    'km-mile': v => v * 0.621371,
+                    'mile-km': v => v * 1.60934,
+                    'kg-lb': v => v * 2.20462,
+                    'lb-kg': v => v / 2.20462,
+                    'c-f': v => (v * 9/5) + 32,
+                    'f-c': v => (v - 32) * 5/9,
+                    'm-ft': v => v * 3.28084,
+                    'ft-m': v => v / 3.28084
+                };
+                const key = `${fromUnit}-${toUnit}`;
+                if (conversions[key]) {
+                    const result = conversions[key](value);
+                    this.displayValue = this.formatNumber(result);
+                    this.addToHistory(`${value}${fromUnit}→${this.displayValue}${toUnit}`);
+                    this.lastResult = result;
+                    return this.displayValue;
+                }
+                return 'ERROR: Unknown conversion';
             }
 
             clear() {
@@ -1037,9 +1115,13 @@
             constructor() {
                 this.logic = new CalculatorLogic();
                 this.scientificMode = false;
+                this.isListening = false;
+                this.recognition = null;
+                this.recognitionState = 'idle'; // idle, starting, listening, stopping
                 this.setupEventListeners();
                 this.setupThemeToggle();
                 this.loadPreferences();
+                this.initializeVoiceInput();
                 this.updateDisplay();
             }
 
@@ -1109,6 +1191,7 @@
                     btn.classList.add('active-click');
                     setTimeout(() => btn.classList.remove('active-click'), 300);
                     this.createRipple(btn);
+                    this.vibrateClick();
                 };
 
                 // Mode toggle
@@ -1117,6 +1200,15 @@
                     modeToggle.addEventListener('click', (e) => {
                         animateButton(e.target);
                         this.toggleScientificMode();
+                    });
+                }
+
+                // Voice input button
+                const voiceButton = document.getElementById('voiceButton');
+                if (voiceButton) {
+                    voiceButton.addEventListener('click', (e) => {
+                        animateButton(e.target);
+                        this.startVoiceInput();
                     });
                 }
 
@@ -1137,7 +1229,10 @@
                 document.querySelectorAll('[data-operator]').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         animateButton(btn);
-                        this.logic.setOperation(e.target.dataset.operator);
+                        const operator = e.target.dataset.operator;
+                        const operatorSymbols = {'+': 'plus', '-': 'minus', '*': 'times', '/': 'divide', '%': 'percent', '^': 'power'};
+                        this.logic.setOperation(operator);
+                        this.announceToScreenReader(`${operatorSymbols[operator] || operator} operation`);
                         this.updateDisplay();
                     });
                 });
@@ -1146,6 +1241,7 @@
                 document.querySelector('[data-action="clear"]').addEventListener('click', (e) => {
                     animateButton(e.target);
                     this.logic.clear();
+                    this.announceToScreenReader('Calculator cleared');
                     this.updateDisplay();
                 });
 
@@ -1158,6 +1254,14 @@
                 document.querySelector('[data-action="equals"]').addEventListener('click', (e) => {
                     animateButton(e.target);
                     this.logic.calculate();
+                    const result = this.logic.displayValue;
+                    if (!this.logic.errorState) {
+                        this.vibrateSuccess();
+                        this.announceToScreenReader(`Result: ${result}`);
+                    } else {
+                        this.vibrateError();
+                        this.announceToScreenReader('Error: Cannot divide by zero');
+                    }
                     this.updateDisplay();
                 });
 
@@ -1213,8 +1317,46 @@
                         historyPanel.classList.toggle('show');
                     } else if (e.key.toLowerCase() === 's') {
                         this.toggleScientificMode();
+                    } else if (e.key.toLowerCase() === 'v') {
+                        // V for Voice input
+                        this.startVoiceInput();
                     }
                     this.updateDisplay();
+                });
+
+                // Copy to clipboard on display click
+                const displayValue = document.getElementById('displayValue');
+                if (displayValue) {
+                    displayValue.addEventListener('click', () => {
+                        const text = this.logic.displayValue;
+                        navigator.clipboard.writeText(text).then(() => {
+                            const originalText = displayValue.textContent;
+                            displayValue.textContent = 'Copied!';
+                            this.announceToScreenReader('Copied to clipboard: ' + text);
+                            setTimeout(() => { displayValue.textContent = originalText; }, 1500);
+                        });
+                    });
+                }
+
+                // Swipe gesture for history (mobile)
+                let touchStartX = 0;
+                let touchStartY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    touchStartY = e.changedTouches[0].screenY;
+                });
+                document.addEventListener('touchend', (e) => {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    const touchEndY = e.changedTouches[0].screenY;
+                    const diffX = touchStartX - touchEndX;
+                    const diffY = Math.abs(touchStartY - touchEndY);
+                    if (Math.abs(diffX) > 50 && diffY < 50) {
+                        if (diffX > 0) {
+                            // Swiped left - show history
+                            const historyPanel = document.getElementById('historyPanel');
+                            historyPanel.classList.add('show');
+                        }
+                    }
                 });
 
                 // Enhanced touch feedback for mobile
@@ -1387,6 +1529,172 @@
                 element.appendChild(ripple);
                 
                 setTimeout(() => ripple.remove(), 400);
+            }
+
+            // Haptic feedback for button clicks
+            vibrateClick() {
+                if (!navigator.vibrate) return;
+                navigator.vibrate([12, 8]);
+            }
+
+            vibrateSuccess() {
+                if (!navigator.vibrate) return;
+                navigator.vibrate([8, 6, 8]);
+            }
+
+            vibrateError() {
+                if (!navigator.vibrate) return;
+                navigator.vibrate([30, 20, 30]);
+            }
+
+            // Voice input functionality
+            initializeVoiceInput() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    console.log('Speech Recognition API not available');
+                    return;
+                }
+
+                this.recognition = new SpeechRecognition();
+                this.recognition.continuous = false;
+                this.recognition.interimResults = false;
+                this.recognition.lang = 'en-US';
+
+                this.recognition.onstart = () => {
+                    console.log('Voice input started');
+                    this.recognitionState = 'listening';
+                    this.isListening = true;
+                    this.announceToScreenReader('Listening for voice input');
+                };
+
+                this.recognition.onresult = (event) => {
+                    let transcript = '';
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        transcript += event.results[i][0].transcript;
+                    }
+                    if (transcript) {
+                        this.vibrateSuccess();
+                        this.processVoiceInput(transcript);
+                    }
+                };
+
+                this.recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    this.recognitionState = 'idle';
+                    this.isListening = false;
+                    if (event.error !== 'aborted') {
+                        this.vibrateError();
+                        this.announceToScreenReader(`Voice input error: ${event.error}`);
+                    }
+                };
+
+                this.recognition.onend = () => {
+                    console.log('Voice input ended');
+                    this.recognitionState = 'idle';
+                    this.isListening = false;
+                };
+            }
+
+            startVoiceInput() {
+                if (!this.recognition) return;
+                
+                // If already in the process of starting/listening, ignore
+                if (this.recognitionState === 'starting' || this.recognitionState === 'listening') {
+                    return;
+                }
+
+                // If stopping, wait and retry
+                if (this.recognitionState === 'stopping') {
+                    setTimeout(() => this.startVoiceInput(), 100);
+                    return;
+                }
+
+                // Ready to start
+                this.recognitionState = 'starting';
+                try {
+                    this.recognition.start();
+                } catch (e) {
+                    console.error('Error starting recognition:', e);
+                    this.recognitionState = 'idle';
+                    this.announceToScreenReader('Voice input unavailable');
+                }
+            }
+
+            processVoiceInput(transcript) {
+                const voiceMap = {
+                    'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
+                    'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9',
+                    'plus': '+', 'minus': '-', 'times': '*', 'multiplied': '*',
+                    'divided by': '/', 'divide': '/', 'point': '.', 'dot': '.',
+                    'equals': '=', 'clear': 'clear', 'delete': 'backspace'
+                };
+
+                const lowerTranscript = transcript.toLowerCase();
+
+                // Check for special commands first
+                if (lowerTranscript.includes('clear') || lowerTranscript.includes('reset')) {
+                    this.logic.clear();
+                    this.updateDisplay();
+                    this.announceToScreenReader('Calculator cleared');
+                    return;
+                }
+                if (lowerTranscript.includes('delete') || lowerTranscript.includes('backspace')) {
+                    this.logic.backspace();
+                    this.updateDisplay();
+                    this.announceToScreenReader('Last digit deleted');
+                    return;
+                }
+
+                // Process the voice input by converting words to symbols
+                let processedInput = lowerTranscript;
+                for (const [word, symbol] of Object.entries(voiceMap)) {
+                    if (symbol !== 'clear' && symbol !== 'backspace') {
+                        processedInput = processedInput.replace(new RegExp(word, 'g'), symbol);
+                    }
+                }
+
+                // Execute the processed input
+                if (processedInput && processedInput !== lowerTranscript) {
+                    for (const char of processedInput) {
+                        if (char === '.') {
+                            this.logic.addDecimal();
+                        } else if ('+-*/%'.includes(char)) {
+                            this.logic.setOperation(char);
+                        } else if (char === '=' || lowerTranscript.includes('equals')) {
+                            this.logic.calculate();
+                        } else if ('0123456789'.includes(char)) {
+                            this.logic.append(char);
+                        }
+                    }
+                    this.updateDisplay();
+                    this.announceToScreenReader(`Voice input: ${transcript}`);
+                }
+            }
+
+            // Screen reader announcement functionality
+            announceToScreenReader(message) {
+                // Create or update aria-live region for announcements
+                let liveRegion = document.getElementById('screenReaderAnnouncements');
+                if (!liveRegion) {
+                    liveRegion = document.createElement('div');
+                    liveRegion.id = 'screenReaderAnnouncements';
+                    liveRegion.setAttribute('aria-live', 'assertive');
+                    liveRegion.setAttribute('aria-atomic', 'true');
+                    liveRegion.style.position = 'absolute';
+                    liveRegion.style.left = '-10000px';
+                    liveRegion.style.width = '1px';
+                    liveRegion.style.height = '1px';
+                    liveRegion.style.overflow = 'hidden';
+                    document.body.appendChild(liveRegion);
+                }
+
+                // Clear previous announcement
+                liveRegion.textContent = '';
+                
+                // Announce the message
+                setTimeout(() => {
+                    liveRegion.textContent = message;
+                }, 100);
             }
         }
 
