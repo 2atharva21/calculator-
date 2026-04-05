@@ -222,18 +222,55 @@ if ((a===b&&c!=d)||e==f&&(g<h)) { // This is confusing!
     --operator-hover: #FFB84D;
 }
 
-/* ✅ DO: Animations only use transform & opacity */
+/* ✅ DO: Animations only use transform & opacity (GPU-accelerated) */
 .btn:active {
-    transform: scale(0.95);      /* Fast, GPU-accelerated */
+    transform: scale(0.95);      /* Fast, smooth, 60fps */
     opacity: 0.9;
 }
 
-/* ❌ DON'T: Animate other properties */
-.btn:active {
-    width: 90px;                 /* Slow, CPU-heavy */
-    box-shadow: 0 0 20px red;    /* Causes reflow */
+/* ✅ DO: Use cubic-bezier for spring-like easing */
+.btn {
+    transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+/* ✅ DO: Keep animations under 400ms for responsiveness */
+@keyframes buttonEntrance {
+    0% { opacity: 0; transform: translateY(10px) scale(0.96); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.btn {
+    animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ❌ DON'T: Animate size, box-shadow, or position */
+.btn:active {
+    width: 90px;                 /* Slow, CPU-heavy, causes reflow */
+    height: 75px;                /* Expensive layout recalculation */
+    box-shadow: 0 0 20px red;    /* Causes repainting */
+}
+
+/* ❌ DON'T: Use ease-in-out for button interactions */
+.btn:hover {
+    transition: all 200ms ease-in-out;  /* Feels sluggish */
+}
+
+/* ❌ DON'T: Animations over 500ms for user interactions */
+@keyframes tooSlow {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+.btn { animation: tooSlow 1000ms ease-out; }  /* Too slow */
 ```
+
+**Animation Performance Guidelines:**
+- ✅ Use `transform` (scale, translate, rotate) — GPU accelerated
+- ✅ Use `opacity` changes — GPU accelerated
+- ✅ Keep durations 150-400ms — feels responsive
+- ✅ Use `cubic-bezier(0.34, 1.56, 0.64, 1)` — spring-like easing
+- ✅ Will-change on animated elements (minimal use)
+- ❌ Avoid animating: width, height, left, top, box-shadow
+- ❌ Avoid: ease-in-out (feels sluggish), steps() on buttons
+- ❌ Avoid: animations over 500ms for interactions
 
 ### HTML
 

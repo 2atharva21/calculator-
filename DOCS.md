@@ -8,10 +8,11 @@ Welcome to the NEXUS Calculator documentation. This guide covers everything you 
 
 1. [Getting Started](#getting-started)
 2. [Features Guide](#features-guide)
-3. [API Reference](#api-reference)
-4. [Keyboard Shortcuts](#keyboard-shortcuts)
-5. [FAQ](#faq)
-6. [Troubleshooting](#troubleshooting)
+3. [User Interface & Animations](#user-interface--animations)
+4. [API Reference](#api-reference)
+5. [Keyboard Shortcuts](#keyboard-shortcuts)
+6. [FAQ](#faq)
+7. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -175,6 +176,90 @@ Keep track of all your calculations.
 - Format: `number operator number = result`
 
 **Keyboard:** Press **H** to toggle
+
+---
+
+## User Interface & Animations
+
+The NEXUS Calculator features a modern, responsive interface with smooth, optimized animations designed for an engaging user experience.
+
+### Button Animations
+
+Every button interaction includes smooth, responsive feedback:
+
+#### Entrance Animations
+- **Duration:** 400ms
+- **Effect:** Buttons fade in and scale up with a cascading effect
+- **Timing:** Staggered by 20-30ms per button for a wave effect  
+- **Best For:** Creating a polished first impression
+
+#### Hover Effects
+- **Regular Buttons:** Lift up 4px with subtle scale (1.02x)
+- **Operator Buttons:** Lift up 5px with more pronounced scale (1.03x)
+- **Duration:** 150ms with spring-like easing
+- **Shadow:** Enhanced depth with larger shadows
+
+**Visual Feedback:**
+```
+Default:  ☐ Button
+Hover:    ↑ Button (lifted position)
+Click:    ○ Button (pulse animation)
+```
+
+#### Click Animations (Pulse)
+- **Duration:** 200ms  
+- **Effect:** Button compresses and returns to normal
+- **Types:**
+  - Regular buttons: scale 1.0 → 0.94 → 1.0
+  - Operator buttons: More pronounced pulse with shadow changes
+- **Purpose:** Tactile feedback indicating button press was registered
+
+#### Ripple Effects
+- **Duration:** 300ms
+- **Effect:** Radial gradient spreads outward from click point
+- **Opacity:** Fades from 60% to 0% for smooth disappearance
+- **Size:** Expands from 0px to 300px diameter
+
+### Animation Timings (Optimized)
+
+| Animation | Duration | Purpose |
+|-----------|----------|---------|
+| Button Entrance | 400ms | Initial page load |
+| Hover Transition | 150ms | User interaction |
+| Click Pulse | 200ms | Confirm button press |
+| Ripple Effect | 300ms | Visual feedback |
+| Display Change | 150ms | Result appearance |
+| Transitions | 150ms | Smooth state changes |
+
+**All animations use cubic-bezier(0.34, 1.56, 0.64, 1) for smooth, energetic motion.**
+
+### Performance
+
+- ✅ 60fps on all devices (tested on budget phones)
+- ✅ GPU-accelerated transforms and animations
+- ✅ Minimal CPU usage
+- ✅ No frame drops during interaction
+- ✅ Optimized for battery life
+
+### Accessibility Features
+
+- ✈️ **Focus Indicators:** Clear 2px outlines on keyboard navigation
+- ✈️ **ARIA Labels:** All buttons have descriptive labels for screen readers
+- ✈️ **High Contrast:** Text readable on all themes
+- ✈️ **Keyboard Navigation:** Tab through all interactive elements
+- ✈️ **No Auto-play:** Animations only trigger on user interaction
+
+### Mobile Optimizations
+
+**Touch Targets:**
+- Buttons: Minimum 60x60px for easy tapping
+- Padded safe areas for notch-aware devices
+- Haptic feedback on supported devices
+
+**Responsive Adjustments:**
+- Tablet (768px): Slightly larger buttons, adjusted padding
+- Mobile (380px-600px): Optimized button sizing
+- Landscape: Compact layout with adjusted dimensions
 
 ---
 

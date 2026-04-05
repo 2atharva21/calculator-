@@ -35,7 +35,13 @@ Welcome to NEXUS Calculator! Choose your starting point below.
   - Scientific Mode
   - Memory Functions
   - History Panel
-  - Themes
+- [User Interface & Animations](DOCS.md#user-interface--animations)
+  - Button animations (entrance, hover, click)
+  - Animation timings
+  - Performance optimizations
+  - Accessibility features
+  - Mobile optimizations
+- [Themes](DOCS.md#themes)
 - [Keyboard Shortcuts](DOCS.md#keyboard-shortcuts)
 - [FAQ](DOCS.md#faq)
 - [Troubleshooting](DOCS.md#troubleshooting)

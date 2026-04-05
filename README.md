@@ -65,14 +65,15 @@ Create a PWA app icon on your phone's home screen in seconds:
 | Feature | Details |
 |---------|---------|
 | **12 Beautiful Themes** | Dark, Light, Ocean, Sunset, Forest, Spring 🌸, Summer ☀️, Autumn 🍂, Winter ❄️, Blossom 🌺, Tropical 🌴, Midnight ⭐ |
+| **Smooth Animations** | Fast (150-400ms) and responsive with spring-like easing |
+| **Button Feedback** | Entrance animations (400ms), click pulses (200ms), ripple effects (300ms) |
 | **Responsive** | Works perfectly on mobile, tablet, desktop |
 | **Keyboard Support** | Full keyboard input with standard shortcuts |
-| **Voice Input** | Hands-free calculation with speech recognition (🎤) |
 | **Real-Time Clock** | Digital clock with 12h/24h format toggle |
 | **Stopwatch/Timer** | Built-in stopwatch for tracking time while calculating |
 | **Accessibility** | ARIA labels, focus indicators, screen reader support |
 | **Haptic Feedback** | Vibration feedback on button clicks (mobile) |
-| **Animations** | Smooth 60fps, works on budget devices |
+| **Performance** | Smooth 60fps animations, optimized for all devices |
 
 ### ⚡ Performance
 
