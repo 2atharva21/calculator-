@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a1a">
     <title>NEXUS - Premium Calculator</title>
     <style>
         * {
@@ -36,12 +39,20 @@
         body {
             background-color: var(--primary-bg);
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
             padding: 20px;
+            padding-left: max(20px, env(safe-area-inset-left));
+            padding-right: max(20px, env(safe-area-inset-right));
+            padding-top: max(20px, env(safe-area-inset-top));
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
         }
 
         /* Calculator container */
@@ -304,33 +315,129 @@
             animation: ripple 400ms ease-out;
         }
 
+        /* Mobile touch optimization */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+                padding-top: max(20px, env(safe-area-inset-top));
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+            }
+        }
+
+        html, body {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .btn {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
         /* Mobile optimization */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .calculator-container {
                 padding: 20px;
                 border-radius: 35px;
+                width: 100%;
+                max-width: 420px;
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
             }
 
             .display-value {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+
+            .display-calculation {
+                font-size: 0.85rem;
             }
 
             .btn {
-                padding: 16px;
-                font-size: 1.1rem;
+                padding: 18px;
+                font-size: 1.2rem;
                 border-radius: 18px;
-                min-height: 65px;
+                min-height: 70px;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+
+            .btn:active {
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             }
 
             .button-grid {
-                gap: 12px;
+                gap: 14px;
             }
 
             .theme-toggle {
-                top: 15px;
-                right: 15px;
-                padding: 8px 12px;
+                top: 20px;
+                right: 20px;
+                padding: 10px 14px;
+                font-size: 1.1rem;
+                z-index: 101;
+            }
+
+            .mic-button {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Extra small phones */
+        @media (max-width: 380px) {
+            .calculator-container {
+                padding: 16px;
+                border-radius: 28px;
+            }
+
+            .display-value {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 14px;
                 font-size: 1rem;
+                min-height: 60px;
+                border-radius: 16px;
+            }
+
+            .button-grid {
+                gap: 10px;
+            }
+        }
+
+        /* Landscape orientation */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+                padding-left: max(10px, env(safe-area-inset-left));
+                padding-right: max(10px, env(safe-area-inset-right));
+            }
+
+            .calculator-container {
+                padding: 15px;
+                max-width: 600px;
+            }
+
+            .display-value {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 12px;
+                font-size: 0.95rem;
+                min-height: 55px;
+            }
+
+            .button-grid {
+                gap: 10px;
+            }
+
+            .theme-toggle {
+                padding: 8px 12px;
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -571,13 +678,49 @@
                     this.updateDisplay();
                 });
 
-                // Touch feedback
-                document.querySelectorAll('.btn').forEach(btn => {
-                    btn.addEventListener('touchstart', () => {
-                        if (navigator.vibrate) {
+                // Enhanced touch feedback for mobile
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const vibratePattern = (type) => {
+                    if (!navigator.vibrate) return;
+                    switch(type) {
+                        case 'click':
+                            navigator.vibrate([12, 8]);
+                            break;
+                        case 'operator':
+                            navigator.vibrate([15, 10, 15]);
+                            break;
+                        case 'equals':
+                            navigator.vibrate([20, 10, 20, 10, 20]);
+                            break;
+                        default:
                             navigator.vibrate(10);
+                    }
+                };
+
+                // Add touch feedback with improved haptics
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        if (btn.classList.contains('btn-operator')) {
+                            vibratePattern('operator');
+                        } else if (btn.classList.contains('btn-equals')) {
+                            vibratePattern('equals');
+                        } else {
+                            vibratePattern('click');
                         }
-                    });
+                    }, { passive: false });
+                });
+
+                // Prevent double tap zoom on buttons
+                let lastTouchEnd = 0;
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.addEventListener('touchend', (e) => {
+                        const now = Date.now();
+                        if (now - lastTouchEnd <= 300) {
+                            e.preventDefault();
+                        }
+                        lastTouchEnd = now;
+                    }, false);
                 });
             }
 
