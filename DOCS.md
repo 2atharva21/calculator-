@@ -247,12 +247,66 @@ Say: "Nine times seven"
 → Result: 63
 ```
 
-**Tips:**
+**Features:**
 - Speak clearly and naturally
 - The calculator processes voice after you finish speaking
 - Haptic feedback confirms recognition
 - Screen reader announces results
 - Works offline (once loaded)
+
+---
+
+### ⏰ Clock & Timer
+
+The calculator includes a professional **real-time digital clock** and **stopwatch timer**.
+
+#### Digital Clock
+
+**Location:** Bottom-right corner of the screen
+
+**Display:**
+- Current time with hours, minutes, and seconds
+- Day of week and date
+- Updates every second in real-time
+
+**Format Toggle:**
+- Click the clock to toggle between **24-hour** and **12-hour** formats
+- Current format shown at bottom: "24H" or "12H"
+- Preference automatically saved to browser
+
+**Examples:**
+```
+24-Hour Format:     14:32:45 Wed, Apr 5
+12-Hour Format:     2:32:45 PM Wed, Apr 5
+```
+
+#### Stopwatch/Timer
+
+**Access:**
+- Double-click the clock display to show/hide timer panel
+- Timer appears as a floating panel
+
+**Controls:**
+- **Start Button** — Start the timer (changes to "Pause" when running)
+- **Pause Button** — Pause the running timer
+- **Reset Button** — Clear the timer back to 00:00
+
+**Display Format:**
+```
+For times under 1 hour: MM:SS (00:45)
+For times over 1 hour:  HH:MM:SS (01:30:45)
+```
+
+**Usage Example:**
+```
+Step 1: Complex calculation is running
+Step 2: Double-click clock to open timer
+Step 3: Click "Start" to begin tracking
+Step 4: Perform calculation
+Step 5: Click "Pause" when done
+Step 6: View how long calculation took
+Step 7: Click "Reset" to clear for next calculation
+```
 
 ---
 

@@ -8,10 +8,11 @@ Complete API documentation for integrating and extending NEXUS Calculator.
 
 1. [CalculatorLogic API](#calculatorlogic-api)
 2. [CalculatorApp API](#calculatorapp-api)
-3. [Events & Callbacks](#events--callbacks)
-4. [Data Structures](#data-structures)
-5. [Examples](#examples)
-6. [Troubleshooting](#troubleshooting)
+3. [ClockTimer API](#clocktimer-api)
+4. [Events & Callbacks](#events--callbacks)
+5. [Data Structures](#data-structures)
+6. [Examples](#examples)
+7. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -456,6 +457,201 @@ app.vibrateError();  // Vibrate: [30, 20, 30]ms
 ```
 
 Pattern: Long pronounced vibration
+
+---
+
+## ClockTimer API
+
+Real-time digital clock with stopwatch/timer functionality.
+
+### Constructor
+
+```javascript
+const clockTimer = new ClockTimer();
+```
+
+**Auto-initializes:**
+- Digital clock display
+- Clock format preference (24h/12h)
+- Timer controls
+- Event listeners
+
+**Properties:**
+```javascript
+clockTimer.is24Hour         // 24-hour format enabled (boolean)
+clockTimer.timerRunning     // Is timer currently running (boolean)
+clockTimer.timerSeconds     // Elapsed seconds on timer (number)
+```
+
+---
+
+### Clock Methods
+
+#### `updateClock()`
+
+Update the clock display with current time and date.
+
+```javascript
+clockTimer.updateClock();  // Updates immediately
+// Auto-updates every second after initialization
+```
+
+**Automatically Called:** Every 1000ms (1 second)
+
+---
+
+#### `formatTime(date)`
+
+Format a Date object to time string.
+
+```javascript
+const date = new Date();
+const timeStr = clockTimer.formatTime(date);
+// Returns: "14:32:45" (24h) or "2:32:45 PM" (12h)
+```
+
+**Parameters:**
+- `date` (Date object) - Date to format
+
+**Returns:** `string` - Formatted time
+
+**Format:**
+- 24-hour: `HH:MM:SS`
+- 12-hour: `H:MM:SS AM/PM`
+
+---
+
+#### `formatDate(date)`
+
+Format a Date object to date string.
+
+```javascript
+const date = new Date();
+const dateStr = clockTimer.formatDate(date);
+// Returns: "Wed, Apr 5"
+```
+
+**Parameters:**
+- `date` (Date object) - Date to format
+
+**Returns:** `string` - Formatted date (`DAY, MON DD`)
+
+---
+
+#### `toggleFormat()`
+
+Switch between 24-hour and 12-hour time formats.
+
+```javascript
+clockTimer.toggleFormat();
+// Toggles display between "24H" and "12H"
+// Saves preference to localStorage
+```
+
+**Behavior:**
+- Toggles `is24Hour` property
+- Updates format toggle display
+- Saves preference for next session
+- Immediately updates clock display
+
+---
+
+### Timer Methods
+
+#### `toggleTimerPanel()`
+
+Show or hide the timer control panel.
+
+```javascript
+clockTimer.toggleTimerPanel();
+// Double-clicking clock also triggers this
+```
+
+**Behavior:**
+- Toggles timer panel visibility
+- Panel slides up from bottom-right
+
+---
+
+#### `toggleTimer()`
+
+Start or pause the stopwatch timer.
+
+```javascript
+clockTimer.toggleTimer();
+// First call: starts timer
+// Second call: pauses timer
+// Changes button text: "Start" ↔ "Pause"
+```
+
+**Behavior:**
+- Toggles `timerRunning` state
+- Updates button text
+- Calls `startTimer()` or `pauseTimer()` accordingly
+
+---
+
+#### `startTimer()`
+
+Begin the stopwatch (internal method).
+
+```javascript
+// Automatically called by toggleTimer()
+clockTimer.startTimer();  // Increments timerSeconds every 1 second
+```
+
+**Effect:**
+- Sets interval to increment `timerSeconds` every 1000ms
+- Updates timer display in real-time
+
+---
+
+#### `pauseTimer()`
+
+Pause the stopwatch without resetting (internal method).
+
+```javascript
+// Automatically called by toggleTimer()
+clockTimer.pauseTimer();  // Stops incrementing but keeps elapsed time
+```
+
+**Effect:**
+- Clears the interval
+- Preserves elapsed time for potential resume
+
+---
+
+#### `resetTimer()`
+
+Reset stopwatch to 00:00.
+
+```javascript
+clockTimer.resetTimer();
+// Clears timer, sets display to 00:00
+// Button text changes to "Start"
+```
+
+**Behavior:**
+- Sets `timerSeconds` to 0
+- Clears timer interval
+- Stops timer if running
+- Updates display
+- Resets button to "Start"
+
+---
+
+#### `updateTimerDisplay()`
+
+Update the timer display with current elapsed time (internal method).
+
+```javascript
+// Automatically called by startTimer() every 1 second
+clockTimer.updateTimerDisplay();
+```
+
+**Display Format:**
+- Under 1 hour: `MM:SS` (e.g., `01:30`)
+- 1 hour or more: `HH:MM:SS` (e.g., `01:30:45`)
 
 ---
 

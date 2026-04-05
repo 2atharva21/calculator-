@@ -68,6 +68,8 @@ Create a PWA app icon on your phone's home screen in seconds:
 | **Responsive** | Works perfectly on mobile, tablet, desktop |
 | **Keyboard Support** | Full keyboard input with standard shortcuts |
 | **Voice Input** | Hands-free calculation with speech recognition (🎤) |
+| **Real-Time Clock** | Digital clock with 12h/24h format toggle |
+| **Stopwatch/Timer** | Built-in stopwatch for tracking time while calculating |
 | **Accessibility** | ARIA labels, focus indicators, screen reader support |
 | **Haptic Feedback** | Vibration feedback on button clicks (mobile) |
 | **Animations** | Smooth 60fps, works on budget devices |
@@ -150,6 +152,35 @@ Click the theme button in the top-right corner to cycle through **12 beautiful t
 - 🌲 **Forest** — Natural greens
 
 All themes are automatically saved to your browser!
+
+### ⏰ Real-Time Clock & Timer
+
+The calculator includes a **built-in digital clock** and **stopwatch/timer** in the bottom-right corner:
+
+**Clock Features:**
+- Displays current time with seconds
+- Shows day and date
+- Click to toggle between **24-hour** and **12-hour** formats
+- Automatically saved format preference
+- Real-time updates every second
+
+**Timer Features:**
+- Double-click the clock to open the timer panel
+- **Start/Pause** button to control timer
+- **Reset** button to clear timer
+- Counts up from 00:00
+- Perfect for tracking calculation time
+- Displays hours:minutes:seconds format
+
+**Usage:**
+```
+1. Look at bottom-right corner for the clock
+2. Click clock face to toggle 24h/12h format
+3. Double-click to reveal timer panel
+4. Click "Start" to begin timer
+5. Click "Pause" to pause
+6. Click "Reset" to clear
+```
 
 ### 🎤 Voice Input
 
