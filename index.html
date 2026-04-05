@@ -570,6 +570,9 @@
             }
 
             append(value) {
+                if (this.errorState) {
+                    this.clear();
+                }
                 if (this.waitingForNewValue) {
                     this.displayValue = String(value);
                     this.waitingForNewValue = false;
@@ -579,7 +582,15 @@
                 return this.displayValue;
             }
 
-            setOperation(op) {\n                if (this.errorState) {\n                    this.clear();\n                    return op;\n                }\n                if (this.operation !== null && !this.waitingForNewValue) {\n                    this.calculate();\n                }\n                this.previousValue = parseFloat(this.displayValue);
+            setOperation(op) {
+                if (this.errorState) {
+                    this.clear();
+                    return op;
+                }
+                if (this.operation !== null && !this.waitingForNewValue) {
+                    this.calculate();
+                }
+                this.previousValue = parseFloat(this.displayValue);
                 this.operation = op;
                 this.waitingForNewValue = true;
                 return op;
