@@ -100,6 +100,54 @@
             --button-text: #1a1a1a;
         }
 
+        /* Ocean Theme */
+        body[data-theme="ocean"] {
+            --primary-bg: #0a2540;
+            --secondary-bg: #164a62;
+            --button-bg: #1b5e7f;
+            --button-hover: #2a7ba8;
+            --operator-bg: #00d4ff;
+            --operator-hover: #33e5ff;
+            --display-text: #e0f7ff;
+            --button-text: #ffffff;
+        }
+
+        /* Sunset Theme */
+        body[data-theme="sunset"] {
+            --primary-bg: #2a1a1a;
+            --secondary-bg: #4a2a1a;
+            --button-bg: #5a3a2a;
+            --button-hover: #7a4a3a;
+            --operator-bg: #ff6b35;
+            --operator-hover: #ff8555;
+            --display-text: #ffe5cc;
+            --button-text: #ffffff;
+        }
+
+        /* Forest Theme */
+        body[data-theme="forest"] {
+            --primary-bg: #1a2a1a;
+            --secondary-bg: #2a4a2a;
+            --button-bg: #3a5a3a;
+            --button-hover: #4a7a4a;
+            --operator-bg: #4db380;
+            --operator-hover: #66d99f;
+            --display-text: #c8e6c8;
+            --button-text: #ffffff;
+        }
+
+        /* Light Ocean */
+        body[data-theme="ocean"].light-theme {
+            --primary-bg: #e3f2fd;
+            --secondary-bg: #b3e5fc;
+            --button-bg: #81d4fa;
+            --button-hover: #4fc3f7;
+            --operator-bg: #0288d1;
+            --operator-hover: #0277bd;
+            --display-text: #01579b;
+            --button-text: #ffffff;
+        }
+
         body {
             background-color: var(--primary-bg);
             min-height: 100vh;
@@ -248,6 +296,84 @@
 
         .btn-backspace:hover {
             background: var(--button-hover);
+        }
+
+        /* Scientific buttons */
+        .btn-scientific {
+            background: var(--button-bg);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .btn-scientific:hover {
+            background: var(--button-hover);
+        }
+
+        .btn-scientific.btn-operator {
+            background: linear-gradient(135deg, var(--operator-bg), #FFA500);
+            font-size: 0.85rem;
+        }
+
+        /* Memory buttons */
+        .btn-memory {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .btn-memory:hover {
+            background: linear-gradient(135deg, #ab47bc, #8e24aa);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(156, 39, 176, 0.3);
+        }
+
+        /* Mode and angle toggle buttons */
+        .btn-mode-toggle, [data-action="angle"] {
+            background: var(--button-bg);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .btn-mode-toggle:hover, [data-action="angle"]:hover {
+            background: var(--button-hover);
+        }
+
+        /* Memory display */
+        #memoryDisplay {
+            position: fixed;
+            bottom: max(340px, calc(env(safe-area-inset-bottom) + 340px));
+            left: max(25px, env(safe-area-inset-left));
+            font-size: 0.8rem;
+            color: var(--display-text);
+            opacity: 0.3;
+            transition: opacity 150ms ease;
+            pointer-events: none;
+            font-weight: 600;
+        }
+
+        /* Scientific buttons grid */
+        #scientificButtons {
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            animation: slideDown 200ms ease-out;
+        }
+
+        #scientificButtons.show {
+            display: grid;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Theme toggle */
@@ -502,8 +628,11 @@
         <div id="historyList" class="history-empty">No history</div>
     </div>
 
+    <!-- Memory display -->
+    <div id="memoryDisplay"></div>
+
     <!-- Theme toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">🌙</button>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle themes">🌙</button>
 
     <!-- Main calculator -->
     <div class="calculator-container">
@@ -511,6 +640,42 @@
         <div class="display" id="display">
             <div class="display-calculation" id="displayCalculation"></div>
             <div class="display-value" id="displayValue">0</div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <button class="btn btn-mode-toggle" id="modeToggle" aria-label="Scientific mode" title="Toggle Scientific mode (S)">SCI</button>
+
+        <!-- Scientific Buttons (Hidden by default) -->
+        <div id="scientificButtons">
+            <!-- Row 1: Trigonometric -->
+            <button class="btn btn-scientific btn-operator" data-scientific="sine" title="sine">sin</button>
+            <button class="btn btn-scientific btn-operator" data-scientific="cosine" title="cosine">cos</button>
+            <button class="btn btn-scientific btn-operator" data-scientific="tangent" title="tangent">tan</button>
+            <button class="btn btn-scientific btn-operator" data-action="angle" title="Toggle angle mode">DEG</button>
+
+            <!-- Row 2: Logarithmic -->
+            <button class="btn btn-scientific btn-operator" data-scientific="log" title="log base 10">log</button>
+            <button class="btn btn-scientific btn-operator" data-scientific="ln" title="natural logarithm">ln</button>
+            <button class="btn btn-scientific btn-operator" data-scientific="exp" title="e to the power">e^x</button>
+            <button class="btn btn-scientific" data-scientific="pi" title="Pi constant">π</button>
+
+            <!-- Row 3: Functions -->
+            <button class="btn btn-scientific btn-operator" data-scientific="sqrt" title="square root">√</button>
+            <button class="btn btn-scientific btn-operator" data-scientific="square" title="square">x²</button>
+            <button class="btn btn-scientific btn-operator" data-scientific="reciprocal" title="reciprocal">1/x</button>
+            <button class="btn btn-scientific" data-scientific="factorial" title="factorial">n!</button>
+
+            <!-- Row 4: Constants -->
+            <button class="btn btn-memory" data-memory="add" title="Memory Add (M+)">M+</button>
+            <button class="btn btn-memory" data-memory="subtract" title="Memory Subtract (M−)">M−</button>
+            <button class="btn btn-memory" data-memory="recall" title="Memory Recall (MR)">MR</button>
+            <button class="btn btn-memory" data-memory="clear" title="Memory Clear (MC)">MC</button>
+
+            <!-- Row 5: Euler's number and Power -->
+            <button class="btn btn-scientific" data-scientific="euler" title="Euler's number">e</button>
+            <button class="btn btn-scientific btn-operator" data-operator="^" title="Power (^)">^</button>
+            <span></span>
+            <span></span>
         </div>
 
         <!-- Button grid -->
@@ -556,17 +721,198 @@
                 this.waitingForNewValue = false;
                 this.history = [];
                 this.errorState = false;
+                this.memory = 0;
+                this.angleMode = 'deg'; // 'deg' or 'rad'
+                this.scientificMode = false;
             }
 
             addToHistory(calculation) {
                 this.history.unshift(calculation);
-                if (this.history.length > 10) {
+                if (this.history.length > 20) {
                     this.history.pop();
                 }
             }
 
             getHistory() {
                 return this.history;
+            }
+
+            // Memory functions
+            memoryAdd() {
+                this.memory += parseFloat(this.displayValue) || 0;
+                this.displayValue = this.memory.toString();
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            memorySubtract() {
+                this.memory -= parseFloat(this.displayValue) || 0;
+                this.displayValue = this.memory.toString();
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            memoryRecall() {
+                this.displayValue = this.memory.toString();
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            memoryClear() {
+                this.memory = 0;
+                return this.displayValue;
+            }
+
+            getMemoryValue() {
+                return this.memory;
+            }
+
+            // Scientific functions
+            convertToRadians(angle) {
+                return this.angleMode === 'deg' ? angle * (Math.PI / 180) : angle;
+            }
+
+            convertFromRadians(angle) {
+                return this.angleMode === 'deg' ? angle * (180 / Math.PI) : angle;
+            }
+
+            sqrt() {
+                const num = parseFloat(this.displayValue);
+                if (num < 0) {
+                    this.displayValue = 'ERROR';
+                    this.errorState = true;
+                } else {
+                    this.displayValue = String(Math.sqrt(num));
+                    this.addToHistory(`√${num} = ${this.displayValue}`);
+                }
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            square() {
+                const num = parseFloat(this.displayValue);
+                this.displayValue = String(num * num);
+                this.addToHistory(`${num}² = ${this.displayValue}`);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            reciprocal() {
+                const num = parseFloat(this.displayValue);
+                if (num === 0) {
+                    this.displayValue = 'ERROR';
+                    this.errorState = true;
+                } else {
+                    this.displayValue = String(1 / num);
+                    this.addToHistory(`1/${num} = ${this.displayValue}`);
+                }
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            sine() {
+                const num = parseFloat(this.displayValue);
+                const radians = this.convertToRadians(num);
+                this.displayValue = String(Math.round(Math.sin(radians) * 100000000) / 100000000);
+                this.addToHistory(`sin(${num}${this.angleMode === 'deg' ? '°' : ' rad'}) = ${this.displayValue}`);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            cosine() {
+                const num = parseFloat(this.displayValue);
+                const radians = this.convertToRadians(num);
+                this.displayValue = String(Math.round(Math.cos(radians) * 100000000) / 100000000);
+                this.addToHistory(`cos(${num}${this.angleMode === 'deg' ? '°' : ' rad'}) = ${this.displayValue}`);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            tangent() {
+                const num = parseFloat(this.displayValue);
+                const radians = this.convertToRadians(num);
+                this.displayValue = String(Math.round(Math.tan(radians) * 100000000) / 100000000);
+                this.addToHistory(`tan(${num}${this.angleMode === 'deg' ? '°' : ' rad'}) = ${this.displayValue}`);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            logarithm() {
+                const num = parseFloat(this.displayValue);
+                if (num <= 0) {
+                    this.displayValue = 'ERROR';
+                    this.errorState = true;
+                } else {
+                    this.displayValue = String(Math.log10(num));
+                    this.addToHistory(`log(${num}) = ${this.displayValue}`);
+                }
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            naturalLog() {
+                const num = parseFloat(this.displayValue);
+                if (num <= 0) {
+                    this.displayValue = 'ERROR';
+                    this.errorState = true;
+                } else {
+                    this.displayValue = String(Math.log(num));
+                    this.addToHistory(`ln(${num}) = ${this.displayValue}`);
+                }
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            exponential() {
+                const num = parseFloat(this.displayValue);
+                this.displayValue = String(Math.exp(num));
+                this.addToHistory(`e^${num} = ${this.displayValue}`);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            power(exponent) {
+                const base = parseFloat(this.displayValue);
+                this.displayValue = String(Math.pow(base, exponent));
+                this.addToHistory(`${base}^${exponent} = ${this.displayValue}`);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            factorial() {
+                const num = parseInt(this.displayValue);
+                if (num < 0) {
+                    this.displayValue = 'ERROR';
+                    this.errorState = true;
+                } else if (num === 0 || num === 1) {
+                    this.displayValue = '1';
+                } else {
+                    let result = 1;
+                    for (let i = 2; i <= num; i++) {
+                        result *= i;
+                    }
+                    this.displayValue = String(result);
+                    this.addToHistory(`${num}! = ${this.displayValue}`);
+                }
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            pi() {
+                this.displayValue = String(Math.PI);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            euler() {
+                this.displayValue = String(Math.E);
+                this.waitingForNewValue = true;
+                return this.displayValue;
+            }
+
+            toggleAngleMode() {
+                this.angleMode = this.angleMode === 'deg' ? 'rad' : 'deg';
+                return this.angleMode;
             }
 
             append(value) {
@@ -623,15 +969,16 @@
                         }
                         break;
                     case '%':
-                        // Proper percentage calculation: what percentage is current of previous
                         result = (current / this.previousValue) * 100;
+                        break;
+                    case '^':
+                        result = Math.pow(this.previousValue, current);
                         break;
                 }
 
                 if (!error) {
                     this.displayValue = String(Math.round(result * 100000000) / 100000000);
                     this.errorState = false;
-                    // Add to history
                     this.addToHistory(`${this.previousValue} ${this.operation} ${current} = ${this.displayValue}`);
                 }
                 
@@ -669,7 +1016,8 @@
                         '-': '−',
                         '*': '×',
                         '/': '÷',
-                        '%': '%'
+                        '%': '%',
+                        '^': '^'
                     };
                     const formatNumber = (num) => {
                         const str = num.toString();
@@ -687,37 +1035,89 @@
         class CalculatorApp {
             constructor() {
                 this.logic = new CalculatorLogic();
+                this.scientificMode = false;
                 this.setupEventListeners();
                 this.setupThemeToggle();
+                this.loadPreferences();
                 this.updateDisplay();
+            }
+
+            loadPreferences() {
+                const savedMode = localStorage.getItem('calculator-mode') || 'standard';
+                const savedTheme = localStorage.getItem('calculator-theme') || 'dark';
+                
+                if (savedMode === 'scientific') {
+                    this.toggleScientificMode();
+                }
             }
 
             setupThemeToggle() {
                 const themeToggle = document.getElementById('themeToggle');
                 const savedTheme = localStorage.getItem('calculator-theme') || 'dark';
                 
-                if (savedTheme === 'light') {
-                    document.body.classList.add('light-theme');
-                    themeToggle.textContent = '☀️';
-                }
-
+                // Set initial theme
+                this.applyTheme(savedTheme);
+                
+                // Theme cycling on click
                 themeToggle.addEventListener('click', () => {
-                    document.body.classList.toggle('light-theme');
-                    const isDark = !document.body.classList.contains('light-theme');
-                    localStorage.setItem('calculator-theme', isDark ? 'dark' : 'light');
-                    themeToggle.textContent = isDark ? '🌙' : '☀️';
+                    const currentTheme = localStorage.getItem('calculator-theme') || 'dark';
+                    const themes = ['dark', 'light', 'ocean', 'sunset', 'forest'];
+                    const currentIndex = themes.indexOf(currentTheme);
+                    const nextTheme = themes[(currentIndex + 1) % themes.length];
+                    
+                    this.applyTheme(nextTheme);
+                    localStorage.setItem('calculator-theme', nextTheme);
                 });
+            }
+
+            applyTheme(themeName) {
+                document.body.setAttribute('data-theme', themeName);
+                const themeIcons = {
+                    'dark': '🌙',
+                    'light': '☀️',
+                    'ocean': '🌊',
+                    'sunset': '🌅',
+                    'forest': '🌲'
+                };
+                document.getElementById('themeToggle').textContent = themeIcons[themeName] || '🌙';
+            }
+
+            toggleScientificMode() {
+                this.scientificMode = !this.scientificMode;
+                const scientificButtons = document.getElementById('scientificButtons');
+                const modeToggle = document.getElementById('modeToggle');
+                
+                if (this.scientificMode) {
+                    scientificButtons.style.display = 'grid';
+                    modeToggle.textContent = 'STD';
+                    modeToggle.title = 'Switch to Standard mode';
+                    localStorage.setItem('calculator-mode', 'scientific');
+                } else {
+                    scientificButtons.style.display = 'none';
+                    modeToggle.textContent = 'SCI';
+                    modeToggle.title = 'Switch to Scientific mode';
+                    localStorage.setItem('calculator-mode', 'standard');
+                }
             }
 
             setupEventListeners() {
                 // Helper to trigger button animation
                 const animateButton = (btn) => {
                     btn.classList.remove('active-click');
-                    void btn.offsetWidth; // Trigger reflow
+                    void btn.offsetWidth;
                     btn.classList.add('active-click');
                     setTimeout(() => btn.classList.remove('active-click'), 300);
                     this.createRipple(btn);
                 };
+
+                // Mode toggle
+                const modeToggle = document.getElementById('modeToggle');
+                if (modeToggle) {
+                    modeToggle.addEventListener('click', (e) => {
+                        animateButton(e.target);
+                        this.toggleScientificMode();
+                    });
+                }
 
                 // Number buttons
                 document.querySelectorAll('[data-number]').forEach(btn => {
@@ -760,6 +1160,37 @@
                     this.updateDisplay();
                 });
 
+                // Scientific function buttons
+                document.querySelectorAll('[data-scientific]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        animateButton(btn);
+                        const func = e.target.dataset.scientific;
+                        this.executeScienticFunction(func);
+                        this.updateDisplay();
+                    });
+                });
+
+                // Memory function buttons
+                document.querySelectorAll('[data-memory]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        animateButton(btn);
+                        const func = e.target.dataset.memory;
+                        this.executeMemoryFunction(func);
+                        this.updateDisplay();
+                    });
+                });
+
+                // Angle mode toggle
+                const angleToggle = document.querySelector('[data-action="angle"]');
+                if (angleToggle) {
+                    angleToggle.addEventListener('click', (e) => {
+                        animateButton(e.target);
+                        const mode = this.logic.toggleAngleMode();
+                        e.target.textContent = mode === 'deg' ? 'DEG' : 'RAD';
+                        e.target.title = `Current mode: ${mode.toUpperCase()}`;
+                    });
+                }
+
                 // Keyboard support
                 document.addEventListener('keydown', (e) => {
                     if (e.key >= '0' && e.key <= '9') {
@@ -768,6 +1199,8 @@
                         this.logic.addDecimal();
                     } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
                         this.logic.setOperation(e.key);
+                    } else if (e.key === '^') {
+                        this.logic.setOperation('^');
                     } else if (e.key === 'Enter' || e.key === '=') {
                         this.logic.calculate();
                     } else if (e.key === 'Backspace') {
@@ -775,15 +1208,15 @@
                     } else if (e.key.toLowerCase() === 'c') {
                         this.logic.clear();
                     } else if (e.key.toLowerCase() === 'h') {
-                        // Toggle history panel
                         const historyPanel = document.getElementById('historyPanel');
                         historyPanel.classList.toggle('show');
+                    } else if (e.key.toLowerCase() === 's') {
+                        this.toggleScientificMode();
                     }
                     this.updateDisplay();
                 });
 
                 // Enhanced touch feedback for mobile
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                 const vibratePattern = (type) => {
                     if (!navigator.vibrate) return;
                     switch(type) {
@@ -801,7 +1234,7 @@
                     }
                 };
 
-                // Add touch feedback with improved haptics (non-blocking)
+                // Add touch feedback with improved haptics
                 document.querySelectorAll('.btn').forEach(btn => {
                     btn.addEventListener('touchstart', () => {
                         if (btn.classList.contains('btn-operator')) {
@@ -813,6 +1246,74 @@
                         }
                     }, true);
                 });
+            }
+
+            executeScienticFunction(func) {
+                switch(func) {
+                    case 'sqrt':
+                        this.logic.sqrt();
+                        break;
+                    case 'square':
+                        this.logic.square();
+                        break;
+                    case 'reciprocal':
+                        this.logic.reciprocal();
+                        break;
+                    case 'sine':
+                        this.logic.sine();
+                        break;
+                    case 'cosine':
+                        this.logic.cosine();
+                        break;
+                    case 'tangent':
+                        this.logic.tangent();
+                        break;
+                    case 'log':
+                        this.logic.logarithm();
+                        break;
+                    case 'ln':
+                        this.logic.naturalLog();
+                        break;
+                    case 'exp':
+                        this.logic.exponential();
+                        break;
+                    case 'factorial':
+                        this.logic.factorial();
+                        break;
+                    case 'pi':
+                        this.logic.pi();
+                        break;
+                    case 'euler':
+                        this.logic.euler();
+                        break;
+                }
+            }
+
+            executeMemoryFunction(func) {
+                switch(func) {
+                    case 'add':
+                        this.logic.memoryAdd();
+                        break;
+                    case 'subtract':
+                        this.logic.memorySubtract();
+                        break;
+                    case 'recall':
+                        this.logic.memoryRecall();
+                        break;
+                    case 'clear':
+                        this.logic.memoryClear();
+                        break;
+                }
+                this.updateMemoryDisplay();
+            }
+
+            updateMemoryDisplay() {
+                const memoryDisplay = document.getElementById('memoryDisplay');
+                if (memoryDisplay) {
+                    const memValue = this.logic.getMemoryValue();
+                    memoryDisplay.textContent = memValue !== 0 ? `M: ${memValue}` : '';
+                    memoryDisplay.style.opacity = memValue !== 0 ? '1' : '0.3';
+                }
             }
 
             updateDisplay() {
