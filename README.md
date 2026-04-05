@@ -597,7 +597,7 @@ If you find CALCORA useful, please:
 
 ---
 
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by Atharva zare**
 
 **Last Updated**: April 5, 2026
 
