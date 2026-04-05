@@ -65,7 +65,8 @@
 
         .display.error-state .display-value {
             color: #ff6b6b;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+            animation: errorShake 400ms ease-in-out;
         }
 
         .btn:focus-visible {
@@ -386,7 +387,7 @@
 
         /* Calculator container */
         .calculator-container {
-            background: var(--secondary-bg);
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.6) 100%);
             border-radius: 32px;
             padding: 16px 12px 18px 12px;
             max-width: 360px;
@@ -394,7 +395,7 @@
             height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 8px);
             position: relative;
             z-index: 1;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             margin: calc(max(44px, calc(44px + env(safe-area-inset-top))) + 4px) auto env(safe-area-inset-bottom) auto;
             flex: 0 1 auto;
             display: flex;
@@ -407,32 +408,36 @@
             background: transparent;
             text-align: right;
             margin-bottom: 12px;
-            padding: 16px 8px;
-            flex: 0.35 1 auto;
+            padding: 12px 12px 8px 12px;
+            flex: 0.28 1 auto;
             display: flex;
             flex-direction: column;
+            align-items: flex-end;
             justify-content: flex-end;
-            min-height: 80px;
+            min-height: 60px;
         }
 
         .display-calculation {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--display-text);
-            opacity: 0.5;
-            margin-bottom: 8px;
-            min-height: 16px;
-            letter-spacing: 0.5px;
+            opacity: 0.4;
+            margin-bottom: 4px;
+            min-height: 14px;
+            letter-spacing: 0.4px;
             line-height: 1;
+            max-height: 20px;
+            overflow: hidden;
         }
 
         .display-value {
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 700;
             color: var(--display-text);
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             word-break: break-all;
             will-change: opacity, transform;
-            line-height: 1.1;
+            line-height: 1;
+            max-width: 100%;
         }
 
         /* Button grid */
@@ -441,8 +446,8 @@
             grid-template-columns: repeat(4, 1fr);
             grid-auto-rows: 1fr;
             gap: 10px;
-            flex: 0.65 1 auto;
-            min-height: 240px;
+            flex: 0.72 1 auto;
+            min-height: 280px;
         }
 
         /* Buttons */
@@ -459,7 +464,7 @@
             background: var(--button-bg);
             color: var(--button-text);
             touch-action: manipulation;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -482,37 +487,38 @@
 
         .btn:hover {
             background: var(--button-hover);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .btn:active {
-            transform: translateY(-1px) scale(0.98);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px) scale(0.92);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.15);
         }
 
         /* Operator buttons */
         .btn-operator {
-            background: linear-gradient(135deg, var(--operator-bg), #FFA500);
+            background: linear-gradient(145deg, #ff9500, #ff7a00);
             color: #ffffff;
             font-weight: 700;
             position: relative;
+            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .btn-operator::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
-            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 18px;
             opacity: 0;
             transition: opacity 200ms ease;
         }
 
         .btn-operator:hover {
-            background: linear-gradient(135deg, var(--operator-hover), #FFB84D);
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 14px 28px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #ffb84d, #ff9500);
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 12px 32px rgba(255, 149, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .btn-operator:hover::before {
@@ -521,12 +527,10 @@
 
         /* Equals button */
         .btn-equals {
-            background: linear-gradient(135deg, var(--operator-bg), #FFA500);
+            background: linear-gradient(145deg, #ff9500, #ff7a00);
             color: #ffffff;
             font-weight: 700;
-            grid-row: span 2;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            min-height: auto;
+            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
             position: relative;
         }
 
@@ -534,20 +538,24 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
-            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 18px;
             opacity: 0;
             transition: opacity 200ms ease;
         }
 
         .btn-equals:hover {
-            background: linear-gradient(135deg, var(--operator-hover), #FFB84D);
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 14px 28px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #ffb84d, #ff9500);
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 12px 32px rgba(255, 149, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .btn-equals:hover::before {
             opacity: 1;
+        }
+
+        .btn-equals.success-click {
+            animation: successBounce 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         /* Clear button */
@@ -631,16 +639,19 @@
 
         /* Mode and angle toggle buttons */
         .btn-mode-toggle, [data-action="angle"] {
-            background: var(--button-bg);
+            background: linear-gradient(145deg, var(--button-bg), rgba(var(--operator-bg), 0.15));
             font-weight: 700;
             font-size: 0.85rem;
             transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(var(--operator-bg), 0.2);
         }
 
         .btn-mode-toggle:hover, [data-action="angle"]:hover {
-            background: var(--button-hover);
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            background: linear-gradient(145deg, var(--button-hover), rgba(var(--operator-bg), 0.25));
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 149, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+            border-color: rgba(var(--operator-bg), 0.4);
         }
 
         /* Memory display */
@@ -919,6 +930,42 @@
             }
         }
 
+        @keyframes successBounce {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes errorShake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-8px);
+            }
+            75% {
+                transform: translateX(8px);
+            }
+        }
+
+        @keyframes resultPulse {
+            0% {
+                box-shadow: 0 4px 12px rgba(255, 149, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 8px 24px rgba(255, 149, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 4px 12px rgba(255, 149, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+        }
+
         .btn.active-click {
             animation: buttonPulse 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -929,7 +976,11 @@
         }
 
         .btn.success-click {
-            animation: successGlow 600ms ease-out;
+            animation: successBounce 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .display.error-shake {
+            animation: errorShake 400ms ease-in-out;
         }
 
         .ripple-effect {
@@ -968,30 +1019,36 @@
                 width: calc(100% - 12px);
                 height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 6px);
                 max-width: 95vw;
-            }
-
-            .display-value {
-                font-size: 2.8rem;
+                background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.8) 100%);
             }
 
             .display {
-                margin-bottom: 10px;
-                padding: 12px 6px;
-                min-height: 70px;
+                flex: 0.25 1 auto;
+                min-height: 50px;
+                padding: 10px 10px 6px 10px;
+            }
+
+            .display-value {
+                font-size: 2.6rem;
             }
 
             .btn {
                 font-size: 1.1rem;
                 border-radius: 16px;
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+            }
+
+            .btn:hover {
+                transform: translateY(-4px) scale(1.03);
             }
 
             .btn:active {
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.15);
             }
 
             .button-grid {
                 gap: 9px;
+                flex: 0.75 1 auto;
             }
         }
 
@@ -1000,24 +1057,28 @@
             .calculator-container {
                 padding: 12px 8px 14px 8px;
                 border-radius: 24px;
+                background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.8) 100%);
+            }
+
+            .display {
+                flex: 0.24 1 auto;
+                min-height: 45px;
+                padding: 8px 8px 4px 8px;
             }
 
             .display-value {
                 font-size: 2.2rem;
             }
 
-            .display {
-                padding: 10px 4px;
-                min-height: 60px;
-            }
-
             .btn {
                 font-size: 0.95rem;
                 border-radius: 14px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
             }
 
             .button-grid {
                 gap: 8px;
+                flex: 0.76 1 auto;
             }
         }
 
@@ -1027,25 +1088,29 @@
                 padding: 10px 8px 12px 8px;
                 max-width: 95vw;
                 height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 4px);
-            }
-
-            .display-value {
-                font-size: 1.8rem;
+                background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.8) 100%);
             }
 
             .display {
-                padding: 8px 4px;
-                margin-bottom: 8px;
-                min-height: 50px;
+                padding: 8px 8px 4px 8px;
+                margin-bottom: 6px;
+                min-height: 40px;
+                flex: 0.22 1 auto;
+            }
+
+            .display-value {
+                font-size: 1.6rem;
             }
 
             .btn {
                 font-size: 0.9rem;
                 border-radius: 14px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             }
 
             .button-grid {
                 gap: 8px;
+                flex: 0.78 1 auto;
             }
         }
     </style>
