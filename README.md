@@ -64,10 +64,12 @@ Create a PWA app icon on your phone's home screen in seconds:
 
 | Feature | Details |
 |---------|---------|
-| **5 Themes** | Dark, Light, Ocean, Sunset, Forest |
+| **12 Beautiful Themes** | Dark, Light, Ocean, Sunset, Forest, Spring 🌸, Summer ☀️, Autumn 🍂, Winter ❄️, Blossom 🌺, Tropical 🌴, Midnight ⭐ |
 | **Responsive** | Works perfectly on mobile, tablet, desktop |
 | **Keyboard Support** | Full keyboard input with standard shortcuts |
-| **Accessibility** | ARIA labels, focus indicators, high contrast |
+| **Voice Input** | Hands-free calculation with speech recognition (🎤) |
+| **Accessibility** | ARIA labels, focus indicators, screen reader support |
+| **Haptic Feedback** | Vibration feedback on button clicks (mobile) |
 | **Animations** | Smooth 60fps, works on budget devices |
 
 ### ⚡ Performance
@@ -122,7 +124,52 @@ MC                → Clear memory
 | `C` | Clear |
 | `H` | Toggle history |
 | `S` | Toggle scientific mode |
+| `V` | Voice input |
 | `.` | Decimal point |
+
+### 🎨 Themes
+
+Click the theme button in the top-right corner to cycle through **12 beautiful themes**:
+
+#### Seasonal Themes
+- 🌸 **Spring** — Fresh greens and pastels
+- ☀️ **Summer** — Bright yellows and golds
+- 🍂 **Autumn** — Warm browns and oranges
+- ❄️ **Winter** — Cool blues and whites
+
+#### Mood Themes
+- 🌺 **Blossom** — Elegant pinks
+- 🌴 **Tropical** — Vibrant teals and greens
+- ⭐ **Midnight** — Deep purples and blues
+
+#### Classic Themes
+- 🌙 **Dark** — Traditional dark mode
+- ☀️ **Light** — Clean light mode
+- 🌊 **Ocean** — Cool water tones
+- 🌅 **Sunset** — Warm orange tones
+- 🌲 **Forest** — Natural greens
+
+All themes are automatically saved to your browser!
+
+### 🎤 Voice Input
+
+Click the🎤 **microphone button** to input calculations by voice:
+
+```
+Say: "Five plus three equals"
+Result: 8
+
+Say: "Twenty divided by four"
+Result: 5
+
+Say: "Square root of sixteen"
+Result: 4
+```
+
+Supported voice commands:
+- Numbers: "zero" through "nine"
+- Operations: "plus", "minus", "times", "divide"
+- Special: "point" (decimal), "equals", "clear", "delete"
 
 ---
 

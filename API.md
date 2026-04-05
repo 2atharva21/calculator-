@@ -293,11 +293,209 @@ const app = new CalculatorApp();
 
 #### `setupThemeToggle()`
 
-Initialize theme switching system.
+Initialize theme switching system with 12 available themes.
 
 ```javascript
 // Automatically called on init
-// Cycles through: dark → light → ocean → sunset → forest
+// Cycles through all 12 themes
+const themes = [
+  'dark', 'light', 'ocean', 'sunset', 'forest',
+  'spring', 'summer', 'autumn', 'winter',
+  'blossom', 'tropical', 'midnight'
+];
+```
+
+**Themes Available:**
+- 🌙 Dark
+- ☀️ Light
+- 🌊 Ocean
+- 🌅 Sunset
+- 🌲 Forest
+- 🌸 Spring
+- ☀️ Summer
+- 🍂 Autumn
+- ❄️ Winter
+- 🌺 Blossom
+- 🌴 Tropical
+- ⭐ Midnight
+
+**Storage:** Theme preference saved to localStorage
+
+---
+
+#### `applyTheme(themeName)`
+
+Apply a specific theme.
+
+```javascript
+app.applyTheme('spring');      // Apply Spring theme
+app.applyTheme('night');       // Apply Dark theme
+app.applyTheme('tropical');    // Apply Tropical theme
+```
+
+**Parameters:**
+- `themeName` (string) - One of the 12 available themes
+
+**Behavior:**
+- Sets `data-theme` attribute on body
+- Updates theme icon
+- Updates button title with theme name
+- Triggers icon rotation animation
+- Saves preference to localStorage
+
+---
+
+#### Voice Input Methods
+
+##### `initializeVoiceInput()`
+
+Setup Web Speech API for voice input.
+
+```javascript
+// Automatically called on init
+// Enables microphone button functionality
+```
+
+**Requirements:**
+- Modern browser with Web Speech API support
+- Microphone permission from user
+
+---
+
+##### `startVoiceInput()`
+
+Begin voice recognition.
+
+```javascript
+app.startVoiceInput();  // Start listening
+```
+
+**State Management:**
+- Checks if already listening
+- Prevents multiple simultaneous sessions
+- Announces "Listening" to screen readers
+- Triggers success vibration
+
+---
+
+##### `processVoiceInput(transcript)`
+
+Convert voice input to calculator operations.
+
+```javascript
+// Automatically triggered when speech recognized
+app.processVoiceInput("five plus three equals");
+// Result: 8
+```
+
+**Supported Commands:**
+```
+Numbers: "zero" through "nine"
+Operations: "plus", "minus", "times", "divide", "percent"
+Decimal: "point", "dot"
+Actions: "equals", "clear", "delete"
+```
+
+---
+
+#### Accessibility Methods
+
+##### `announceToScreenReader(message)`
+
+Announce text to screen reader users.
+
+```javascript
+app.announceToScreenReader("Result: 42");
+app.announceToScreenReader("Listening for voice input");
+app.announceToScreenReader("Error: Cannot divide by zero");
+```
+
+**Parameters:**
+- `message` (string) - Text to announce
+
+**Implementation:**
+- Creates aria-live region
+- Uses aria-atomic for complete announcements
+- Off-screen element (hidden visually)
+- Automatically cleared between announcements
+
+---
+
+#### Haptic Feedback Methods
+
+##### `vibrateClick()`
+
+Light vibration for button presses.
+
+```javascript
+app.vibrateClick();  // Vibrate: [12, 8]ms
+```
+
+Pattern: Short pulse (12ms) + pause (8ms)
+
+---
+
+##### `vibrateSuccess()`
+
+Success vibration for calculations.
+
+```javascript
+app.vibrateSuccess();  // Vibrate: [8, 6, 8]ms
+```
+
+Pattern: Triple pulse pattern
+
+---
+
+##### `vibrateError()`
+
+Error vibration for mistakes.
+
+```javascript
+app.vibrateError();  // Vibrate: [30, 20, 30]ms
+```
+
+Pattern: Long pronounced vibration
+
+---
+
+## Data Structures
+
+### Theme Configuration
+
+```javascript
+const themeConfig = {
+  'spring': {
+    '--primary-bg': '#e8f5e9',
+    '--secondary-bg': '#c8e6c9',
+    '--button-bg': '#a5d6a7',
+    '--operator-bg': '#66bb6a',
+    'icon': '🌸',
+    'label': 'Spring'
+  },
+  // ... additional themes
+};
+```
+
+### History Entry Format
+
+```javascript
+const historyEntry = "5 + 3 = 8";
+// Format: "operand1 operator operand2 = result"
+```
+
+### Voice Recognition Result
+
+```javascript
+const voiceResult = {
+  results: [
+    [
+      { transcript: "five plus three" }
+    ]
+  ],
+  resultIndex: 0
+};
+```
 ```
 
 ---

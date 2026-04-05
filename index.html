@@ -137,6 +137,90 @@
             --button-text: #ffffff;
         }
 
+        /* Spring Theme - Fresh and Blooming */
+        body[data-theme="spring"] {
+            --primary-bg: #e8f5e9;
+            --secondary-bg: #c8e6c9;
+            --button-bg: #a5d6a7;
+            --button-hover: #81c784;
+            --operator-bg: #66bb6a;
+            --operator-hover: #4caf50;
+            --display-text: #1b5e20;
+            --button-text: #ffffff;
+        }
+
+        /* Summer Theme - Vibrant and Warm */
+        body[data-theme="summer"] {
+            --primary-bg: #fff8e1;
+            --secondary-bg: #ffecb3;
+            --button-bg: #ffe082;
+            --button-hover: #ffd54f;
+            --operator-bg: #ffc107;
+            --operator-hover: #ffb300;
+            --display-text: #f57f17;
+            --button-text: #ffffff;
+        }
+
+        /* Autumn Theme - Warm and Rich */
+        body[data-theme="autumn"] {
+            --primary-bg: #3e2723;
+            --secondary-bg: #5d4037;
+            --button-bg: #795548;
+            --button-hover: #8d6e63;
+            --operator-bg: #ff6f00;
+            --operator-hover: #ff7f00;
+            --display-text: #ffe0b2;
+            --button-text: #ffffff;
+        }
+
+        /* Winter Theme - Cool and Crisp */
+        body[data-theme="winter"] {
+            --primary-bg: #0d47a1;
+            --secondary-bg: #1565c0;
+            --button-bg: #1976d2;
+            --button-hover: #1e88e5;
+            --operator-bg: #64b5f6;
+            --operator-hover: #90caf9;
+            --display-text: #e3f2fd;
+            --button-text: #ffffff;
+        }
+
+        /* Cherry Blossom Theme - Elegant Pink */
+        body[data-theme="blossom"] {
+            --primary-bg: #fce4ec;
+            --secondary-bg: #f8bbd0;
+            --button-bg: #f48fb1;
+            --button-hover: #f06292;
+            --operator-bg: #ec407a;
+            --operator-hover: #e91e63;
+            --display-text: #880e4f;
+            --button-text: #ffffff;
+        }
+
+        /* Tropical Theme - Vibrant Paradise */
+        body[data-theme="tropical"] {
+            --primary-bg: #004d40;
+            --secondary-bg: #00695c;
+            --button-bg: #00897b;
+            --button-hover: #009688;
+            --operator-bg: #00bcd4;
+            --operator-hover: #4dd0e1;
+            --display-text: #b2dfdb;
+            --button-text: #ffffff;
+        }
+
+        /* Midnight Theme - Deep Dark */
+        body[data-theme="midnight"] {
+            --primary-bg: #0a0e27;
+            --secondary-bg: #16213e;
+            --button-bg: #1a3a52;
+            --button-hover: #2d5a7b;
+            --operator-bg: #7c3aed;
+            --operator-hover: #8b5cf6;
+            --display-text: #e0e7ff;
+            --button-text: #ffffff;
+        }
+
         /* Theme-specific improvements */
         body[data-theme="light"] .theme-toggle {
             background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%);
@@ -176,6 +260,92 @@
         body[data-theme="forest"] .theme-toggle:hover {
             box-shadow: 0 12px 32px rgba(77, 179, 128, 0.3);
             border-color: rgba(77, 179, 128, 0.4);
+        }
+
+        /* Spring Theme Toggle */
+        body[data-theme="spring"] .theme-toggle {
+            background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+            border-color: rgba(76, 175, 80, 0.2);
+            box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+        }
+
+        body[data-theme="spring"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.4);
+        }
+
+        /* Summer Theme Toggle */
+        body[data-theme="summer"] .theme-toggle {
+            background: linear-gradient(135deg, #ffe082 0%, #ffd54f 100%);
+            border-color: rgba(255, 193, 7, 0.2);
+            color: #f57f17;
+            box-shadow: 0 8px 24px rgba(255, 193, 7, 0.2);
+        }
+
+        body[data-theme="summer"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(255, 193, 7, 0.4);
+            border-color: rgba(255, 193, 7, 0.5);
+        }
+
+        /* Autumn Theme Toggle */
+        body[data-theme="autumn"] .theme-toggle {
+            background: linear-gradient(135deg, #795548 0%, #8d6e63 100%);
+            border-color: rgba(255, 111, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(255, 111, 0, 0.15);
+        }
+
+        body[data-theme="autumn"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(255, 111, 0, 0.3);
+            border-color: rgba(255, 111, 0, 0.4);
+        }
+
+        /* Winter Theme Toggle */
+        body[data-theme="winter"] .theme-toggle {
+            background: linear-gradient(135deg, #1976d2 0%, #1e88e5 100%);
+            border-color: rgba(100, 181, 246, 0.2);
+            box-shadow: 0 8px 24px rgba(13, 71, 161, 0.2);
+        }
+
+        body[data-theme="winter"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(100, 181, 246, 0.3);
+            border-color: rgba(100, 181, 246, 0.4);
+        }
+
+        /* Blossom Theme Toggle */
+        body[data-theme="blossom"] .theme-toggle {
+            background: linear-gradient(135deg, #f48fb1 0%, #f06292 100%);
+            border-color: rgba(236, 64, 122, 0.2);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(236, 64, 122, 0.2);
+        }
+
+        body[data-theme="blossom"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(236, 64, 122, 0.3);
+            border-color: rgba(236, 64, 122, 0.4);
+        }
+
+        /* Tropical Theme Toggle */
+        body[data-theme="tropical"] .theme-toggle {
+            background: linear-gradient(135deg, #00897b 0%, #009688 100%);
+            border-color: rgba(0, 188, 212, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 188, 212, 0.15);
+        }
+
+        body[data-theme="tropical"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(0, 188, 212, 0.3);
+            border-color: rgba(0, 188, 212, 0.4);
+        }
+
+        /* Midnight Theme Toggle */
+        body[data-theme="midnight"] .theme-toggle {
+            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+            border-color: rgba(124, 58, 237, 0.2);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+        }
+
+        body[data-theme="midnight"] .theme-toggle:hover {
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.3);
+            border-color: rgba(124, 58, 237, 0.4);
         }
 
         body {
@@ -705,7 +875,7 @@
     <div id="memoryDisplay"></div>
 
     <!-- Theme toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme: Dark, Light, Ocean, Sunset, Forest" aria-label="Toggle themes">
+    <button class="theme-toggle" id="themeToggle" title="Toggle themes: Dark, Light, Ocean, Sunset, Forest, Spring, Summer, Autumn, Winter, Blossom, Tropical, Midnight" aria-label="Toggle themes">
         <span class="theme-icon" id="themeIcon">🌙</span>
     </button>
 
@@ -1218,7 +1388,7 @@
                 // Theme cycling on click
                 themeToggle.addEventListener('click', () => {
                     const currentTheme = localStorage.getItem('calculator-theme') || 'dark';
-                    const themes = ['dark', 'light', 'ocean', 'sunset', 'forest'];
+                    const themes = ['dark', 'light', 'ocean', 'sunset', 'forest', 'spring', 'summer', 'autumn', 'winter', 'blossom', 'tropical', 'midnight'];
                     const currentIndex = themes.indexOf(currentTheme);
                     const nextTheme = themes[(currentIndex + 1) % themes.length];
                     
@@ -1237,14 +1407,28 @@
                     'light': '☀️',
                     'ocean': '🌊',
                     'sunset': '🌅',
-                    'forest': '🌲'
+                    'forest': '🌲',
+                    'spring': '🌸',
+                    'summer': '☀️',
+                    'autumn': '🍂',
+                    'winter': '❄️',
+                    'blossom': '🌺',
+                    'tropical': '🌴',
+                    'midnight': '⭐'
                 };
                 const themeLabels = {
                     'dark': 'Dark',
                     'light': 'Light',
                     'ocean': 'Ocean',
                     'sunset': 'Sunset',
-                    'forest': 'Forest'
+                    'forest': 'Forest',
+                    'spring': 'Spring',
+                    'summer': 'Summer',
+                    'autumn': 'Autumn',
+                    'winter': 'Winter',
+                    'blossom': 'Blossom',
+                    'tropical': 'Tropical',
+                    'midnight': 'Midnight'
                 };
                 const themeIcon = document.getElementById('themeIcon');
                 const themeButton = document.getElementById('themeToggle');

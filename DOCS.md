@@ -180,23 +180,114 @@ Keep track of all your calculations.
 
 ### Themes
 
-Choose from 5 beautiful themes by clicking the emoji button (🌙):
+Choose from **12 beautiful themes** by clicking the theme button in the top-right corner:
 
-| Theme | Colors | Best For |
-|-------|--------|----------|
+#### Seasonal Themes
+| Theme | Icon | Best For |
+|-------|------|----------|
+| **Spring** 🌸 | Fresh greens & pastels | New beginnings, fresh feel |
+| **Summer** ☀️ | Bright yellows & golds | Daytime, energetic mood |
+| **Autumn** 🍂 | Warm browns & oranges | Cozy atmosphere, creativity |
+| **Winter** ❄️ | Cool blues & whites | Clean look, professional |
+
+#### Mood & Nature Themes
+| Theme | Icon | Best For |
+|-------|------|----------|
+| **Blossom** 🌺 | Elegant pinks | Sophisticated, elegant feel |
+| **Tropical** 🌴 | Vibrant teals & greens | Paradise, vacation vibes |
+| **Midnight** ⭐ | Deep purples & blues | Mystery, late night work |
+
+#### Classic Themes
+| Theme | Icon | Best For |
+|-------|------|----------|
 | **Dark** 🌙 | Black & orange | Night use, OLED phones |
 | **Light** ☀️ | White & orange | Bright environments |
 | **Ocean** 🌊 | Blues & cyan | Professional look |
 | **Sunset** 🌅 | Oranges & reds | Warm, friendly feel |
-| **Forest** 🌲 | Greens | Nature-inspired |
+| **Forest** 🌲 | Natural greens | Nature-inspired |
 
-**Saved Automatically:** Your theme preference persists across sessions.
+**Features:**
+- ✅ Automatically saved to your device
+- ✅ Smooth theme transitions
+- ✅ Each theme optimized for readability
+- ✅ Haptic feedback when changing themes
+
+**How to use:**
+1. Click the emoji button in the top-right corner
+2. Themes cycle through automatically
+3. Your preference is saved in browser storage
 
 ---
 
-## API Reference
+### 🎤 Voice Input
 
-### Calculator Logic Methods
+Input calculations by speaking! Click the **🎤 microphone button** to start.
+
+**Supported Voice Commands:**
+
+| Category | Examples |
+|----------|----------|
+| **Numbers** | "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" |
+| **Operations** | "plus", "minus", "times", "multiplied by", "divide", "divided by", "percent" |
+| **Special** | "point" (decimal), "dot" (decimal), "equals", "clear", "reset", "delete", "backspace" |
+
+**Examples:**
+
+```
+Say: "Five plus three equals"
+→ Result: 8
+
+Say: "Twenty divided by four"
+→ Result: 5
+
+Say: "Square root of sixteen"
+→ Result: 4
+
+Say: "Nine times seven"
+→ Result: 63
+```
+
+**Tips:**
+- Speak clearly and naturally
+- The calculator processes voice after you finish speaking
+- Haptic feedback confirms recognition
+- Screen reader announces results
+- Works offline (once loaded)
+
+---
+
+### ♿ Accessibility Features
+
+NEXUS Calculator is fully accessible:
+
+| Feature | Support |
+|---------|---------|
+| **Screen Readers** | Full ARIA support for NVDA, JAWS, VoiceOver |
+| **Keyboard Navigation** | Complete keyboard control |
+| **Voice Input** | Hands-free operation |
+| **High Contrast** | All themes have high contrast ratios |
+| **Focus Indicators** | Clear focus outlines on all interactive elements |
+| **Haptic Feedback** | Vibration on button clicks (mobile) |
+
+---
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `0-9` | Input numbers |
+| `+` `-` `*` `/` | Operators |
+| `Enter` or `=` | Calculate |
+| `Backspace` | Toggle sign (+/−) |
+| `C` | Clear all |
+| `H` | Toggle history panel |
+| `S` | Toggle scientific mode |
+| `V` | Start voice input |
+| `.` | Decimal point |
+
+---
+
+## Themes
 
 For developers integrating NEXUS into their applications:
 
