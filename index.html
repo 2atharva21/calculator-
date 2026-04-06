@@ -461,8 +461,9 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            animation: fadeIn 300ms ease;
+            animation: fadeIn 200ms ease;
             will-change: opacity;
+            min-height: 18px;
         }
 
         .display-value {
@@ -474,9 +475,8 @@
             will-change: opacity, transform;
             line-height: 1.2;
             max-width: 100%;
-            transition: opacity 200ms ease, transform 200ms ease;
-            text-shadow: 0 0 20px rgba(255, 149, 0, 0.1);
-            animation: slideDownFadeIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: opacity 100ms ease, transform 100ms ease;
+            animation: slideDownFadeIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .display-value.number-change {
@@ -505,7 +505,7 @@
             font-size: 1.25rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 120ms ease;
+            transition: all 100ms ease;
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, #2a5a7a 0%, #1f4a62 100%);
@@ -521,6 +521,7 @@
             animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             will-change: transform, box-shadow, background;
             user-select: none;
+            min-height: 60px;
         }
 
         /* Staggered entrance animation */
@@ -546,10 +547,11 @@
         }
 
         .btn:active {
-            transform: scale(0.95) translateY(-2px);
+            transform: scale(0.94) translateY(2px);
             box-shadow: 
-                0 4px 8px rgba(0, 0, 0, 0.3),
-                inset 0 2px 4px rgba(0, 0, 0, 0.4);
+                inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+                inset -1px -1px 3px rgba(0, 0, 0, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .btn:focus-visible {
@@ -565,25 +567,25 @@
             position: relative;
             box-shadow: 
                 0 8px 16px rgba(255, 140, 0, 0.3),
-                0 0 1px rgba(255, 255, 255, 0.1) inset;
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .btn-operator::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
             border-radius: inherit;
             opacity: 0;
-            transition: opacity 200ms ease;
+            transition: opacity 100ms ease;
         }
 
         .btn-operator:hover {
             background: linear-gradient(135deg, #ffb84d 0%, #ff9500 100%);
             transform: translateY(-4px);
             box-shadow: 
-                0 12px 24px rgba(255, 149, 0, 0.4),
-                0 0 20px rgba(255, 149, 0, 0.3) inset;
+                0 12px 24px rgba(255, 149, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .btn-operator:hover::before {
@@ -591,17 +593,30 @@
         }
 
         .btn-operator:active {
-            transform: scale(0.95) translateY(-2px);
+            transform: scale(0.94) translateY(2px);
             box-shadow: 
-                0 4px 8px rgba(255, 140, 0, 0.3),
-                inset 0 2px 4px rgba(0, 0, 0, 0.4);
+                inset 3px 3px 6px rgba(0, 0, 0, 0.4),
+                inset -1px -1px 3px rgba(0, 0, 0, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .btn-operator.active {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6b3 100%);
+            color: #ff9500;
             box-shadow: 
-                0 0 12px rgba(255, 149, 0, 0.6),
+                0 0 16px rgba(255, 149, 0, 0.6),
                 0 8px 16px rgba(255, 140, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            font-weight: 800;
+        }
+
+        .btn-operator.active:active {
+            background: linear-gradient(135deg, #fff3cc 0%, #ffd699 100%);
+            transform: scale(0.93) translateY(2px);
+            box-shadow: 
+                inset 3px 3px 6px rgba(255, 149, 0, 0.4),
+                inset -1px -1px 3px rgba(255, 100, 0, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         /* Equals button */
@@ -638,10 +653,11 @@
         }
 
         .btn-equals:active {
-            transform: scale(0.95) translateY(-2px);
+            transform: scale(0.94) translateY(2px);
             box-shadow: 
-                0 4px 8px rgba(255, 140, 0, 0.3),
-                inset 0 2px 4px rgba(0, 0, 0, 0.4);
+                inset 3px 3px 6px rgba(0, 0, 0, 0.4),
+                inset -1px -1px 3px rgba(0, 0, 0, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .btn-equals.success-click {
@@ -1090,7 +1106,7 @@
             }
         }
 
-        /* Button click animations */
+        /* Button click animations - Fast and responsive */
         @keyframes buttonPulse {
             0% {
                 transform: scale(1);
@@ -1103,33 +1119,15 @@
             }
         }
 
-        @keyframes buttonPress {
-            0% {
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                transform: translateY(-3px);
-            }
-            50% {
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                transform: translateY(0px);
-            }
-            100% {
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                transform: translateY(-3px);
-            }
-        }
-
         @keyframes operatorPulse {
             0% {
                 transform: scale(1);
-                box-shadow: 0 12px 24px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
             50% {
                 transform: scale(0.92);
-                box-shadow: 0 6px 12px rgba(255, 149, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
             100% {
                 transform: scale(1);
-                box-shadow: 0 12px 24px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
         }
 
@@ -1173,7 +1171,7 @@
         @keyframes numberSlideUp {
             from {
                 opacity: 0.7;
-                transform: translateY(8px);
+                transform: translateY(4px);
             }
             to {
                 opacity: 1;
@@ -1186,14 +1184,14 @@
                 opacity: 0;
             }
             to {
-                opacity: 0.35;
+                opacity: 0.55;
             }
         }
 
         @keyframes slideDownFadeIn {
             from {
-                opacity: 0;
-                transform: translateY(-6px);
+                opacity: 0.8;
+                transform: translateY(-2px);
             }
             to {
                 opacity: 1;
@@ -1240,16 +1238,16 @@
         }
 
         .btn.active-click {
-            animation: buttonPulse 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: buttonPulse 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-operator.active-click,
         .btn-equals.active-click {
-            animation: operatorPulse 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: operatorPulse 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn.success-click {
-            animation: successBounce 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: successBounce 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .display.error-shake {
@@ -1974,27 +1972,37 @@
                     osc.connect(gain);
                     gain.connect(this.audioContext.destination);
                     
-                    gain.gain.setValueAtTime(0.1, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                    
                     switch(type) {
                         case 'click':
-                            osc.frequency.setValueAtTime(800, now);
-                            osc.stop(now + 0.05);
+                            // Short, subtle click for number buttons
+                            gain.gain.setValueAtTime(0.08, now);
+                            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
+                            osc.frequency.setValueAtTime(900, now);
+                            osc.stop(now + 0.04);
                             break;
                         case 'operator':
-                            osc.frequency.setValueAtTime(600, now);
-                            osc.stop(now + 0.08);
+                            // Slightly deeper click for operators
+                            gain.gain.setValueAtTime(0.06, now);
+                            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+                            osc.frequency.setValueAtTime(700, now);
+                            osc.stop(now + 0.06);
                             break;
                         case 'equals':
-                            osc.frequency.setValueAtTime(1000, now);
-                            osc.frequency.linearRampToValueAtTime(1200, now + 0.1);
-                            osc.stop(now + 0.1);
+                            // Satisfying "success" tone
+                            gain.gain.setValueAtTime(0.1, now);
+                            gain.gain.exponentialRampToValueAtTime(0.02, now + 0.12);
+                            osc.frequency.setValueAtTime(1100, now);
+                            osc.frequency.linearRampToValueAtTime(1300, now + 0.06);
+                            osc.frequency.linearRampToValueAtTime(1100, now + 0.12);
+                            osc.stop(now + 0.12);
                             break;
                         case 'error':
-                            osc.frequency.setValueAtTime(300, now);
-                            osc.frequency.linearRampToValueAtTime(200, now + 0.2);
-                            osc.stop(now + 0.2);
+                            // Low, warning tone
+                            gain.gain.setValueAtTime(0.08, now);
+                            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                            osc.frequency.setValueAtTime(250, now);
+                            osc.frequency.linearRampToValueAtTime(200, now + 0.15);
+                            osc.stop(now + 0.15);
                             break;
                     }
                     
@@ -2146,6 +2154,17 @@
                         animateButton(btn, 'operator');
                         const operator = e.target.dataset.operator;
                         const operatorSymbols = {'+': 'plus', '-': 'minus', '*': 'times', '/': 'divide', '%': 'percent', '^': 'power'};
+                        
+                        // Remove active state from all other operators
+                        document.querySelectorAll('[data-operator]').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        
+                        // Add active state to this operator
+                        if (this.logic.operation) {
+                            e.target.classList.add('active');
+                        }
+                        
                         this.logic.setOperation(operator);
                         this.announceToScreenReader(`${operatorSymbols[operator] || operator} operation`);
                         this.updateDisplay();
@@ -2155,6 +2174,12 @@
                 // Action buttons
                 document.querySelector('[data-action="clear"]').addEventListener('click', (e) => {
                     animateButton(e.target, 'click');
+                    
+                    // Remove operator highlighting on clear
+                    document.querySelectorAll('[data-operator]').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
                     this.logic.clear();
                     this.announceToScreenReader('Calculator cleared');
                     this.updateDisplay();
@@ -2170,6 +2195,12 @@
                     animateButton(e.target, 'equals');
                     this.logic.calculate();
                     this.triggerResultAnimation();
+                    
+                    // Remove operator highlighting on equals
+                    document.querySelectorAll('[data-operator]').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
                     const result = this.logic.displayValue;
                     if (!this.logic.errorState) {
                         this.vibrateSuccess();
@@ -2462,20 +2493,23 @@
                 setTimeout(() => ripple.remove(), 400);
             }
 
-            // Haptic feedback for button clicks
+            // Haptic feedback for button clicks - Enhanced for real device feel
             vibrateClick() {
                 if (!navigator.vibrate) return;
-                navigator.vibrate([12, 8]);
+                // Quick, subtle vibration for number buttons
+                navigator.vibrate(10);
             }
 
             vibrateSuccess() {
                 if (!navigator.vibrate) return;
-                navigator.vibrate([8, 6, 8]);
+                // Double tap vibration for successful calculation
+                navigator.vibrate([15, 10, 15]);
             }
 
             vibrateError() {
                 if (!navigator.vibrate) return;
-                navigator.vibrate([30, 20, 30]);
+                // Strong, longer vibration for error
+                navigator.vibrate([40, 30, 40]);
             }
 
             // Screen reader announcement functionality
