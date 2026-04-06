@@ -606,7 +606,7 @@
 
         /* Display - Premium Typography */
         .display {
-            background: linear-gradient(180deg, #0d0f1a 0%, #141826 100%);
+            background: transparent;
             text-align: right;
             margin-bottom: 28px;
             padding: 40px 20px 24px 20px;
@@ -618,39 +618,6 @@
             min-height: 160px;
             gap: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
-            border-radius: 24px;
-            position: relative;
-            box-shadow: 
-                inset 0 0 20px rgba(0, 150, 255, 0.08),
-                inset 0 0 40px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-        }
-
-        .display::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.08),
-                transparent
-            );
-            pointer-events: none;
-            border-radius: 24px 24px 0 0;
-        }
-
-        .display::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.02"/></svg>');
-            opacity: 0.03;
-            pointer-events: none;
-            border-radius: 24px;
         }
 
         .display-calculation {
@@ -669,27 +636,22 @@
             min-height: 24px;
             transition: opacity 100ms ease, transform 100ms ease;
             margin-bottom: 4px;
-            position: relative;
-            z-index: 2;
         }
 
         .display-value {
             font-size: 56px;
-            font-weight: 500;
-            color: #e8f0ff;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            color: var(--display-text);
+            letter-spacing: -0.8px;
             word-break: break-all;
             will-change: opacity, transform;
             line-height: 1.1;
             max-width: 100%;
-            padding-right: 18px;
-            text-align: right;
+            padding-right: 16px;
             transition: opacity 100ms ease, transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: slideDownFadeIn 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
             opacity: 1;
-            margin-top: 20px;
-            position: relative;
-            z-index: 2;
+            margin-top: 25px;
         }
 
         .display-value.number-change {
@@ -698,7 +660,6 @@
 
         .display-value.updated {
             animation: resultPulseScale 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: scale(1.05);
         }
 
         /* Button grid - Proper Spacing */
@@ -1609,20 +1570,7 @@
         }
 
         .ripple-effect {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
-            transform: scale(0);
-            pointer-events: none;
-            animation: ripplePulse 0.6s ease-out forwards;
-            will-change: transform, opacity;
-        }
-
-        @keyframes ripplePulse {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+            display: none;
         }
 
         /* Mobile touch optimization */
@@ -2583,15 +2531,8 @@
             setupEventListeners() {
                 // Helper to trigger button animation
                 const animateButton = (btn, soundType = 'click') => {
-                    // Create ripple effect
-                    this.createRipple(btn);
-                    
-                    // Smart haptic feedback based on button type
-                    if (soundType === 'operator' || soundType === 'equals') {
-                        this.vibrateSuccess();
-                    } else {
-                        this.vibrateClick();
-                    }
+                    // Instant vibration and sound - no JS animation delay, no ripple
+                    this.vibrateClick();
                     this.playSound(soundType);
                 };
 
@@ -2959,40 +2900,38 @@
             }
 
             createRipple(element) {
-                // Create ripple element
-                const ripple = document.createElement('span');
+                const ripple = document.createElement('div');
                 ripple.className = 'ripple-effect';
-                
-                // Get click position relative to button
                 const rect = element.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                
+                const size = Math.max(rect.width, rect.height) * 0.5;
+
                 ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = (element.offsetWidth - size) / 2 + 'px';
-                ripple.style.top = (element.offsetHeight - size) / 2 + 'px';
-                
+                ripple.style.left = (element.clientWidth - size) / 2 + 'px';
+                ripple.style.top = (element.clientHeight - size) / 2 + 'px';
+
+                element.style.position = 'relative';
+                element.style.overflow = 'hidden';
                 element.appendChild(ripple);
                 
-                // Remove ripple after animation
-                setTimeout(() => ripple.remove(), 600);
+                setTimeout(() => ripple.remove(), 400);
             }
 
             // Haptic feedback for button clicks - Enhanced for real device feel
             vibrateClick() {
                 if (!navigator.vibrate) return;
-                // Light vibration for number buttons
-                navigator.vibrate(8);
+                // Quick, subtle vibration for number buttons
+                navigator.vibrate(10);
             }
 
             vibrateSuccess() {
                 if (!navigator.vibrate) return;
-                // Strong feedback for operators and equals
-                navigator.vibrate([12, 8, 12]);
+                // Double tap vibration for successful calculation
+                navigator.vibrate([15, 10, 15]);
             }
 
             vibrateError() {
                 if (!navigator.vibrate) return;
-                // Intense feedback for errors
+                // Strong, longer vibration for error
                 navigator.vibrate([40, 30, 40]);
             }
 

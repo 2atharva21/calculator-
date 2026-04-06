@@ -1,0 +1,60 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1c1c1e;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gradient for X icon -->
+    <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff8c42;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="iconGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Shadow filter -->
+    <filter id="iconShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="512" height="512" fill="url(#bgGrad)"/>
+
+  <!-- Icon group -->
+  <g filter="url(#iconShadow)">
+    <!-- Outer orbit circles -->
+    <circle cx="256" cy="256" r="160" fill="none" stroke="url(#xGradient)" stroke-width="3" opacity="0.3"/>
+    <circle cx="256" cy="256" r="120" fill="none" stroke="url(#xGradient)" stroke-width="2" opacity="0.2"/>
+
+    <!-- Dynamic X -->
+    <g filter="url(#iconGlow)">
+      <!-- First diagonal -->
+      <line x1="120" y1="120" x2="392" y2="392" stroke="url(#xGradient)" stroke-width="48" stroke-linecap="round"/>
+      <!-- Second diagonal -->
+      <line x1="392" y1="120" x2="120" y2="392" stroke="url(#xGradient)" stroke-width="48" stroke-linecap="round"/>
+    </g>
+
+    <!-- Center node -->
+    <circle cx="256" cy="256" r="32" fill="url(#xGradient)" filter="url(#iconGlow)"/>
+    <circle cx="256" cy="256" r="20" fill="#e8f0ff" opacity="0.25"/>
+
+    <!-- Accent corner nodes -->
+    <circle cx="188" cy="188" r="10" fill="url(#xGradient)" opacity="0.8"/>
+    <circle cx="324" cy="188" r="10" fill="url(#xGradient)" opacity="0.8"/>
+    <circle cx="188" cy="324" r="10" fill="url(#xGradient)" opacity="0.8"/>
+    <circle cx="324" cy="324" r="10" fill="url(#xGradient)" opacity="0.8"/>
+  </g>
+</svg>

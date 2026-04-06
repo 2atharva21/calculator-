@@ -1,0 +1,72 @@
+<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" width="800" height="200">
+  <defs>
+    <!-- Gradient for X icon -->
+    <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff8c42;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gradient for text -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00d9ff;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow filter for icon -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle glow for text -->
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- X Icon -->
+  <g filter="url(#shadow)">
+    <!-- Orbit -->
+    <circle cx="80" cy="100" r="55" fill="none" stroke="url(#xGradient)" stroke-width="1.5" opacity="0.3"/>
+
+    <!-- X -->
+    <g filter="url(#glow)">
+      <line x1="35" y1="55" x2="125" y2="145" stroke="url(#xGradient)" stroke-width="14" stroke-linecap="round"/>
+      <line x1="125" y1="55" x2="35" y2="145" stroke="url(#xGradient)" stroke-width="14" stroke-linecap="round"/>
+    </g>
+
+    <!-- Center node -->
+    <circle cx="80" cy="100" r="9" fill="url(#xGradient)" filter="url(#glow)"/>
+    <circle cx="80" cy="100" r="6" fill="#e8f0ff" opacity="0.3"/>
+  </g>
+
+  <!-- NEXUS Text -->
+  <g filter="url(#textGlow)">
+    <text x="220" y="115" 
+          font-family="'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif" 
+          font-size="64" 
+          font-weight="700" 
+          letter-spacing="4"
+          fill="url(#textGradient)"
+          dominant-baseline="middle">NEXUS</text>
+  </g>
+
+  <!-- Accent line -->
+  <line x1="280" y1="155" x2="750" y2="155" stroke="url(#xGradient)" stroke-width="1.5" opacity="0.3"/>
+</svg>

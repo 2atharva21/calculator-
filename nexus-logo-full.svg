@@ -1,0 +1,104 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" width="1200" height="400">
+  <defs>
+    <!-- Gradient for X icon -->
+    <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#0099ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff8c42;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gradient for text -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00d9ff;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow filter for icon -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle glow for text -->
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Dark gradient background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1c1c1e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bgGradient)"/>
+
+  <!-- X Icon Group -->
+  <g filter="url(#shadow)">
+    <!-- Outer orbit circles -->
+    <circle cx="180" cy="200" r="110" fill="none" stroke="url(#xGradient)" stroke-width="2" opacity="0.4"/>
+    <circle cx="180" cy="200" r="85" fill="none" stroke="url(#xGradient)" stroke-width="1.5" opacity="0.25"/>
+
+    <!-- Dynamic X with flowing lines -->
+    <g filter="url(#glow)">
+      <!-- First diagonal line (top-left to bottom-right) -->
+      <line x1="100" y1="120" x2="260" y2="280" stroke="url(#xGradient)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- Second diagonal line (top-right to bottom-left) -->
+      <line x1="260" y1="120" x2="100" y2="280" stroke="url(#xGradient)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Center connection nodes -->
+    <circle cx="180" cy="200" r="18" fill="url(#xGradient)" filter="url(#glow)" opacity="0.9"/>
+    <circle cx="180" cy="200" r="12" fill="#e8f0ff" opacity="0.3"/>
+
+    <!-- Accent nodes at connection points -->
+    <circle cx="145" cy="165" r="6" fill="url(#xGradient)" opacity="0.7"/>
+    <circle cx="215" cy="165" r="6" fill="url(#xGradient)" opacity="0.7"/>
+    <circle cx="145" cy="235" r="6" fill="url(#xGradient)" opacity="0.7"/>
+    <circle cx="215" cy="235" r="6" fill="url(#xGradient)" opacity="0.7"/>
+  </g>
+
+  <!-- NEXUS Text -->
+  <g filter="url(#textGlow)">
+    <!-- Subtle background shape for text -->
+    <rect x="380" y="140" width="720" height="120" rx="20" fill="none" stroke="url(#textGradient)" stroke-width="1" opacity="0.15"/>
+    
+    <!-- Main text -->
+    <text x="740" y="240" 
+          font-family="'SF Pro Display', 'Helvetica Neue', 'Inter', sans-serif" 
+          font-size="92" 
+          font-weight="700" 
+          letter-spacing="8"
+          fill="url(#textGradient)"
+          text-anchor="middle"
+          dominant-baseline="middle">NEXUS</text>
+
+    <!-- Subtitle line (optional accent) -->
+    <line x1="420" y1="295" x2="1060" y2="295" stroke="url(#xGradient)" stroke-width="2" opacity="0.4"/>
+  </g>
+
+  <!-- Watermark/copyright space (optional) -->
+  <text x="600" y="375" 
+        font-family="'SF Pro Display', 'Helvetica Neue', sans-serif" 
+        font-size="12" 
+        fill="#e8f0ff" 
+        text-anchor="middle" 
+        opacity="0.4">Premium Design • Modern Tech</text>
+</svg>
