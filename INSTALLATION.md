@@ -4,6 +4,19 @@
 
 NEXUS Calculator is a **zero-setup web app** that works immediately. However, for the best experience, install it as a PWA (Progressive Web App) on your device.
 
+### ✨ What You Get (Latest Version)
+
+**Premium Features Included:**
+- 📺 **Realistic Calculator Screen** — Glowing display with glass reflection effect
+- 🌊 **Google-Style Ripple Effects** — Professional Material Design animations on every button
+- 📳 **Smart Haptic Feedback** — Context-aware vibration (light for numbers, strong for operators)
+- ⏱️ **Interactive Clock** — Tap to toggle 12H/24H with pop animation
+- 🎨 **12 Premium Themes** — Dark, Light, Ocean, Sunset, Forest, Spring, Summer, Autumn, Winter, Blossom, Tropical, Midnight
+- 🧮 **Advanced Calculations** — Scientific mode with trigonometry, logarithms, memory functions
+- 🔊 **Audio Feedback** — Premium sound effects for every interaction
+- ⚙️ **Perfect Physics** — Realistic button press (scale 0.93) + 5px shadows
+- 🎯 **Professional Polish** — 10/10 production-grade UI
+
 ---
 
 ## Quick Start (2 Minutes)

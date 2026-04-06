@@ -216,45 +216,65 @@ Keep track of all your calculations.
 
 ## User Interface & Animations
 
-The NEXUS Calculator features a premium, responsive interface with sophisticated micro-interactions, multi-sensory feedback, and smooth animations designed for top-tier user experience. This section covers the detailed animation specifications and interaction design.
+The NEXUS Calculator features a premium, production-grade interface with sophisticated micro-interactions, multi-sensory feedback, and realistic hardware-inspired animations designed for top-tier user experience.
 
-### Display System (Premium Grade)
+### Display System (Realistic Hardware Grade)
 
-The display is optimized for maximum clarity and premium feel:
+The display simulates a real calculator screen with authentic hardware aesthetics:
+
+**Visual Effects:**
+- **Glowing Background:** Linear gradient (#0d0f1a → #141826) with inset blue glow
+- **Glass Reflection:** ::before pseudo-element with top 50% radial gradient highlight
+- **Subtle Texture:** SVG noise overlay (0.03 opacity) for authentic screen feel
+- **Curved Edges:** 24px border-radius (feels like real device glass)
 
 **Dimensions & Layout:**
-- Height: 130px (prominent, anchored)
-- Font Size: 52px (crystal clear, highly visible)
-- Expression Font: 16px (0.65 opacity, clear context)
-- Padding: 28px 20px 16px 20px (breathing room)
-- Spacing: 6px gap between expression and result
+- Height: 160px (spacious, premium feel)
+- Font Size: 56px (bold, highly visible)
+- Expression Font: 14px (0.6 opacity, clear context)
+- Number Color: #e8f0ff (cool blue-white, modern screen aesthetic)
+- Padding: 40px 20px 24px 20px (breathing room)
+- Spacing: 12px gap between expression and result
 
 **Display Animations (Ultra-Fast 100-150ms):**
 - **Entrance:** slideDownFadeIn (150ms spring) on page load
 - **Number Change:** numberSlideUp (120ms spring) when digit enters
-- **Result Pulse:** scale(1.08) over 150ms (satisfying spring)
+- **Result Update Animation:** scale(1.0 → 1.08 → 1.0) over 150ms (satisfying spring)
 - **Expression Update:** fadeIn (100ms) with smooth transition
 - **Timing:** All under 150ms for "native app" responsiveness
 
-**Result:** Display feels anchored, substantial, and instantly responsive
+**Result:** Display feels like real calculator hardware with authentic screen glow and reflection
 
 ### Button Interaction System (10/10 Polish)
 
 Every button interaction includes synchronized multi-sensory feedback with unprecedented depth and quality:
 
-#### Physical Press Feel (ULTRA TACTILE)
-- **Active State:** Scale 0.92 + translateY(3px) (very deep compression)
-- **Shadow Inset:** 4px 4px 8px rgba(0,0,0,0.7) (strong depressed effect)
-- **Outer Shadow:** 0 1px 2px rgba(0,0,0,0.6) (ground effect)
-- **Transition Duration:** 100ms (instant feedback)
-- **Purpose:** Creates exceptionally satisfying physical press sensation
+#### Physical Press Feel (TACTILE FEEDBACK)
+- **Active State:** Scale 0.93 (deep compression)
+- **Outer Shadow:** 5px 5px 12px rgba(0,0,0,0.5) (physical depth)
+- **Highlight Shadow:** -2px -2px 6px rgba(255,255,255,0.05) (realism)
+- **Inset Shadow:** 4px 4px 10px rgba(0,0,0,0.8) (depressed effect)
+- **Transition Duration:** 50ms cubic-bezier(0.34, 1.56, 0.64, 1)
+- **Purpose:** Creates extremely satisfying physical button press sensation
 
-**Press Timeline (100ms):**
+**Press Timeline (50ms):**
 ```
-0ms:     User down (scale 1.0)
-50ms:    Peak compression (scale 0.92, shadow 4px)
-100ms:   Release completes
+0ms:     User down (scale 1.0, outer shadow visible)
+25ms:    Peak compression (scale 0.93, large inset shadow)
+50ms:    Release completes
 ```
+
+#### Google-Style Ripple Effect (MATERIAL DESIGN)
+Every button tap creates a professional ripple animation:
+
+- **Trigger:** On click / tap
+- **Animation:** ripplePulse (600ms ease-out)
+- **Effect:** Radial gradient expansion from center
+- **Scale:** 0 → 4x (covers whole button)
+- **Opacity:** 1.0 → 0 (smooth fade)
+- **Background:** radial-gradient(circle, rgba(255,255,255,0.6), rgba(255,255,255,0))
+- **Performance:** GPU-optimized transform
+- **Result:** Professional Material Design feel matching Google Calculator
 
 #### Hover Effects (Engagement)
 - **Regular Buttons:** translateY(-4px) + glow enhancement
@@ -307,15 +327,43 @@ Page load features a premium staggered button entrance:
 - **End State:** opacity 1, scale 1.0
 - **Easing:** cubic-bezier(0.34, 1.56, 0.64, 1) - energetic, alive
 
-### Scientific Controls Polish
+#### Scientific Controls Polish
 
 When scientific mode is activated:
 
-- **Slide Animation:** 150ms cubic-bezier spring (faster than before)
-- **Background:** Gradient border with orange tint
+- **Slide Animation:** 150ms cubic-bezier spring (controlled entrance)
+- **Background:** Gradient border with operator color tint
 - **Border Glow:** 1px rgba(255,149,0,0.15) border
 - **Padding:** 12px inside container
 - **Sensation:** Premium expandable controls feel
+
+### Time Display Animations (Interactive Clock)
+
+The clock display responds to user interaction with premium animations:
+
+#### Time Press Feedback
+- **Active State:** scale(0.96) + opacity(0.8) 
+- **Transition:** 0.08s cubic-bezier (instant feedback)
+- **Purpose:** Tactile confirmation of time being clickable
+
+#### Time Pop Animation
+- **Animation:** timePop (200ms cubic-bezier spring)
+- **Scale Sequence:** 1.0 → 1.08 → 1.0
+- **Trigger:** On time tap
+- **Effect:** Satisfying bounce, indicates format toggle
+
+#### Time Glow Pulse
+- **Animation:** glowPulse (300ms ease-in-out)
+- **Text-Shadow:** 0 0 0px → 0 0 12px → 0 0 0px
+- **Glow Color:** rgba(255, 255, 255, 0.4)
+- **Effect:** Subtle "wake up" effect on time element
+
+#### 12H/24H Format Toggle
+- **Trigger:** Tap on time display
+- **Animation Sync:** All three animations run simultaneously (pop + glow + vibrate)
+- **Duration:** 300ms total
+- **Haptic:** Medium vibration on success
+- **Result:** Interactive, responsive time interaction
 
 ### Touch Target Perfection
 
@@ -324,22 +372,25 @@ When scientific mode is activated:
 - **Minimum Gap:** 12px between adjacent buttons
 - **Result:** Comfortable thumb targeting, zero mis-taps
 
-### Animation Registry (COMPLETE - 10/10)
+### Animation Registry (COMPLETE - 13 Animations)
 
-| Animation | Type | Duration | Easing | Trigger | Quality |
-|-----------|------|----------|--------|---------|---------|
-| **Button Press** | Physics | 100ms | Ease-out | Down Event | scale(0.92) inset(4px) |
-| **Button Hover** | Engagement | 100ms | Ease-out | Hover | translateY(-4px) glow |
-| **Entrance** | Page Load | 400ms | Spring | Load | Cascading 30ms stagger |
+| Animation | Type | Duration | Easing | Trigger | Effect |
+|-----------|------|----------|--------|---------|--------|
+| **Button Press** | Physics | 50ms | Cubic-bezier | Down Event | scale(0.93) + inset shadow |
+| **Ripple Effect** | Material | 600ms | Ease-out | Tap | Radial expansion (0→4x) |
+| **Button Hover** | Engagement | 100ms | Ease-out | Hover | translateY(-4px) + glow |
+| **Entrance** | Page Load | 400ms | Spring | Load | Cascading 30-150ms stagger |
 | **Expression Change** | Display | 100ms | Ease | Type | fadeIn + transition |
 | **Number Slide** | Display | 120ms | Spring | Digit | numberSlideUp |
 | **Result Pulse** | Success | 150ms | Spring | Equals | scale(1.0→1.08→1.0) |
 | **Operator Pulse** | State | 150ms | Spring | Operator | glow animation |
+| **Time Pop** | Interactive | 200ms | Spring | Time Tap | scale(1.0→1.08→1.0) |
+| **Time Glow Pulse** | Interactive | 300ms | Ease-in-out | Time Tap | text-shadow pulse |
 | **Error Shake** | Alert | 400ms | Linear | Invalid | ±4px oscillation |
 | **Scientific Slide** | Panel | 150ms | Spring | SCI Mode | slideDown |
-| **Ripple (Legacy)** | Touch | 300ms | Linear | Tap | Radial fade |
+| **Theme Toggle Spin** | Theme | 600ms | Spring | Theme Change | Spin + brightness pulse |
 
-**Key Achievement:** Nearly all animations now 100-150ms (native app speed)
+**Key Achievement:** All animations are under 600ms (snappy), most 50-150ms (native app speed)
 
 ### Performance Specifications
 

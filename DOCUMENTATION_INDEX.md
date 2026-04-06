@@ -63,13 +63,19 @@ Full detailed documentation covering:
   - History panel
 
 - **[User Interface & Animations](DOCS.md#user-interface--animations)**
-  - Display system (52px, 130px height)
-  - Button press physics (scale 0.92, 4px inset)
+  - Display system (56px, 160px height, realistic glowing screen)
+  - Glass reflection effect & subtle texture
+  - Button press physics (scale 0.93, 5px shadow)
+  - Google-style ripple effects (600ms)
+  - Time display animations (pop + glow)
   - Operator glow balance
   - Touch target sizing (70px)
-  - All 100-150ms animations
+  - Interactive 12H/24H time toggle
+  - All animations 50-600ms (native app speed)
+  - Smart haptic feedback (light/medium/strong)
   - Audio & haptic feedback
   - Accessibility features
+  - Animation registry (13 animations)
 
 - **[Keyboard Shortcuts](DOCS.md#keyboard-shortcuts)**
 - **[Themes](DOCS.md#themes)**

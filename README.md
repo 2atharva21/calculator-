@@ -21,11 +21,13 @@
 
 This isn't just another calculator — it's a **premium, production-grade application** that demonstrates:
 
-- 🎯 **Exceptional UX Design** (11/10) - Every interaction feels premium and native
-- 🎨 **Flawless Visual Design** (11/10) - Modern, refined, perfectly polished
-- ⚡ **Responsive Interactions** (11/10) - Instant tactile feedback on every click
-- 📱 **True PWA Native Feel** - Installable on home screen, full-screen experience
-- 🎧 **Immersive Feedback** - Audio + haptics + visual animations
+- 🎯 **Exceptional UX Design** (10/10) - Google Material Design + Apple aesthetic
+- 🎨 **Flawless Visual Design** (10/10) - Modern hardware-like display with realistic screen effects
+- ⚡ **Ultra-Responsive Interactions** (10/10) - 60fps animations, instant tactile feedback
+- 📱 **True PWA Native Feel** - Installable on home screen, full-screen, offline-capable
+- 🎧 **Immersive Multi-Sensory Feedback** - Ripple effects + haptics + audio + animations
+- 💡 **Realistic Calculator Screen** - Glowing display, glass reflections, subtle texture
+- ⏱️ **Smart Time Display** - Animated clock with 12H/24H toggle, interactive pop animation
 - 🔒 **Offline Ready** - Works 100% offline via service worker caching
 - 👨‍💼 **Portfolio-Ready Code** - Clean, documented, production-optimized
 - 🚀 **Zero Dependencies** - Pure JavaScript, no build tools, no bloat
@@ -85,22 +87,28 @@ Transform it into an installable app on your device:
 
 ## 🎨 Key Features
 
-### 💎 Premium User Experience (11/10)
+### 💎 Premium User Experience (10/10)
 
 | Feature | Details | Impact |
 |---------|---------|--------|
-| **Ultra-Responsive Display** | 52px font, 130px height, smooth 100ms fade-in | Crystal-clear visibility |
-| **Physical Button Press** | `scale(0.92)` + 4px inset shadow + 3px translateY | Extremely tactile feel |
-| **Deep Button Shadows** | `inset 4px 4px 8px rgba(0,0,0,0.7)` | Real physical depth |
-| **Visual Balance Glow** | 20px subtle orange glow on all buttons | Operator column perfectly balanced |
-| **Operator Active Pulse** | 150ms glow animation with double-layer box-shadow | Satisfying visual feedback |
-| **Result Animation Pulse** | `scale(1.08)` spring effect on equals press | Celebration feel |
+| **Realistic Calculator Screen** | Glowing gradient background + glass reflection overlay + subtle texture | Feels like real device |
+| **Glowing Display** | Inset blue glow (0, 150, 255) + depth shadow | Modern "lit screen" feel |
+| **Glass Reflection** | ::before pseudo-element with radial gradient | Premium hardware aesthetic |
+| **Subtle Texture** | Microscopic screen grain (0.03 opacity) | Authentic, not flat |
+| **Google-Style Ripple** | Radial expansion animation (600ms) on every tap | Material Design Polish |
+| **Smart Haptic Feedback** | Light (8ms) for numbers, Strong (12-20ms) for operators | Contextual tactile response |
+| **Ultra-Responsive Display** | 56px font, 160px height, smooth 100ms animations | Crystal-clear visibility |
+| **Physical Button Press** | `scale(0.93)` + 5px inset shadow + instant feedback | Extremely tactile feel |
+| **Deep Button Shadows** | `5px 5px 12px rgba(0,0,0,0.5)` + 2px highlight | Real physical depth |
+| **Balanced Button Colors** | Blue (#2c5f75) and Orange (#ff9a1a) perfectly balanced | No visual dominance |
+| **Operator Active Glow** | Bright glow + scale animation on operator press | Clear visual feedback |
+| **Result Pop Animation** | `scale(1.08)` spring effect on equals press | Celebration moment |
 | **Perfect Touch Targets** | 70px button height (Apple/Google standard) | Comfortable thumb accessibility |
-| **100-150ms Animations** | All transitions ultra-snappy | Native app response time |
-| **Safe Area Respect** | Notch/waterfall/gesture bar accommodations | Works on any modern device |
-| **Audio Feedback** | 4 tone types (click/operator/equals/error) | Immersive feedback |
-| **Haptic Vibration** | Configurable [10ms], [15,10,15], [40,30,40] patterns | Mobile tactile response |
-| **Scientific Control Glow** | Gradient border + animated slide-down | Premium controls feel |
+| **80-150ms Animations** | All transitions ultra-snappy | Native app response time |
+| **Safe Area Support** | Notch/waterfall/gesture bar accommodation | Works on any device |
+| **Time Display Animation** | Pop effect + glow pulse on tap with 12H/24H toggle | Interactive clock feel |
+| **Expression Line** | Shows calculation in progress (14px, subtle) | Real calculator behavior |
+| **Number Color Tint** | Cool blue-white (#e8f0ff) on glowing display | Modern screen aesthetic |
 
 ### 📱 PWA Features (True Native App)
 
