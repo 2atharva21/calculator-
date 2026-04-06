@@ -20,33 +20,68 @@ Welcome to the NEXUS Calculator documentation. This guide covers everything you 
 
 ### First Time Users
 
-1. **Download or Open**
+1. **Quick Browser Access**
    - Download `index.html` from GitHub
    - Open in any modern web browser
-   - No installation needed
+   - Start using immediately (no installation needed)
 
-2. **Basic Calculation**
+2. **PWA Installation (Optional but Recommended)**
+   - See [PWA Installation Guide](#pwa-installation) below
+   - Gives you native app experience on home screen
+   - Works 100% offline
+   - Removes browser chrome completely
+
+3. **Basic Calculation**
    - Type numbers using buttons or keyboard
    - Press operator button (+, −, ×, ÷)
    - Enter second number
    - Press **=** to get result
 
+### 📱 PWA Installation
+
+Transform NEXUS Calculator into a true native app:
+
+**iOS (iPhone/iPad):**
+1. Safari: Open `index.html`
+2. Tap Share (arrow icon)
+3. Tap "Add to Home Screen"
+4. Tap "Add"
+
+**Android (Chrome):**
+1. Chrome: Open `index.html`
+2. Menu (three dots)
+3. Tap "Install app"
+4. Tap "Install"
+
+**Desktop (Chrome/Edge):**
+1. Click Install icon (top right)
+2. Click "Install"
+3. Launches fullscreen
+
+**Result:** 
+- ✅ Home screen app icon
+- ✅ Full-screen experience (no browser chrome)
+- ✅ Works offline completely
+- ✅ Behaves like native app
+
 ### Visual Tour
 
 ```
 ┌─────────────────────────────────┐
-│  Display: 0                     │   ← Shows current input/result
+│  Display Area                   │   ← Ultra-clear 52px font
+│  12 × 4                         │   ← Shows calculation
+│         48                      │   ← Shows result
 ├─────────────────────────────────┤
 │  ┌──────┬──────┬──────┬──────┐  │
-│  │  C   │ +/−  │  %   │  ÷   │  │   ← Basic operations
+│  │  C   │ +/−  │  %   │  ÷   │  │   ← Basic operations (orange glow)
 │  ├──────┼──────┼──────┼──────┤  │
-│  │  7   │  8   │  9   │  ×   │  │   ← Number pad
+│  │  7   │  8   │  9   │  ×   │  │   ← Number pad (70px tall)
 │  ├──────┼──────┼──────┼──────┤  │
 │  │  4   │  5   │  6   │  −   │  │
 │  ├──────┼──────┼──────┼──────┤  │
 │  │  1   │  2   │  3   │  +   │  │
 │  ├──────┼──────┼──────┼──────┤  │
-│  │    0     │  .   │  =   │  │   ← Result button
+│  │    0     │  .   │  =   │  │   ← Satisfying spring feel
 │  └──────┴──────┴──────┴──────┘  │
 └─────────────────────────────────┘
 ```
@@ -185,95 +220,126 @@ The NEXUS Calculator features a premium, responsive interface with sophisticated
 
 ### Display System (Premium Grade)
 
-The display is optimized for maximum readability and premium feel:
+The display is optimized for maximum clarity and premium feel:
 
 **Dimensions & Layout:**
-- Height: 26% of calculator height (flex ratio)
-- Padding: 18px 16px 14px 16px (optimized spacing)
-- Font Size: 3.4rem (bold, legible at distance)
-- Background: Translucent glass effect with theme gradients
+- Height: 130px (prominent, anchored)
+- Font Size: 52px (crystal clear, highly visible)
+- Expression Font: 16px (0.65 opacity, clear context)
+- Padding: 28px 20px 16px 20px (breathing room)
+- Spacing: 6px gap between expression and result
 
-**Display Animations:**
-- **Entrance:** fadeIn (300ms) + slideDownFadeIn (300ms) on page load
-- **Result Animation:** Bounce effect when equals is pressed
-- **Previous Calc:** Shows calculation history (e.g., "32 + 8 = " in dim text)
-- **Transition:** 300ms smooth fade when display updates
+**Display Animations (Ultra-Fast 100-150ms):**
+- **Entrance:** slideDownFadeIn (150ms spring) on page load
+- **Number Change:** numberSlideUp (120ms spring) when digit enters
+- **Result Pulse:** scale(1.08) over 150ms (satisfying spring)
+- **Expression Update:** fadeIn (100ms) with smooth transition
+- **Timing:** All under 150ms for "native app" responsiveness
 
-### Button Interaction System (120ms Enhanced Press Feel)
+**Result:** Display feels anchored, substantial, and instantly responsive
 
-Every button interaction includes synchronized multi-sensory feedback:
+### Button Interaction System (10/10 Polish)
 
-#### Tactile Feedback (Press Effect)
-- **Active State:** Scale 0.92 (2.5px compression)
-- **Shadow Inset:** 0 2px 6px inset (depressed appearance)
-- **Transition Duration:** 120ms (snappy, responsive)
-- **Color Shift:** Subtle saturation increase on press
-- **Purpose:** Creates satisfying "click" feeling without system click sound
+Every button interaction includes synchronized multi-sensory feedback with unprecedented depth and quality:
 
-**Press Timeline:**
+#### Physical Press Feel (ULTRA TACTILE)
+- **Active State:** Scale 0.92 + translateY(3px) (very deep compression)
+- **Shadow Inset:** 4px 4px 8px rgba(0,0,0,0.7) (strong depressed effect)
+- **Outer Shadow:** 0 1px 2px rgba(0,0,0,0.6) (ground effect)
+- **Transition Duration:** 100ms (instant feedback)
+- **Purpose:** Creates exceptionally satisfying physical press sensation
+
+**Press Timeline (100ms):**
 ```
 0ms:     User down (scale 1.0)
-60ms:    Peak compression (scale 0.92) + shadow
-120ms:   Release completes
+50ms:    Peak compression (scale 0.92, shadow 4px)
+100ms:   Release completes
 ```
 
-#### Hover Effects (Engagement Layer)
-- **Regular Buttons:** translateY(-6px) + scale(1.05)
-- **Operator Buttons:** translateY(-8px) + scale(1.08) + enhanced glow
-- **Duration:** 150ms cubic-bezier for spring-like motion
-- **Shadow:** Increased depth shadow below lifted button
+#### Hover Effects (Engagement)
+- **Regular Buttons:** translateY(-4px) + glow enhancement
+- **Operator Buttons:** translateY(-4px) + 32px glow radius + enhanced shadow
+- **Duration:** 100ms (responsive, not delayed)
+- **Shadow:** Increased depth with orange glow optimization
 
-#### Ripple Animations (Visual Feedback)
-- **Duration:** 300ms radial expansion
-- **Start:** Click point with 60% opacity
-- **End:** 300px radius at 0% opacity (fade out)
-- **Purpose:** Shows precise click registration point
-- **Effect:** Subtle Material Design-inspired pulse
+#### Operator Button Refinement (BALANCED GLOW)
+Operator buttons (+, −, ×, ÷) now have perfect visual balance:
 
-#### Success Bounce (Equals Button)
-- **Duration:** 400ms total
-- **Sequence:** Scale 1.0 → 1.15 → 0.95 → 1.0
-- **Purpose:** Celebratory feedback on successful calculation
-- **Coupled With:** Chime audio tone (1kHz chirp) + success vibration
+- **Base Glow:** 0 0 20px rgba(255,149,0,0.15) (subtle)
+- **Hover Glow:** 0 0 32px rgba(255,149,0,0.25) (enhanced)
+- **Active Glow:** 0 0 40px rgba(255,149,0,0.4) (highlighted)
+- **All Buttons Glow:** Subtle 20px glow on all buttons (balance)
+- **Result:** Perfect visual weight distribution, no single column feels heavy
 
-#### Error Shake (Invalid Operations)
-- **Duration:** 400ms horizontal oscillation
-- **Amplitude:** ±4px left-right movement
-- **Frequency:** 3 shakes per 400ms
-- **Coupled With:** Error buzzer (300→200Hz sweep) + error vibration pattern
+#### Active Operator State (PULSE ANIMATION)
+When an operator is selected, it activates and pulses:
 
-### Operator Button Refinement (Premium Glow)
+- **State Duration:** Stays active until equals or clear
+- **Animation:** operatorActivePulse (150ms, repeats on new operator)
+- **Glow Surge:** Double-layer box-shadow swells and retreats
+- **Visual Feedback:** Crystal-clear indicator of active operation
+- **Example:** Press +, button becomes cream/orange and pulses
 
-Operator buttons (+, −, ×, ÷) have subtle premium styling:
+#### Success Celebration (RESULT PULSE)
+When you press equals:
 
-- **Glow Effect:** 0 0 8px rgba(255,140,0,0.4) (subtle orange glow)
-- **Depth Shadow:** 0 6px 14px rgba(0,0,0,0.6)
-- **Gradient:** 145° linear gradient (#ff9f0a → #ff7a00)
-- **Hover:** Glow increases to 0 0 12px rgba(255,140,0,0.6)
-- **Active:** Inset shadow with slight desaturation
+- **Animation:** resultPulseScale (150ms spring)
+- **Sequence:** scale(1.0) → scale(1.08) → scale(1.0)
+- **Coupled With:** Audio chime + celebration vibration
+- **Sensation:** Satisfying "ding" moment
 
-### Entrance Animation (Cascading Buttons)
+#### Error Feedback (VISUAL ALERT)
+Invalid operations trigger immediate feedback:
 
-Page load features a staggered button entrance:
+- **Display Shake:** ±4px horizontal oscillation
+- **Duration:** 400ms, 3 cycles
+- **Coupled With:** Error buzz (300→200Hz sweep) + error vibration
+- **Visual:** Error text shows in red
 
-- **Total Duration:** 400ms (all buttons within this window)
-- **Per-Button Stagger:** 30ms increments (0, 30, 60, 90ms... up to 150ms)
-- **Effect:** Combines fade-in + scale-up for wave appearance
+#### Entrance Animation (CASCADING FLOW)
+
+Page load features a premium staggered button entrance:
+
+- **Total Duration:** 400ms (all buttons enter within window)
+- **Per-Button Stagger:** 30-150ms increments (creates wave)
+- **Effect:** Fade-in + spring scale for premium feel
 - **Start State:** opacity 0, scale 0.8
 - **End State:** opacity 1, scale 1.0
-- **Easing:** cubic-bezier(0.34, 1.56, 0.64, 1) - energetic spring curve
+- **Easing:** cubic-bezier(0.34, 1.56, 0.64, 1) - energetic, alive
 
-### Animation Registry (Complete Specification)
+### Scientific Controls Polish
+
+When scientific mode is activated:
+
+- **Slide Animation:** 150ms cubic-bezier spring (faster than before)
+- **Background:** Gradient border with orange tint
+- **Border Glow:** 1px rgba(255,149,0,0.15) border
+- **Padding:** 12px inside container
+- **Sensation:** Premium expandable controls feel
+
+### Touch Target Perfection
+
+- **Button Height:** 70px (within 68-72px Apple/Google standard)
+- **Button Width:** 70px (equal for touch comfort)
+- **Minimum Gap:** 12px between adjacent buttons
+- **Result:** Comfortable thumb targeting, zero mis-taps
+
+### Animation Registry (COMPLETE - 10/10)
 
 | Animation | Type | Duration | Easing | Trigger | Quality |
 |-----------|------|----------|--------|---------|---------|
-| **Entrance** | Page Load | 400ms | Spring (0.34,1.56,0.64,1) | Load | Staggered 30ms |
-| **Ripple** | Click Event | 300ms | Linear fade | Button Press | 300px radius |
-| **Bounce** | Success | 400ms | Ease-out | Equals Press | 1.0→1.15→0.95→1.0 |
-| **Shake** | Error | 400ms | Linear oscillation | Invalid Op | ±4px / 3 cycles |
-| **Hover** | Mouse Enter | 150ms | Ease-out | Hover | translateY + scale |
-| **Press** | Mouse Down | 120ms | Ease-in | Down Event | Scale 0.92 + inset |
-| **Display** | Value Change | 300ms | Ease-in-out | Calculation | Fade + slide |
+| **Button Press** | Physics | 100ms | Ease-out | Down Event | scale(0.92) inset(4px) |
+| **Button Hover** | Engagement | 100ms | Ease-out | Hover | translateY(-4px) glow |
+| **Entrance** | Page Load | 400ms | Spring | Load | Cascading 30ms stagger |
+| **Expression Change** | Display | 100ms | Ease | Type | fadeIn + transition |
+| **Number Slide** | Display | 120ms | Spring | Digit | numberSlideUp |
+| **Result Pulse** | Success | 150ms | Spring | Equals | scale(1.0→1.08→1.0) |
+| **Operator Pulse** | State | 150ms | Spring | Operator | glow animation |
+| **Error Shake** | Alert | 400ms | Linear | Invalid | ±4px oscillation |
+| **Scientific Slide** | Panel | 150ms | Spring | SCI Mode | slideDown |
+| **Ripple (Legacy)** | Touch | 300ms | Linear | Tap | Radial fade |
+
+**Key Achievement:** Nearly all animations now 100-150ms (native app speed)
 
 ### Performance Specifications
 

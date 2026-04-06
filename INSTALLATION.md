@@ -1,52 +1,163 @@
-# Installation Guide
+# Installation & Setup Guide
 
 ## Overview
 
-NEXUS Calculator can be set up in multiple ways depending on your needs. Choose the method that best suits your use case.
+NEXUS Calculator is a **zero-setup web app** that works immediately. However, for the best experience, install it as a PWA (Progressive Web App) on your device.
 
 ---
 
 ## Quick Start (2 Minutes)
 
-### Option 1: Download & Open
-1. Download `index.html` from the GitHub repository
+### Option 1: Open Directly in Browser (Instant)
+1. Download `index.html` from GitHub
 2. Open the file in your web browser
-3. Start using the calculator immediately
+3. Start using immediately
 
-✅ **No installation, no dependencies, works offline**
+✅ **No installation, zero dependencies, works offline, service worker active**
+
+---
+
+## PWA Installation (True Native App Experience)
+
+### Install as Native App ⭐ Recommended
+
+Converting to an app takes 30 seconds and removes browser chrome completely for a native app feel.
+
+---
+
+## Platform-Specific Installation
+
+### 📱 iOS (iPhone/iPad)
+
+**Step-by-step:**
+1. Open Safari browser
+2. Navigate to `index.html` (or bookmark it first)
+3. Tap **Share** button (arrow icon at bottom)
+4. Scroll down and tap **Add to Home Screen**
+5. Enter app name: `NEXUS Calculator` (or keep default)
+6. Tap **Add** in top-right
+7. Tap **Add** again to confirm
+
+**Result:**
+- App icon appears on home screen
+- Opens full-screen without browser chrome
+- Touch the Home button once to show/hide app
+- Works 100% offline
+
+**Indicators you've succeeded:**
+- ✅ No Safari address bar visible
+- ✅ Orange "C" icon on home screen
+- ✅ No browser navigation buttons
+
+---
+
+### 🤖 Android (Chrome/Firefox/Edge)
+
+**Chrome Method (Recommended):**
+1. Open Chrome browser
+2. Navigate to `index.html`
+3. Tap **Menu** button (three dots, top-right)
+4. Tap **Install app** (or **Add to Home screen**)
+5. Review the install dialog
+6. Tap **Install** button
+
+**Result:**
+- App appears in App Drawer
+- Can pin to home screen
+- Full-screen standalone experience
+- Service worker enables offline mode
+- Auto-updates in background
+
+**Firefox Method:**
+1. Open Firefox
+2. Navigate to `index.html`
+3. Tap **Menu** button
+4. Tap **Install** → **Add to Home Screen**
+5. Follow prompts
+
+---
+
+### 🖥️ Desktop (Windows/Mac/Linux)
+
+**Chrome/Edge (Chromium-based):**
+1. Open the browser
+2. Navigate to `index.html`
+3. Click **Install** icon (top-right of address bar)
+4. Click **Install** button
+5. App launches in its own window
+
+**Firefox:**
+1. Navigate to `index.html`
+2. Right-click page → **Create Shortcut**
+3. Choose **Add to Applications**
+4. Double-click created shortcut to launch
+
+**Manual Desktop Shortcut:**
+1. Right-click on `index.html`
+2. Create shortcut/desktop link
+3. Open with Chrome/Firefox for best experience
+
+---
+
+## Files in This Installation
+
+```
+nexus-calculator/
+├── index.html              ← Main app (open this file)
+├── manifest.json           ← PWA configuration
+├── service-worker.js       ← Offline support & caching
+├── README.md              ← Overview
+├── INSTALLATION.md        ← This file
+├── DOCS.md                ← Full documentation
+├── API.md                 ← API reference
+└── LICENSE                ← MIT License
+```
+
+**All in one file concept:** Everything is self-contained. Just `index.html` can run standalone, but `manifest.json` and `service-worker.js` enable PWA features.
 
 ---
 
 ## Installation Methods
 
-### Method 1: Direct Download ⭐ Recommended
+### Method 1: Direct Download ⭐ Recommended for Users
 
-**Best for:** Users who want immediate access
+**Best for:** Everyone - fastest, no dependencies
 
 ```bash
-# 1. Download index.html from GitHub
-# 2. Save to your computer
-# 3. Double-click to open in browser
+# 1. Download all files from GitHub:
+#    - index.html
+#    - manifest.json
+#    - service-worker.js
+# 2. Keep them in same folder
+# 3. Open index.html in browser
+# 4. (Optional) Install as PWA per platform instructions above
 ```
 
 **Pros:**
-- ✅ Fastest setup
+- ✅ Fastest setup (< 30 seconds)
 - ✅ No technical knowledge required
-- ✅ Works offline
+- ✅ Works offline immediately
+- ✅ Progressive enhancement
 
 **Cons:**
-- ❌ Manual updates needed for new versions
+- ❌ Manual updates needed for new versions (just re-download)
 
 ---
 
 ### Method 2: Clone with Git
 
-**Best for:** Developers who want latest updates
+**Best for:** Developers who want version control
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/nexus-calculator.git
 cd nexus-calculator
+
+# Open in browser (pick one):
+# - macOS: open index.html
+# - Windows: start index.html
+# - Linux: xdg-open index.html
+# - Or just double-click index.html
 
 # Open in browser
 open index.html          # macOS

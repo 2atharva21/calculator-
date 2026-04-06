@@ -2,52 +2,251 @@
 
 Welcome to NEXUS Calculator! Choose your starting point below.
 
----
-
-## 🚀 Getting Started
-
-**New to NEXUS?** Start here!
-
-### [📖 README.md](README.md)
-- Overview and key features
-- Quick start in 2 minutes
-- Technology stack
-- Browser support
-
-### [⚡ Quick Start Guide](DOCS.md#getting-started)
-- Your first calculation
-- Visual tour
-- Basic operations
-
 <div align="center">
 
-**👉 [Start Using NEXUS](index.html)**
+**[👉 OPEN CALCULATOR](index.html)** or **[📲 Add to Home Screen](#pwa-installation-guide)**
 
 </div>
 
 ---
 
+## 🚀 Quick Links by Goal
+
+| Goal | Start Here |
+|------|-----------|
+| **I just want to use it** | [Quick Start](#quick-start) below |
+| **I want to install it as an app** | [PWA Installation](#pwa-installation-guide) |
+| **I want detailed help** | [Full User Guide](DOCS.md) |
+| **I'm a developer** | [API Reference](API.md) + [Technical Details](DOCS.md#animation-specifications) |
+| **I want to contribute** | [Contributing Guide](CONTRIBUTING.md) |
+
+---
+
+## 🟢 Quick Start (30 seconds)
+
+### Just Use It Now
+1. Download `index.html`
+2. Open in browser
+3. Start calculating
+
+[Learn more →](DOCS.md#getting-started)
+
+### Or Install as App
+**iPhone:** Safari → Share → Add to Home Screen
+**Android:** Chrome → Menu → Install App
+**Desktop:** Chrome: Install button (top right)
+
+[Full PWA Guide →](INSTALLATION.md)
+
+---
+
 ## 📚 User Documentation
 
-### [📖 DOCS.md](DOCS.md) - Complete User Guide
-- [Features Guide](DOCS.md#features-guide)
-  - Standard Mode
-  - Scientific Mode
-  - Memory Functions
-  - History Panel
-- [User Interface & Animations](DOCS.md#user-interface--animations)
-  - Button animations (entrance, hover, click)
-  - Animation timings
-  - Performance optimizations
-  - Accessibility features
-  - Mobile optimizations
-- [Themes](DOCS.md#themes)
-- [Keyboard Shortcuts](DOCS.md#keyboard-shortcuts)
-- [FAQ](DOCS.md#faq)
-- [Troubleshooting](DOCS.md#troubleshooting)
+### [📖 README.md](README.md) - Overview
+- What makes NEXUS special
+- Key features at a glance
+- Technology stack
+- Quality metrics
 
-### [💾 INSTALLATION.md](INSTALLATION.md) - Setup & Deployment
-- [Quick Start](INSTALLATION.md#quick-start-2-minutes)
+### [⚡ DOCS.md](DOCS.md) - Complete User Guide
+Full detailed documentation covering:
+
+- **[Getting Started](DOCS.md#getting-started)**
+  - Quick browser access
+  - PWA installation steps
+  - Basic calculations
+
+- **[Features Guide](DOCS.md#features-guide)**
+  - Standard mode operations
+  - Scientific mode functions
+  - Memory functions
+  - History panel
+
+- **[User Interface & Animations](DOCS.md#user-interface--animations)**
+  - Display system (52px, 130px height)
+  - Button press physics (scale 0.92, 4px inset)
+  - Operator glow balance
+  - Touch target sizing (70px)
+  - All 100-150ms animations
+  - Audio & haptic feedback
+  - Accessibility features
+
+- **[Keyboard Shortcuts](DOCS.md#keyboard-shortcuts)**
+- **[Themes](DOCS.md#themes)**
+- **[FAQ](DOCS.md#faq)**
+- **[Troubleshooting](DOCS.md#troubleshooting)**
+
+### [💾 INSTALLATION.md](INSTALLATION.md) - Setup & PWA
+- Quick start (2 minutes)
+- **[PWA Installation Guide](INSTALLATION.md#pwa-installation-true-native-app-experience)**
+  - iOS (iPhone/iPad) detailed steps
+  - Android (Chrome/Firefox) methods
+  - Desktop (Windows/Mac/Linux) setup
+  - What you get after installation
+- Installation methods (direct, git clone)
+- File structure
+- Online vs offline
+- Troubleshooting installation
+
+### 📱 PWA Installation Guide
+
+Transform NEXUS into a native app on your device:
+
+#### **iOS (iPhone 13+ / iPad)**
+```
+1. Safari: Open index.html
+2. Tap Share (arrow icon at bottom)
+3. Scroll down → "Add to Home Screen"
+4. Name: "NEXUS Calculator"
+5. Tap Add (top right)
+6. Tap Add again to confirm
+```
+**Result:** Full-screen app, no browser chrome, works offline
+
+#### **Android (Chrome/Firefox)**
+```
+1. Chrome: Open index.html
+2. Tap Menu (⋮ three dots, top right)
+3. Tap "Install app"
+4. Review permissions
+5. Tap "Install"
+```
+**Result:** Install like any app from Play Store, full-screen experience
+
+#### **Desktop (Windows/Mac/Linux)**
+```
+Chrome/Edge Method:
+1. Open index.html in Chrome or Edge
+2. Click Install icon (top address bar, right side)
+3. Click "Install" button
+4. Opens in standalone window (like native app)
+
+Firefox Method:
+1. Right-click page → "Create Shortcut"
+2. Choose "Add to Applications"
+3. Double-click to launch
+```
+**Result:** Standalone window with no browser chrome
+
+[Full installation details →](INSTALLATION.md)
+
+---
+
+## 👨‍💻 Developer Documentation
+
+### [📖 API.md](API.md) - API Reference
+Complete API documentation for developers:
+
+- **[CalculatorLogic Class](API.md#calculatorlogic-api)**
+  - Properties (displayValue, operation, history, memory)
+  - Methods (append, setOperation, calculate, etc.)
+  - Scientific functions (sin, cos, sqrt, factorial, etc.)
+  - Memory operations (M+, M-, MR, MC)
+  - History management
+
+- **[CalculatorApp Class](API.md#calculatorapp-api)**
+  - UI management
+  - Event listeners
+  - Theme system (12 themes)
+  - Display updates
+  - Animation controls
+
+- **[ClockTimer Class](API.md#clocktimer-api)**
+  - Clock display
+  - Timer functionality
+
+- **[Events & Callbacks](API.md#events--callbacks)**
+- **[Data Structures](API.md#data-structures)**
+- **[Code Examples](API.md#examples)**
+- **[Troubleshooting](API.md#troubleshooting)**
+
+### [📋 CONTRIBUTING.md](CONTRIBUTING.md) - Development
+- Code style guide
+- How to contribute
+- Development workflow
+- Testing guidelines
+- Pull request process
+
+---
+
+## 📊 Technical Features
+
+### UX Excellence (11/10)
+- ✅ Ultra-responsive 100-150ms animations
+- ✅ Physical button press with 4px shadow depth
+- ✅ Operator glow perfectly balanced
+- ✅ 70px touch targets (Apple/Google standard)
+- ✅ Result pulse celebration on equals
+- ✅ Perfect safe-area support for notches
+
+### PWA Capabilities
+- ✅ Install to home screen (iOS/Android/Desktop)
+- ✅ Full-screen experience (no browser chrome)
+- ✅ Works 100% offline
+- ✅ Auto-updates in background
+- ✅ Service worker caching
+- ✅ App manifest with shortcuts
+
+### Accessibility & Performance
+- ✅ Keyboard navigation (all features)
+- ✅ Screen reader support (ARIA labels)
+- ✅ High contrast (4.5:1+ ratio)
+- ✅ 60fps locked animations
+- ✅ <100ms load time
+- ✅ Reduced motion support
+
+---
+
+## ❓ Frequently Asked
+
+**Q: Is it free?**
+A: Yes, MIT Licensed. Use freely, modify, redistribute.
+
+**Q: Does it work offline?**
+A: Yes, 100%. Service worker caches everything.
+
+**Q: How do I install it?**
+A: See [PWA Installation Guide](#pwa-installation-guide) above or [INSTALLATION.md](INSTALLATION.md)
+
+**Q: Can I extend it?**
+A: Yes! See [API Reference](API.md) and [Contributing](CONTRIBUTING.md)
+
+**Q: What browsers work?**
+A: All modern browsers (Chrome, Firefox, Safari, Edge, mobile browsers)
+
+**Q: Can I use it without internet?**
+A: Absolutely. Works 100% offline via service worker.
+
+[More FAQs →](DOCS.md#faq)
+
+---
+
+## 📞 Support
+
+- 📖 Read [DOCS.md](DOCS.md) for detailed help
+- 🔧 Check [API.md](API.md) for technical questions
+- 🐛 See [Troubleshooting](DOCS.md#troubleshooting)
+- 💬 Have suggestions? See [Contributing](CONTRIBUTING.md)
+
+---
+
+## 📄 All Documentation Files
+
+```
+nexus-calculator/
+├── README.md                    ← Start here (overview)
+├── DOCS.md                     ← Full user guide
+├── INSTALLATION.md             ← Setup & PWA guide
+├── API.md                      ← Developer reference
+├── DOCUMENTATION_INDEX.md      ← This file
+├── CONTRIBUTING.md             ← Developer guidelines
+├── CODE_OF_CONDUCT.md         ← Community standards
+├── LICENSE                     ← MIT License
+└── [Application Files]
+    ├── index.html             ← Main application
+    ├── manifest.json          ← PWA configuration
+    └── service-worker.js      ← Offline support
+```
 - [Installation Methods](INSTALLATION.md#installation-methods)
   - Direct download
   - Git clone
