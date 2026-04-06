@@ -2,11 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-title" content="NEXUS Calculator">
+    <meta name="application-name" content="NEXUS Calculator">
+    <meta name="theme-color" content="#0f0f11">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Premium calculator with scientific functions, haptic feedback, and native app feel">
+    <meta name="keywords" content="calculator, scientific, premium, app">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230f0f11' width='180' height='180' rx='40'/><text x='50%' y='50%' font-size='90' font-weight='700' fill='%23ff9500' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'>C</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230f0f11' width='192' height='192' rx='45'/><text x='50%' y='50%' font-size='100' font-weight='700' fill='%23ff9500' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'>C</text></svg>">
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect fill='%230f0f11' width='64' height='64' rx='14'/><text x='50%' y='50%' font-size='36' font-weight='700' fill='%23ff9500' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'>C</text></svg>">
+    
     <title>NEXUS - Premium Calculator</title>
     <style>
         .history-panel {
@@ -1426,6 +1440,92 @@
                 padding: 4px 12px;
             }
         }
+
+        /* PWA & Fullscreen Styling */
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: var(--primary-bg);
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            touch-action: manipulation;
+        }
+
+        /* Safe area insets for notched devices */
+        @supports (padding: max(0px)) {
+            body {
+                padding-top: max(0px, env(safe-area-inset-top));
+                padding-left: max(0px, env(safe-area-inset-left));
+                padding-right: max(0px, env(safe-area-inset-right));
+                padding-bottom: max(0px, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Prevent address bar from showing on scroll */
+        @supports (height: 100dvh) {
+            body {
+                height: 100dvh;
+            }
+        }
+
+        /* Fullscreen mode styling */
+        :fullscreen {
+            background: var(--primary-bg);
+        }
+
+        :-webkit-full-screen {
+            background: var(--primary-bg);
+        }
+
+        :-moz-full-screen {
+            background: var(--primary-bg);
+        }
+
+        /* Prevent text selection (native app behavior) */
+        .calculator-container,
+        .btn,
+        .display {
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Remove default input styling on iOS */
+        input {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        /* iOS scroll bounce fix */
+        body {
+            overscroll-behavior: none;
+            -webkit-user-select: none;
+        }
+
+        /* Status bar styling */
+        @media (display-mode: standalone) or (display-mode: fullscreen) {
+            body {
+                /* App is in standalone/fullscreen mode */
+            }
+        }
+
+        /* Window controls overlay for PWA desktop mode */
+        @media (display-mode: window-controls-overlay) {
+            body {
+                padding-top: 32px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2700,6 +2800,59 @@
         document.addEventListener('DOMContentLoaded', () => {
             new CalculatorApp();
             new ClockTimer();
+
+            // Register Service Worker for PWA functionality
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('✓ Service Worker registered:', registration);
+                        
+                        // Check for updates periodically
+                        setInterval(() => {
+                            registration.update().catch(err => {
+                                console.log('Service Worker update check failed:', err);
+                            });
+                        }, 60000); // Check every minute
+                    })
+                    .catch(error => {
+                        console.log('✗ Service Worker registration failed:', error);
+                    });
+
+                // Handle Service Worker updates
+                let refreshing;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshing) return;
+                    refreshing = true;
+                    window.location.reload();
+                });
+            }
+
+            // Request fullscreen on mobile standalone mode
+            if ((window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches) && document.fullscreenElement === null) {
+                // Auto-fullscreen on standalone PWA (optional - uncomment if desired)
+                // document.documentElement.requestFullscreen().catch(err => console.log('Fullscreen request denied:', err));
+            }
+
+            // Hide address bar on iOS
+            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                window.addEventListener('scroll', () => {
+                    window.scrollTo(0, 0);
+                }, false);
+            }
+
+            // Prevent pull-to-refresh on Android
+            document.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 1) e.preventDefault();
+            }, { passive: false });
+
+            // Handle app lifecycle
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    console.log('App backgrounded');
+                } else {
+                    console.log('App foregrounded');
+                }
+            });
         });
     </script>
 </body>
