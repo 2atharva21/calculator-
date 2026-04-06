@@ -351,19 +351,22 @@
 
         body {
             background: linear-gradient(135deg, #0f0f11 0%, #1a1a1f 100%);
-            height: 100vh;
-            height: 100dvh;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            overflow: hidden;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+            overflow-x: hidden;
             padding: 0;
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             transition: background 400ms ease, color 400ms ease;
+            margin: 0;
         }
 
         body[data-theme="dark"] {
@@ -388,78 +391,91 @@
             top: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.95) 100%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            border-bottom: none;
             padding: max(6px, env(safe-area-inset-top)) 12px;
             z-index: 999;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            display: flex;
+            box-shadow: none;
+            backdrop-filter: none;
+            display: none;
             justify-content: space-between;
             align-items: center;
-            height: max(44px, calc(44px + env(safe-area-inset-top)));
+            height: auto;
             box-sizing: border-box;
         }
 
-        /* Calculator container */
+        /* Show status bar on mobile */
+        @media (max-width: 768px) {
+            .mobile-status-bar {
+                display: flex;
+            }
+        }
+
+        /* Calculator container - Premium Card Design */
         .calculator-container {
-            background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.5) 100%);
-            border-radius: 32px;
-            padding: 12px 10px 14px 10px;
-            max-width: 360px;
-            width: calc(100% - 16px);
-            height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 8px);
+            background: linear-gradient(135deg, #1a1a23 0%, #242430 100%);
+            border-radius: 28px;
+            padding: 16px;
+            width: 380px;
+            max-width: 95vw;
+            aspect-ratio: 1 / 1.4;
+            max-height: 90vh;
             position: relative;
-            z-index: 1;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            margin: calc(max(44px, calc(44px + env(safe-area-inset-top))) + 4px) auto env(safe-area-inset-bottom) auto;
-            flex: 0 1 auto;
+            z-index: 10;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 1px rgba(255, 255, 255, 0.1) inset,
+                0 0 40px rgba(255, 149, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             will-change: transform;
+            backdrop-filter: blur(0px);
+            margin: auto;
         }
 
-        /* Display */
+        /* Display - Premium Typography */
         .display {
             background: transparent;
             text-align: right;
-            margin-bottom: 8px;
-            padding: 18px 16px 14px 16px;
-            flex: 0.26 1 auto;
+            margin-bottom: 16px;
+            padding: 24px 20px 12px 20px;
+            flex: 0 0 auto;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             justify-content: flex-end;
-            min-height: 60px;
+            min-height: 120px;
+            gap: 4px;
         }
 
         .display-calculation {
-            font-size: 0.7rem;
+            font-size: 15px;
             color: var(--display-text);
-            opacity: 0.35;
-            margin-bottom: 6px;
-            min-height: 12px;
-            letter-spacing: 0.3px;
-            line-height: 1;
-            max-height: 16px;
-            overflow: hidden;
+            opacity: 0.55;
             font-weight: 400;
+            letter-spacing: 0.2px;
+            line-height: 1.2;
+            max-height: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             animation: fadeIn 300ms ease;
             will-change: opacity;
         }
 
         .display-value {
-            font-size: 3.4rem;
-            font-weight: 700;
+            font-size: 48px;
+            font-weight: 600;
             color: var(--display-text);
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
             word-break: break-all;
             will-change: opacity, transform;
-            line-height: 1;
+            line-height: 1.2;
             max-width: 100%;
-            transition: opacity 150ms ease, transform 150ms ease;
-            text-shadow: 0 0 20px rgba(255, 149, 0, 0.15);
+            transition: opacity 200ms ease, transform 200ms ease;
+            text-shadow: 0 0 20px rgba(255, 149, 0, 0.1);
             animation: slideDownFadeIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
@@ -467,39 +483,47 @@
             animation: numberSlideUp 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Button grid */
+        .display-value.updated {
+            animation: resultPulseScale 200ms ease-out;
+        }
+
+        /* Button grid - Proper Spacing */
         .button-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-auto-rows: 1fr;
-            gap: 10px;
-            flex: 0.70 1 auto;
-            min-height: 280px;
+            gap: 12px;
+            flex: 1 1 auto;
+            min-height: 300px;
         }
 
-        /* Buttons */
+        /* Premium Button Design */
         .btn {
             padding: 0;
             border: none;
-            border-radius: 18px;
-            font-size: 1.3rem;
+            border-radius: 20px;
+            font-size: 1.25rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 120ms ease, box-shadow 120ms ease, background 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 120ms ease;
             position: relative;
             overflow: hidden;
-            background: var(--button-bg);
+            background: linear-gradient(135deg, #2a5a7a 0%, #1f4a62 100%);
             color: var(--button-text);
             touch-action: manipulation;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 8px 16px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            will-change: transform, box-shadow;
+            will-change: transform, box-shadow, background;
+            user-select: none;
         }
 
+        /* Staggered entrance animation */
         .btn:nth-child(1) { animation-delay: 30ms; }
         .btn:nth-child(2) { animation-delay: 50ms; }
         .btn:nth-child(3) { animation-delay: 70ms; }
@@ -514,51 +538,80 @@
         .btn:nth-child(12) { animation-delay: 150ms; }
 
         .btn:hover {
-            background: var(--button-hover);
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, #3a6a8a 0%, #2a5a72 100%);
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .btn:active {
-            transform: scale(0.92);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), inset 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            transform: scale(0.95) translateY(-2px);
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        /* Operator buttons */
+        .btn:focus-visible {
+            outline: 2px solid var(--operator-bg);
+            outline-offset: 2px;
+        }
+
+        /* Operator buttons - Bright Orange */
         .btn-operator {
-            background: linear-gradient(145deg, #ff9f0a, #ff7a00);
+            background: linear-gradient(135deg, #ff9500 0%, #ff7a00 100%);
             color: #ffffff;
             font-weight: 700;
             position: relative;
-            box-shadow: 0 0 8px rgba(255, 140, 0, 0.4), 0 6px 14px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 8px 16px rgba(255, 140, 0, 0.3),
+                0 0 1px rgba(255, 255, 255, 0.1) inset;
         }
 
         .btn-operator::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
-            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+            border-radius: inherit;
             opacity: 0;
             transition: opacity 200ms ease;
         }
 
         .btn-operator:hover {
-            background: linear-gradient(145deg, #ffb84d, #ff9500);
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 0 16px rgba(255, 140, 0, 0.6), 0 12px 24px rgba(255, 149, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #ffb84d 0%, #ff9500 100%);
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 24px rgba(255, 149, 0, 0.4),
+                0 0 20px rgba(255, 149, 0, 0.3) inset;
         }
 
         .btn-operator:hover::before {
             opacity: 1;
         }
 
+        .btn-operator:active {
+            transform: scale(0.95) translateY(-2px);
+            box-shadow: 
+                0 4px 8px rgba(255, 140, 0, 0.3),
+                inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-operator.active {
+            box-shadow: 
+                0 0 12px rgba(255, 149, 0, 0.6),
+                0 8px 16px rgba(255, 140, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
         /* Equals button */
         .btn-equals {
-            background: linear-gradient(145deg, #ff9500, #ff7a00);
+            background: linear-gradient(135deg, #ff9500 0%, #ff7a00 100%);
             color: #ffffff;
             font-weight: 700;
-            box-shadow: 0 0 8px rgba(255, 140, 0, 0.4), 0 6px 14px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 8px 16px rgba(255, 140, 0, 0.3),
+                0 0 1px rgba(255, 255, 255, 0.1) inset;
             position: relative;
         }
 
@@ -566,20 +619,29 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+            border-radius: inherit;
             opacity: 0;
             transition: opacity 200ms ease;
         }
 
         .btn-equals:hover {
-            background: linear-gradient(145deg, #ffb84d, #ff9500);
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 0 16px rgba(255, 140, 0, 0.6), 0 12px 24px rgba(255, 149, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #ffb84d 0%, #ff9500 100%);
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 24px rgba(255, 149, 0, 0.4),
+                0 0 20px rgba(255, 149, 0, 0.3) inset;
         }
 
         .btn-equals:hover::before {
             opacity: 1;
+        }
+
+        .btn-equals:active {
+            transform: scale(0.95) translateY(-2px);
+            box-shadow: 
+                0 4px 8px rgba(255, 140, 0, 0.3),
+                inset 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .btn-equals.success-click {
@@ -588,26 +650,24 @@
 
         /* Clear button */
         .btn-clear {
-            background: var(--button-bg);
-            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: linear-gradient(135deg, #2a5a7a 0%, #1f4a62 100%);
+            transition: all 150ms ease;
         }
 
         .btn-clear:hover {
-            background: var(--button-hover);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #3a6a8a 0%, #2a5a72 100%);
+            transform: translateY(-4px);
         }
 
-        /* Backspace button - +/− symbol */
+        /* Backspace button */
         .btn-backspace {
-            background: var(--button-bg);
-            transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: linear-gradient(135deg, #2a5a7a 0%, #1f4a62 100%);
+            transition: all 150ms ease;
         }
 
         .btn-backspace:hover {
-            background: var(--button-hover);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #3a6a8a 0%, #2a5a72 100%);
+            transform: translateY(-4px);
         }
 
         /* Scientific buttons */
@@ -665,51 +725,60 @@
             opacity: 1;
         }
 
-        /* Mode and angle toggle buttons - Pill Toggle Style */
+        /* Mode toggle button - Pill style */
         .btn-mode-toggle {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.06);
             font-weight: 700;
             font-size: 0.75rem;
-            letter-spacing: 1.2px;
-            transition: all 200ms ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.6);
-            will-change: background, box-shadow, border, color;
+            letter-spacing: 1.3px;
+            transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.65);
             cursor: pointer;
             padding: 8px 16px;
             height: auto;
-            border-radius: 20px;
+            border-radius: 999px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            will-change: background, box-shadow, border-color, color;
+            margin: 12px 0;
+            opacity: 1;
+            animation: none !important;
         }
 
         .btn-mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .btn-mode-toggle:active {
             transform: scale(0.96);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .btn-mode-toggle.active {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 140, 0, 0.5);
-            color: #ff9f0a;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 10px rgba(255, 140, 0, 0.3);
+            background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%);
+            border: 1px solid rgba(0, 150, 255, 0.6);
+            color: #ffffff;
+            box-shadow: 
+                0 0 16px rgba(0, 150, 255, 0.5),
+                0 6px 16px rgba(0, 150, 255, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            animation: pillTogglePulse 300ms ease-out;
         }
 
         .btn-mode-toggle.active:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: #ffb840;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 14px rgba(255, 140, 0, 0.4);
+            background: linear-gradient(135deg, #00aaff 0%, #0077dd 100%);
+            color: #ffffff;
+            box-shadow: 
+                0 0 20px rgba(0, 150, 255, 0.6),
+                0 8px 20px rgba(0, 150, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         /* Angle toggle button styling */
@@ -758,19 +827,70 @@
         #scientificButtons {
             display: none;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 12px;
             animation: slideDown 200ms ease-out;
+            flex: 0 0 auto;
         }
 
         #scientificButtons.show {
             display: grid;
         }
 
+        /* Scientific buttons styling */
+        .btn-scientific {
+            background: linear-gradient(135deg, #2a5a7a 0%, #1f4a62 100%);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 150ms ease;
+        }
+
+        .btn-scientific:hover {
+            background: linear-gradient(135deg, #3a6a8a 0%, #2a5a72 100%);
+            transform: translateY(-3px);
+        }
+
+        /* Scientific operator buttons */
+        .btn-scientific.btn-operator {
+            background: linear-gradient(135deg, #ff9500 0%, #ff7a00 100%);
+            font-size: 0.85rem;
+            box-shadow: 
+                0 8px 16px rgba(255, 140, 0, 0.3),
+                0 0 1px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .btn-scientific.btn-operator:hover {
+            background: linear-gradient(135deg, #ffb84d 0%, #ff9500 100%);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 20px rgba(255, 149, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Memory buttons */
+        .btn-memory {
+            background: linear-gradient(135deg, #8b2d9d 0%, #6b1a7f 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 150ms ease;
+            box-shadow: 
+                0 8px 16px rgba(139, 45, 157, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .btn-memory:hover {
+            background: linear-gradient(135deg, #9b3dab 0%, #7b2a8f 100%);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 20px rgba(139, 45, 157, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(-12px);
             }
             to {
                 opacity: 1;
@@ -886,18 +1006,18 @@
             font-weight: 600;
             user-select: none;
             -webkit-user-select: none;
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
 
         .theme-toggle:hover {
             background: none;
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(20deg);
             box-shadow: none;
             border-color: transparent;
         }
 
         .theme-toggle:active {
-            transform: scale(0.95);
+            transform: scale(0.95) rotate(20deg);
             box-shadow: none;
         }
 
@@ -917,7 +1037,16 @@
         }
 
         .theme-toggle:hover .theme-icon {
-            transform: rotate(20deg) scale(1.15);
+            transform: rotateZ(20deg) scale(1.15);
+        }
+
+        /* Hide status bar elements on desktop */
+        @supports (padding: max(0px)) {
+            @media (min-width: 769px) {
+                .mobile-status-bar {
+                    display: none !important;
+                }
+            }
         }
 
         /* Theme icon rotation animation */
@@ -1084,6 +1213,32 @@
             }
         }
 
+        @keyframes resultPulseScale {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pillTogglePulse {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .btn.active-click {
             animation: buttonPulse 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -1129,106 +1284,148 @@
             user-select: none;
         }
 
-        /* Mobile optimization */
-        @media (max-width: 768px) {
+        /* Desktop Layout - Centered */
+        @media (min-width: 1024px) {
             .calculator-container {
-                padding: 14px 10px 16px 10px;
-                border-radius: 28px;
-                width: calc(100% - 12px);
-                height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 6px);
-                max-width: 95vw;
-                background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.8) 100%);
+                width: 380px;
+                max-width: 90vw;
+                aspect-ratio: 1 / 1.45;
             }
+        }
 
-            .display {
-                flex: 0.25 1 auto;
-                min-height: 50px;
-                padding: 10px 10px 6px 10px;
+        /* Tablet Layout */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .calculator-container {
+                width: 360px;
+                max-width: 90vw;
+                aspect-ratio: 1 / 1.4;
             }
 
             .display-value {
-                font-size: 2.6rem;
+                font-size: 44px;
+            }
+        }
+
+        /* Mobile Layout - Full Screen */
+        @media (max-width: 767px) {
+            body {
+                justify-content: flex-start;
+                padding-top: env(safe-area-inset-top);
+            }
+
+            .calculator-container {
+                width: calc(100% - 16px);
+                max-width: 95vw;
+                height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 8px);
+                border-radius: 24px;
+                padding: 14px;
+                margin: 8px auto auto auto;
+                aspect-ratio: auto;
+            }
+
+            .display {
+                min-height: 100px;
+                padding: 20px 16px 8px 16px;
+            }
+
+            .display-value {
+                font-size: 42px;
+            }
+
+            .display-calculation {
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 1.2rem;
+                border-radius: 18px;
+                min-height: 56px;
+            }
+
+            .button-grid {
+                gap: 10px;
+                margin-bottom: 8px;
+            }
+
+            .btn-mode-toggle {
+                margin: 10px 0;
+                padding: 6px 14px;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Small mobile phones */
+        @media (max-width: 380px) {
+            .calculator-container {
+                padding: 12px;
+                border-radius: 20px;
+            }
+
+            .display {
+                min-height: 90px;
+                padding: 16px 12px 6px 12px;
+            }
+
+            .display-value {
+                font-size: 36px;
+            }
+
+            .display-calculation {
+                font-size: 13px;
+            }
+
+            .button-grid {
+                gap: 9px;
             }
 
             .btn {
                 font-size: 1.1rem;
                 border-radius: 16px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
-            }
-
-            .btn:hover {
-                transform: translateY(-4px) scale(1.03);
-            }
-
-            .btn:active {
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.15);
-            }
-
-            .button-grid {
-                gap: 9px;
-                flex: 0.75 1 auto;
-            }
-        }
-
-        /* Extra small phones */
-        @media (max-width: 380px) {
-            .calculator-container {
-                padding: 12px 8px 14px 8px;
-                border-radius: 24px;
-                background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.8) 100%);
-            }
-
-            .display {
-                flex: 0.24 1 auto;
-                min-height: 45px;
-                padding: 8px 8px 4px 8px;
-            }
-
-            .display-value {
-                font-size: 2.2rem;
-            }
-
-            .btn {
-                font-size: 0.95rem;
-                border-radius: 14px;
-                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
-            }
-
-            .button-grid {
-                gap: 8px;
-                flex: 0.76 1 auto;
+                min-height: 52px;
             }
         }
 
         /* Landscape orientation */
         @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 0;
+            }
+
             .calculator-container {
-                padding: 10px 8px 12px 8px;
+                height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+                aspect-ratio: auto;
+                width: calc(100% - 16px);
                 max-width: 95vw;
-                height: calc(100vh - max(44px, calc(44px + env(safe-area-inset-top))) - env(safe-area-inset-bottom) - 4px);
-                background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(var(--button-bg), 0.8) 100%);
             }
 
             .display {
-                padding: 8px 8px 4px 8px;
-                margin-bottom: 6px;
-                min-height: 40px;
-                flex: 0.22 1 auto;
+                min-height: 60px;
+                padding: 12px 16px 6px 16px;
+                margin-bottom: 8px;
             }
 
             .display-value {
-                font-size: 1.6rem;
+                font-size: 32px;
             }
 
-            .btn {
-                font-size: 0.9rem;
-                border-radius: 14px;
-                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            .display-calculation {
+                font-size: 12px;
             }
 
             .button-grid {
                 gap: 8px;
-                flex: 0.78 1 auto;
+            }
+
+            .btn {
+                font-size: 1rem;
+                border-radius: 14px;
+                min-height: 44px;
+            }
+
+            .btn-mode-toggle {
+                margin: 6px 0;
+                font-size: 0.65rem;
+                padding: 4px 12px;
             }
         }
     </style>
@@ -1972,6 +2169,7 @@
                 document.querySelector('[data-action="equals"]').addEventListener('click', (e) => {
                     animateButton(e.target, 'equals');
                     this.logic.calculate();
+                    this.triggerResultAnimation();
                     const result = this.logic.displayValue;
                     if (!this.logic.errorState) {
                         this.vibrateSuccess();
@@ -2201,6 +2399,7 @@
 
                     // Trigger number change animation
                     display.classList.remove('number-change');
+                    display.classList.remove('updated');
                     void display.offsetWidth; // Trigger reflow to restart animation
                     display.classList.add('number-change');
 
@@ -2210,6 +2409,16 @@
 
                 // Update history panel
                 this.updateHistoryPanel();
+            }
+
+            triggerResultAnimation() {
+                const display = document.getElementById('displayValue');
+                if (display) {
+                    display.classList.remove('updated');
+                    void display.offsetWidth; // Trigger reflow
+                    display.classList.add('updated');
+                    setTimeout(() => display.classList.remove('updated'), 200);
+                }
             }
 
             updateHistoryPanel() {
