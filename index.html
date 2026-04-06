@@ -97,7 +97,7 @@
         :root {
             --primary-bg: #1a1a1a;
             --secondary-bg: #2d2d2d;
-            --button-bg: #2c5f75;
+            --button-bg: #1f4e63;
             --button-hover: #1f4e63;
             --operator-bg: #ff9a1a;
             --operator-hover: #f57c00;
@@ -528,7 +528,8 @@
             justify-content: center;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', sans-serif;
             overflow-x: hidden;
-            padding: 0;
+            overflow-y: auto;
+            padding: clamp(20px, 5vw, 60px) clamp(12px, 3vw, 40px);
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
@@ -536,6 +537,16 @@
             -moz-osx-font-smoothing: grayscale;
             transition: background 400ms ease, color 400ms ease;
             margin: 0;
+        }
+        
+        /* Ultrawide bonus: ambient background glow */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(0, 150, 255, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         body[data-theme="dark"] {
@@ -580,78 +591,169 @@
             }
         }
 
-        /* Calculator container - Premium Card Design */
+        /* Calculator container - Premium Card Design with Adaptive Scaling */
         .calculator-container {
-            background: linear-gradient(135deg, #1a1a23 0%, #242430 100%);
-            border-radius: 28px;
-            padding: 16px 16px max(20px, env(safe-area-inset-bottom)) 16px;
-            width: 380px;
-            max-width: 95vw;
-            aspect-ratio: 1 / 1.4;
-            max-height: 90vh;
+            background: rgba(20, 24, 38, 0.7);
+            border-radius: clamp(20px, 4vw, 32px);
+            padding: 0 clamp(12px, 2vw, 20px) clamp(12px, 2vw, 20px) clamp(12px, 2vw, 20px);
+            width: 100%;
+            max-width: clamp(320px, 90vw, 540px);
+            aspect-ratio: 1 / 1.55;
             position: relative;
             z-index: 10;
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.6),
-                0 0 1px rgba(255, 255, 255, 0.1) inset,
+                inset 0 0 20px rgba(255, 255, 255, 0.03),
                 0 0 40px rgba(255, 149, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             will-change: transform;
-            backdrop-filter: blur(0px);
-            margin: auto;
+            backdrop-filter: blur(20px);
         }
 
-        /* Display - Premium Typography */
+        /* Window-style header */
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: rgba(232, 240, 255, 0.6);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: background 150ms ease;
+        }
+
+        .window-control.close:hover {
+            background: #ff6b6b;
+        }
+
+        .window-control.minimize:hover {
+            background: #ffd93d;
+        }
+
+        .window-control.maximize:hover {
+            background: #6bcf7f;
+        }
+
+        /* ====== DESKTOP HISTORY PANEL ====== */
+        .history-panel-desktop {
+            display: none;
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 240px;
+            max-height: 500px;
+            background: rgba(20, 24, 38, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+            font-size: 13px;
+            color: rgba(232, 240, 255, 0.7);
+            overflow-y: auto;
+            z-index: 5;
+        }
+
+        @media (min-width: 1100px) {
+            .history-panel-desktop {
+                display: block;
+            }
+        }
+
+        .history-panel-desktop .history-title {
+            font-size: 11px;
+            color: rgba(232, 240, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .history-panel-desktop .history-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: color 150ms ease;
+            font-family: 'SF Mono', 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .history-panel-desktop .history-item:hover {
+            color: rgba(232, 240, 255, 0.95);
+        }
+
+        .history-panel-desktop .history-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Display - Premium Typography with Adaptive Sizing */
         .display {
             background: transparent;
             text-align: right;
-            margin-bottom: 28px;
-            padding: 40px 20px 24px 20px;
+            margin-bottom: clamp(16px, 3vw, 32px);
+            padding: clamp(24px, 4vw, 40px) clamp(12px, 2vw, 20px) clamp(16px, 3vw, 24px) clamp(12px, 2vw, 20px);
             flex: 0 0 auto;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             justify-content: flex-end;
-            min-height: 160px;
-            gap: 12px;
+            min-height: clamp(120px, 16vh, 180px);
+            gap: clamp(8px, 1.5vw, 14px);
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
         .display-calculation {
-            font-size: 14px;
+            font-size: clamp(13px, 1.6vw, 18px);
             color: var(--display-text);
-            opacity: 0.6;
-            font-weight: 400;
+            opacity: 0.7;
+            font-weight: 500;
             letter-spacing: 0.4px;
-            line-height: 1.4;
-            max-height: 28px;
+            line-height: 1.5;
+            max-height: 32px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             animation: fadeIn 100ms ease;
             will-change: opacity, transform;
-            min-height: 24px;
+            min-height: 28px;
             transition: opacity 100ms ease, transform 100ms ease;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
         }
 
         .display-value {
-            font-size: 56px;
+            font-size: clamp(48px, 7vw, 72px);
             font-weight: 700;
             color: var(--display-text);
-            letter-spacing: -0.8px;
+            letter-spacing: -1px;
             word-break: break-all;
             will-change: opacity, transform;
             line-height: 1.1;
             max-width: 100%;
-            padding-right: 16px;
+            padding-right: clamp(12px, 2vw, 20px);
             transition: opacity 100ms ease, transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: slideDownFadeIn 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
             opacity: 1;
-            margin-top: 25px;
+            margin-top: 12px;
+            font-variant-numeric: tabular-nums;
         }
 
         .display-value.number-change {
@@ -662,22 +764,22 @@
             animation: resultPulseScale 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Button grid - Proper Spacing */
+        /* Button grid - Proper Spacing with Adaptive Gap */
         .button-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-auto-rows: 1fr;
-            gap: 12px;
+            gap: clamp(8px, 1.5vw, 16px);
             flex: 1 1 auto;
-            min-height: 300px;
+            min-height: clamp(240px, 50vh, 380px);
         }
 
-        /* Premium Button Design - Realistic Physical Press */
+        /* Premium Button Design - Realistic Physical Press with Adaptive Sizing */
         .btn {
             padding: 0;
             border: none;
-            border-radius: 20px;
-            font-size: 1.25rem;
+            border-radius: clamp(14px, 2.5vw, 20px);
+            font-size: clamp(16px, 2vw, 20px);
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.05s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.05s cubic-bezier(0.34, 1.56, 0.64, 1), background 100ms ease;
@@ -687,10 +789,10 @@
             color: var(--button-text);
             touch-action: manipulation;
             box-shadow: 
-                5px 5px 12px rgba(0, 0, 0, 0.5),
-                -2px -2px 6px rgba(255, 255, 255, 0.05),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+                6px 6px 16px rgba(0, 0, 0, 0.6),
+                -2px -2px 6px rgba(255, 255, 255, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -699,7 +801,7 @@
             animation: buttonEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             will-change: transform, box-shadow, opacity;
             user-select: none;
-            min-height: 70px;
+            min-height: clamp(56px, 10vh, 85px);
         }
 
         /* Glass shimmer effect */
@@ -727,21 +829,34 @@
         .btn:nth-child(11) { animation-delay: 130ms; }
         .btn:nth-child(12) { animation-delay: 150ms; }
 
-        .btn:hover {
-            background: linear-gradient(135deg, #3d7aae 0%, #2a5a8a 100%);
-            transform: translateY(-4px);
-            box-shadow: 
-                0 12px 24px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(255, 149, 0, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        @media (hover: hover) {
+            .btn:hover {
+                transform: translateY(-4px);
+                filter: brightness(1.12);
+                box-shadow: 
+                    8px 8px 20px rgba(0, 0, 0, 0.5),
+                    -2px -2px 8px rgba(255, 255, 255, 0.08),
+                    0 0 30px rgba(255, 149, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
         }
 
         .btn:active,
         .btn.pressed {
-            transform: scale(0.93);
+            transform: scale(0.92);
+            filter: brightness(1.15);
             box-shadow: 
                 inset 4px 4px 10px rgba(0, 0, 0, 0.8),
                 inset -2px -2px 4px rgba(255, 255, 255, 0.03);
+        }
+
+        .btn.keyboard-active {
+            transform: scale(0.92);
+            filter: brightness(1.15);
+            box-shadow: 
+                inset 4px 4px 10px rgba(0, 0, 0, 0.8),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.03),
+                0 0 15px rgba(255, 149, 0, 0.3);
         }
 
         .btn:focus-visible {
@@ -1585,6 +1700,60 @@
             display: none;
         }
 
+        /* ====== LARGE SCREEN OPTIMIZATION (1000px+) ====== */
+        @media (min-width: 1000px) {
+            .calculator-container {
+                max-width: clamp(400px, 95vw, 600px);
+                border-radius: clamp(24px, 5vw, 36px);
+            }
+
+            .btn {
+                min-height: clamp(65px, 12vh, 90px);
+                font-size: clamp(18px, 2.2vw, 22px);
+            }
+
+            .display {
+                min-height: clamp(140px, 18vh, 200px);
+            }
+
+            .display-value {
+                font-size: clamp(56px, 8vw, 72px);
+            }
+
+            .display-calculation {
+                font-size: clamp(14px, 1.8vw, 18px);
+            }
+        }
+
+        /* ====== ULTRAWIDE OPTIMIZATION (1600px+) ====== */
+        @media (min-width: 1600px) {
+            body {
+                padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 60px);
+            }
+
+            .calculator-container {
+                max-width: 650px;
+                border-radius: 36px;
+            }
+
+            .btn {
+                min-height: 90px;
+                font-size: 22px;
+            }
+
+            .display {
+                min-height: 200px;
+            }
+
+            .display-value {
+                font-size: 72px;
+            }
+
+            .display-calculation {
+                font-size: 18px;
+            }
+        }
+
         /* Mobile touch optimization */
         @supports (padding: max(0px)) {
             body {
@@ -1775,10 +1944,9 @@
             min-height: 100vh;
             min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-            position: fixed;
-            width: 100%;
-            height: 100%;
             touch-action: manipulation;
             background: linear-gradient(
                 270deg,
@@ -1789,6 +1957,7 @@
             );
             background-size: 600% 600%;
             animation: bgMove 20s ease infinite;
+            padding: 40px 20px;
         }
 
         /* Animated background gradient */
@@ -2140,6 +2309,16 @@
 
     <!-- Main calculator -->
     <div class="calculator-container">
+        <!-- Window-style header -->
+        <div class="app-header">
+            <div class="window-controls">
+                <div class="window-control close"></div>
+                <div class="window-control minimize"></div>
+                <div class="window-control maximize"></div>
+            </div>
+            <span style="flex-grow: 1; text-align: center;">NEXUS CALCULATOR</span>
+        </div>
+
         <!-- Display -->
         <div class="display" id="display">
             <div class="display-calculation" id="displayCalculation"></div>
@@ -3143,14 +3322,19 @@
 
             updateHistoryPanel() {
                 const historyList = document.getElementById('historyList');
+                const historyListDesktop = document.getElementById('historyListDesktop');
                 const history = this.logic.getHistory();
 
                 if (history.length === 0) {
                     historyList.innerHTML = '<div class="history-empty">No history</div>';
+                    if (historyListDesktop) historyListDesktop.innerHTML = '<div class="history-empty">No history</div>';
                 } else {
-                    historyList.innerHTML = history.map(item => 
+                    const historyHtml = history.map(item => 
                         `<div class="history-item" title="Click to copy">${item}</div>`
                     ).join('');
+
+                    historyList.innerHTML = historyHtml;
+                    if (historyListDesktop) historyListDesktop.innerHTML = historyHtml;
 
                     // Add click handlers to history items
                     document.querySelectorAll('.history-item').forEach((item, index) => {
@@ -3473,6 +3657,77 @@
                 }
             });
 
+            // ====== FULL KEYBOARD SUPPORT (DESKTOP PRO-LEVEL UX) ======
+            document.addEventListener('keydown', (e) => {
+                const key = e.key;
+
+                // Helper to trigger button action and feedback
+                const triggerButton = (selector, highlightDuration = 100) => {
+                    const btn = document.querySelector(selector);
+                    if (btn) {
+                        btn.click();
+                        // Visual keyboard feedback
+                        btn.classList.add('keyboard-active');
+                        setTimeout(() => {
+                            btn.classList.remove('keyboard-active');
+                        }, highlightDuration);
+                        e.preventDefault();
+                    }
+                };
+
+                // Number keys (0-9)
+                if (!isNaN(key) && key !== ' ') {
+                    triggerButton(`[data-number="${key}"]`);
+                    return;
+                }
+
+                // Decimal point
+                if (key === '.') {
+                    triggerButton('[data-number="."]');
+                    return;
+                }
+
+                // Operators
+                if (key === '+') {
+                    triggerButton('[data-operator="+"]');
+                    return;
+                }
+                if (key === '-') {
+                    triggerButton('[data-operator="-"]');
+                    return;
+                }
+                if (key === '*') {
+                    triggerButton('[data-operator="*"]');
+                    return;
+                }
+                if (key === '/') {
+                    triggerButton('[data-operator="/"]');
+                    e.preventDefault(); // Prevent search
+                    return;
+                }
+
+                // Equals (Enter or =)
+                if (key === 'Enter' || key === '=') {
+                    triggerButton('[data-action="equals"]', 150);
+                    e.preventDefault();
+                    return;
+                }
+
+                // Backspace (delete last digit)
+                if (key === 'Backspace') {
+                    triggerButton('[data-action="backspace"]', 100);
+                    e.preventDefault();
+                    return;
+                }
+
+                // Clear (Escape or C)
+                if (key === 'Escape' || key.toLowerCase() === 'c') {
+                    triggerButton('[data-action="clear"]', 100);
+                    e.preventDefault();
+                    return;
+                }
+            });
+
             // ====== PERFORMANCE-BASED DYNAMIC LOADING ======
             const perfStart = performance.now();
 
@@ -3516,5 +3771,11 @@
             });
         });
     </script>
+
+    <!-- Desktop History Panel -->
+    <div class="history-panel-desktop" id="historyPanelDesktop">
+        <div class="history-title">History</div>
+        <div id="historyListDesktop" style="font-size: 12px; opacity: 0.6;">No history</div>
+    </div>
 </body>
 </html>
