@@ -1888,6 +1888,106 @@
         #splash.splash-hide {
             animation: fadeOut 0.4s ease forwards;
         }
+
+        /* ====== SKELETON LOADER ====== */
+        #loader {
+            position: absolute;
+            inset: 0;
+            padding: 16px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .display-skeleton {
+            height: 140px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            background: #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-skeleton {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .btn-skeleton {
+            height: 65px;
+            border-radius: 18px;
+            background: #2a2a2a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-skeleton.wide {
+            grid-column: span 2;
+        }
+
+        /* Shimmer effect */
+        .display-skeleton::after,
+        .btn-skeleton::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.08),
+                transparent
+            );
+            animation: shimmer 1.2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Loader fade-out */
+        #loader.loader-hide {
+            animation: fadeOut 0.3s ease forwards;
+        }
+
+        /* ====== APP REVEAL ANIMATION ====== */
+        .calculator-container {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .calculator-container.app-show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Staggered button pop-in */
+        .calculator-container.app-show .btn {
+            animation: buttonPopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes buttonPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Stagger each button */
+        .calculator-container.app-show .btn:nth-child(1) { animation-delay: 0ms; }
+        .calculator-container.app-show .btn:nth-child(2) { animation-delay: 20ms; }
+        .calculator-container.app-show .btn:nth-child(3) { animation-delay: 40ms; }
+        .calculator-container.app-show .btn:nth-child(4) { animation-delay: 60ms; }
+        .calculator-container.app-show .btn:nth-child(5) { animation-delay: 80ms; }
+        .calculator-container.app-show .btn:nth-child(6) { animation-delay: 100ms; }
+        .calculator-container.app-show .btn:nth-child(7) { animation-delay: 120ms; }
+        .calculator-container.app-show .btn:nth-child(8) { animation-delay: 140ms; }
+        .calculator-container.app-show .btn:nth-child(n+9) { animation-delay: 160ms; }
     </style>
 </head>
 <body>
@@ -1960,6 +2060,28 @@
         <div class="timer-controls">
             <button class="timer-btn" id="timerStartBtn">Start</button>
             <button class="timer-btn" id="timerResetBtn">Reset</button>
+        </div>
+    </div>
+
+    <!-- Skeleton Loader -->
+    <div id="loader" class="calculator-container">
+        <div class="display-skeleton"></div>
+        <div class="grid-skeleton">
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton wide"></div>
+            <div class="btn-skeleton"></div>
+            <div class="btn-skeleton"></div>
         </div>
     </div>
 
@@ -3298,16 +3420,32 @@
                 }
             });
 
-            // ====== SPLASH SCREEN TIMING ======
+            // ====== SPLASH & LOADER SCREEN TIMING ======
             window.addEventListener('load', () => {
                 const splash = document.getElementById('splash');
+                const loader = document.getElementById('loader');
+                const app = document.querySelector('.calculator-container:not(#loader)');
+
+                // Phase 1: Splash screen (600ms)
                 if (splash) {
                     setTimeout(() => {
                         splash.classList.add('splash-hide');
                         setTimeout(() => {
                             splash.style.display = 'none';
                         }, 400);
-                    }, 600); // 600ms splash duration + 400ms fade out = ~1s total
+                    }, 600);
+                }
+
+                // Phase 2: Skeleton loader (600ms)
+                if (loader && app) {
+                    setTimeout(() => {
+                        loader.classList.add('loader-hide');
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            // Phase 3: Show real calculator with staggered button animation
+                            app.classList.add('app-show');
+                        }, 300);
+                    }, 1200); // 600ms splash + 600ms loader = 1200ms total
                 }
             });
         });
