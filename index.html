@@ -1570,7 +1570,20 @@
         }
 
         .ripple-effect {
-            display: none;
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+            transform: scale(0);
+            pointer-events: none;
+            animation: ripplePulse 0.6s ease-out forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes ripplePulse {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         /* Mobile touch optimization */
@@ -2531,8 +2544,15 @@
             setupEventListeners() {
                 // Helper to trigger button animation
                 const animateButton = (btn, soundType = 'click') => {
-                    // Instant vibration and sound - no JS animation delay, no ripple
-                    this.vibrateClick();
+                    // Create ripple effect
+                    this.createRipple(btn);
+                    
+                    // Smart haptic feedback based on button type
+                    if (soundType === 'operator' || soundType === 'equals') {
+                        this.vibrateSuccess();
+                    } else {
+                        this.vibrateClick();
+                    }
                     this.playSound(soundType);
                 };
 
@@ -2900,38 +2920,40 @@
             }
 
             createRipple(element) {
-                const ripple = document.createElement('div');
+                // Create ripple element
+                const ripple = document.createElement('span');
                 ripple.className = 'ripple-effect';
+                
+                // Get click position relative to button
                 const rect = element.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height) * 0.5;
-
+                const size = Math.max(rect.width, rect.height);
+                
                 ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = (element.clientWidth - size) / 2 + 'px';
-                ripple.style.top = (element.clientHeight - size) / 2 + 'px';
-
-                element.style.position = 'relative';
-                element.style.overflow = 'hidden';
+                ripple.style.left = (element.offsetWidth - size) / 2 + 'px';
+                ripple.style.top = (element.offsetHeight - size) / 2 + 'px';
+                
                 element.appendChild(ripple);
                 
-                setTimeout(() => ripple.remove(), 400);
+                // Remove ripple after animation
+                setTimeout(() => ripple.remove(), 600);
             }
 
             // Haptic feedback for button clicks - Enhanced for real device feel
             vibrateClick() {
                 if (!navigator.vibrate) return;
-                // Quick, subtle vibration for number buttons
-                navigator.vibrate(10);
+                // Light vibration for number buttons
+                navigator.vibrate(8);
             }
 
             vibrateSuccess() {
                 if (!navigator.vibrate) return;
-                // Double tap vibration for successful calculation
-                navigator.vibrate([15, 10, 15]);
+                // Strong feedback for operators and equals
+                navigator.vibrate([12, 8, 12]);
             }
 
             vibrateError() {
                 if (!navigator.vibrate) return;
-                // Strong, longer vibration for error
+                // Intense feedback for errors
                 navigator.vibrate([40, 30, 40]);
             }
 
