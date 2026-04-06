@@ -1314,12 +1314,7 @@
         }
 
         .ripple-effect {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 70%, transparent);
-            pointer-events: none;
-            animation: ripple 300ms ease-out;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+            display: none;
         }
 
         /* Mobile touch optimization */
@@ -2262,10 +2257,9 @@
             setupEventListeners() {
                 // Helper to trigger button animation
                 const animateButton = (btn, soundType = 'click') => {
-                    // Instant vibration and sound - no JS animation delay
+                    // Instant vibration and sound - no JS animation delay, no ripple
                     this.vibrateClick();
                     this.playSound(soundType);
-                    this.createRipple(btn);
                 };
 
                 // Mode toggle
