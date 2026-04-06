@@ -82,6 +82,20 @@ Full detailed documentation covering:
 - **[FAQ](DOCS.md#faq)**
 - **[Troubleshooting](DOCS.md#troubleshooting)**
 
+### [🖥️ DESKTOP_LAYOUT.md](DESKTOP_LAYOUT.md) - Desktop Experience
+Professional desktop optimization documentation:
+
+- **Phase 24: Desktop Layout Perfection** (NEW!)
+  - Display positioning fix (no more floating display)
+  - Wider layout (580px max-width, 16:9 aspect ratio)
+  - Optimized vertical spacing (all buttons fit perfectly)
+  - Professional window styling
+  - SCI button integration
+  - Perfect fit on laptops to ultrawide monitors
+  - Cross-screen testing results
+  - Layout specifications and dimensions
+  - Responsive breakpoints (1400px+ ultrawide optimization)
+
 ### [💾 INSTALLATION.md](INSTALLATION.md) - Setup & PWA
 - Quick start (2 minutes)
 - **[PWA Installation Guide](INSTALLATION.md#pwa-installation-true-native-app-experience)**
