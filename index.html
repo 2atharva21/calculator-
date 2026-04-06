@@ -99,8 +99,8 @@
             --secondary-bg: #2d2d2d;
             --button-bg: #2c5f75;
             --button-hover: #1f4e63;
-            --operator-bg: #FF9500;
-            --operator-hover: #FFB84D;
+            --operator-bg: #ff9a1a;
+            --operator-hover: #f57c00;
             --display-text: #ffffff;
             --button-text: #ffffff;
         }
@@ -621,13 +621,13 @@
         }
 
         .display-calculation {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--display-text);
             opacity: 0.6;
             font-weight: 400;
             letter-spacing: 0.4px;
             line-height: 1.4;
-            max-height: 24px;
+            max-height: 28px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -635,7 +635,7 @@
             will-change: opacity, transform;
             min-height: 24px;
             transition: opacity 100ms ease, transform 100ms ease;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .display-value {
@@ -647,11 +647,11 @@
             will-change: opacity, transform;
             line-height: 1.1;
             max-width: 100%;
-            padding-right: 16px;
+            padding-right: 18px;
             transition: opacity 100ms ease, transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: slideDownFadeIn 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
             opacity: 1;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .display-value.number-change {
@@ -687,7 +687,7 @@
             color: var(--button-text);
             touch-action: manipulation;
             box-shadow: 
-                4px 4px 10px rgba(0, 0, 0, 0.5),
+                5px 5px 12px rgba(0, 0, 0, 0.5),
                 -2px -2px 6px rgba(255, 255, 255, 0.05),
                 inset 0 1px 0 rgba(255, 255, 255, 0.06),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.1);
@@ -726,9 +726,9 @@
 
         .btn:active,
         .btn.pressed {
-            transform: scale(0.94);
+            transform: scale(0.93);
             box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.8),
+                inset 4px 4px 10px rgba(0, 0, 0, 0.8),
                 inset -2px -2px 4px rgba(255, 255, 255, 0.03);
         }
 
@@ -971,7 +971,13 @@
 
         .btn-mode-toggle:active {
             transform: scale(0.96);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .btn-mode-toggle.active:active {
+            transform: scale(0.96);
+            background: linear-gradient(90deg, #0099dd, #0066bb);
+            box-shadow: 0 2px 8px rgba(0, 150, 255, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
         .btn-mode-toggle.active {
@@ -1501,7 +1507,7 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.1);
+                transform: scale(1.08);
             }
             100% {
                 transform: scale(1);
