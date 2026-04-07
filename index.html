@@ -998,12 +998,12 @@
 
         /* Backspace button - Themed */
         .btn-backspace {
-            background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
+            background: linear-gradient(145deg, #444, #2a2a2a);
             transition: transform 0.06s linear, box-shadow 0.06s linear, background 100ms ease;
         }
 
         .btn-backspace:hover {
-            background: linear-gradient(135deg, #3d7aae 0%, #2a5a8a 100%);
+            background: linear-gradient(145deg, #555, #333);
             transform: translateY(-4px);
             box-shadow: 
                 0 12px 24px rgba(0, 0, 0, 0.4),
@@ -2330,7 +2330,7 @@
         <div class="button-grid">
             <!-- Row 1 -->
             <button class="btn btn-clear" data-action="clear" aria-label="Clear" title="Clear all (C)">C</button>
-            <button class="btn btn-backspace" data-action="backspace" aria-label="Toggle sign" title="Toggle positive/negative (+/−)">+/−</button>
+            <button class="btn btn-backspace" data-action="backspace" aria-label="Backspace" title="Delete last digit (Backspace)">⌫</button>
             <button class="btn btn-operator" data-operator="%" aria-label="Percentage" title="Calculate percentage (%)">%</button>
             <button class="btn btn-operator" data-operator="/" aria-label="Divide" title="Divide (÷)">÷</button>
 
@@ -2719,9 +2719,11 @@
             }
 
             backspace() {
-                const num = parseFloat(this.displayValue);
-                const toggled = (num * -1).toString();
-                this.displayValue = toggled;
+                if (this.displayValue.length > 1) {
+                    this.displayValue = this.displayValue.slice(0, -1);
+                } else {
+                    this.displayValue = '0';
+                }
                 return this.displayValue;
             }
 
