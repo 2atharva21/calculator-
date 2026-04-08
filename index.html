@@ -13,6 +13,25 @@
     <meta name="description" content="Premium calculator with scientific functions, haptic feedback, and native app feel">
     <meta name="keywords" content="calculator, scientific, premium, app">
     
+    <!-- Early seasonal theme initialization for mobile compatibility -->
+    <script>
+        (function() {
+            // Detect current season and apply automatically if no saved theme
+            const getSeasonalTheme = () => {
+                const month = new Date().getMonth();
+                if (month >= 2 && month <= 4) return 'spring';
+                if (month >= 5 && month <= 7) return 'summer';
+                if (month >= 8 && month <= 10) return 'autumn';
+                return 'winter';
+            };
+            
+            const savedTheme = localStorage.getItem('calculator-theme');
+            const themeToApply = savedTheme || getSeasonalTheme();
+            document.documentElement.setAttribute('data-theme', themeToApply);
+            document.body.setAttribute('data-theme', themeToApply);
+        })();
+    </script>
+    
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
@@ -3169,9 +3188,35 @@
                 return this.soundEnabled;
             }
 
+            getSeasonalTheme() {
+                const month = new Date().getMonth(); // 0-11
+                
+                // Spring: March, April, May (months 2, 3, 4)
+                if (month >= 2 && month <= 4) {
+                    return 'spring';
+                }
+                // Summer: June, July, August (months 5, 6, 7)
+                else if (month >= 5 && month <= 7) {
+                    return 'summer';
+                }
+                // Autumn: September, October, November (months 8, 9, 10)
+                else if (month >= 8 && month <= 10) {
+                    return 'autumn';
+                }
+                // Winter: December, January, February (months 0, 1, 11)
+                else {
+                    return 'winter';
+                }
+            }
+
             loadPreferences() {
                 const savedMode = localStorage.getItem('calculator-mode') || 'standard';
-                const savedTheme = localStorage.getItem('calculator-theme') || 'dark';
+                const savedTheme = localStorage.getItem('calculator-theme');
+                
+                // Apply seasonal theme automatically if no saved theme
+                const themeToUse = savedTheme || this.getSeasonalTheme();
+                this.applyTheme(themeToUse);
+                localStorage.setItem('calculator-theme', themeToUse);
                 
                 if (savedMode === 'scientific') {
                     this.toggleScientificMode();
@@ -3180,7 +3225,7 @@
 
             setupThemeToggle() {
                 const themeToggle = document.getElementById('themeToggle');
-                const savedTheme = localStorage.getItem('calculator-theme') || 'dark';
+                const savedTheme = localStorage.getItem('calculator-theme') || this.getSeasonalTheme();
                 
                 // Set initial theme
                 this.applyTheme(savedTheme);
