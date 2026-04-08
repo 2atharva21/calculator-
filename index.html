@@ -1076,53 +1076,57 @@
             flex-direction: column;
             align-items: flex-end;
             justify-content: flex-end;
-            min-height: 68px;
-            max-height: 72px;
-            gap: 1px;
+            min-height: 88px;
+            max-height: 100px;
+            gap: 4px;
             border-bottom: 1px solid rgba(255,255,255,0.02);
+            background:  linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(0,217,217,0.02) 100%);
         }
 
         .display-calculation {
-            font-size: 12px;
+            font-size: 14px;
             color: var(--display-text);
-            opacity: 0.65;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            line-height: 1.2;
-            max-height: 14px;
+            opacity: 0.75;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            line-height: 1.4;
+            max-height: 24px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             animation: fadeIn 100ms ease;
             will-change: opacity, transform;
             transition: opacity 100ms ease, transform 100ms ease;
-            margin-bottom: 1px;
+            margin-bottom: 2px;
             font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            padding-bottom: 4px;
         }
 
         .display-value {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 52px;
+            font-weight: 800;
             color: var(--display-text);
-            letter-spacing: -1px;
+            letter-spacing: -1.2px;
             word-break: break-all;
-            will-change: opacity, transform;
+            will-change: opacity, transform, filter;
             line-height: 1.0;
             max-width: 100%;
             padding-right: 12px;
-            transition: opacity 100ms ease, transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: opacity 100ms ease, transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 140ms ease;
             animation: slideDownFadeIn 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
             opacity: 1;
-            margin-top: 0px;
+            margin-top: 2px;
             font-variant-numeric: tabular-nums;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .display-value.number-change {
-            animation: numberSlideUp 120ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: numberSlideUp 140ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .display-value.updated {
-            animation: resultPulseScale 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: resultPulseScale 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: brightness(1.35) saturate(1.1);
         }
 
         /* Button grid - Optimal Spacing */
@@ -1151,10 +1155,10 @@
             color: var(--button-text);
             touch-action: manipulation;
             box-shadow: 
-                6px 6px 16px rgba(0, 0, 0, 0.6),
-                -2px -2px 6px rgba(255, 255, 255, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+                8px 8px 20px rgba(0, 0, 0, 0.7),
+                -2px -2px 8px rgba(255, 255, 255, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1390,59 +1394,159 @@
             animation: successBounce 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Clear button - Themed */
+        /* Number buttons - Dark teal for clear hierarchy */
+        .btn:not([data-operator]):not([data-action]):not([data-scientific]):not([data-memory]):not(.btn-mode-toggle) {
+            background: linear-gradient(145deg, #0f766e, #0d5f59);
+            color: #e0f2f1;
+        }
+
+        .btn:not([data-operator]):not([data-action]):not([data-scientific]):not([data-memory]):not(.btn-mode-toggle):hover {
+            background: linear-gradient(145deg, #14919c, #0f766e);
+            filter: brightness(1.15);
+        }
+
+        /* Operator buttons - Bright cyan/blue for maximum contrast */
+        .btn-operator {
+            background: linear-gradient(145deg, #0891b2, #0e7490) !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            box-shadow: 
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(8, 145, 178, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .btn-operator:hover {
+            background: linear-gradient(145deg, #06b6d4, #0891b2) !important;
+            filter: brightness(1.2);
+            box-shadow: 
+                0 12px 24px rgba(8, 145, 178, 0.35),
+                0 0 32px rgba(6, 182, 212, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .btn-operator:active, .btn-operator.pressed {
+            background: linear-gradient(145deg, #0a7ea4, #0b5563) !important;
+            transform: scale(0.92);
+            box-shadow: 
+                inset 4px 4px 10px rgba(0, 0, 0, 0.7),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .btn-operator.active {
+            background: linear-gradient(145deg, #00e5ff, #00bcd4) !important;
+            color: #001f3f !important;
+            box-shadow: 
+                0 0 30px rgba(0, 229, 255, 0.8),
+                0 0 60px rgba(0, 149, 218, 0.4),
+                0 8px 16px rgba(0, 149, 218, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+            font-weight: 800;
+            animation: operatorActivePulse 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Equals button - Accent highlight */
+        .btn-equals {
+            background: linear-gradient(145deg, #00d9d9, #00b8b8) !important;
+            color: #001a1a !important;
+            font-weight: 800;
+            box-shadow: 
+                0 8px 16px rgba(0, 217, 217, 0.3),
+                0 0 20px rgba(0, 217, 217, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .btn-equals:hover {
+            background: linear-gradient(145deg, #00ffff, #00e5e5) !important;
+            transform: translateY(-4px);
+            filter: brightness(1.25);
+            box-shadow: 
+                0 12px 24px rgba(0, 217, 217, 0.4),
+                0 0 30px rgba(0, 229, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        }
+
+        .btn-equals:active, .btn-equals.pressed {
+            background: linear-gradient(145deg, #00a8a8, #008080) !important;
+            transform: scale(0.92);
+            box-shadow: 
+                inset 4px 4px 10px rgba(0, 0, 0, 0.7),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Clear button - Danger feel (slightly different tone) */
         .btn-clear {
-            background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
+            background: linear-gradient(145deg, #1f9d8b, #0f766e) !important;
+            color: #e0f2f1 !important;
+            font-weight: 700;
             transition: transform 0.06s linear, box-shadow 0.06s linear, background 100ms ease;
+            box-shadow: 
+                6px 6px 16px rgba(0, 0, 0, 0.6),
+                -2px -2px 6px rgba(255, 255, 255, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         }
 
         .btn-clear:hover {
-            background: linear-gradient(135deg, #3d7aae 0%, #2a5a8a 100%);
+            background: linear-gradient(145deg, #259a8a, #1f8b7a) !important;
             transform: translateY(-4px);
+            filter: brightness(1.15);
             box-shadow: 
-                0 12px 24px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(255, 149, 0, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 12px 24px rgba(31, 157, 139, 0.3),
+                0 0 25px rgba(31, 157, 139, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
         }
 
-        /* Backspace button - Themed */
+        /* Backspace button - Enhanced with glow */
         .btn-backspace {
-            background: linear-gradient(145deg, #444, #2a2a2a);
-            transition: transform 0.06s linear, box-shadow 0.06s linear, background 100ms ease;
+            background: linear-gradient(145deg, #555, #2a2a2a);
+            transition: transform 0.06s linear, box-shadow 0.06s linear, background 100ms ease, filter 100ms ease;
+            filter: brightness(0.95);
         }
 
         .btn-backspace:hover {
-            background: linear-gradient(145deg, #555, #333);
+            background: linear-gradient(145deg, #666, #3a3a3a);
             transform: translateY(-4px);
+            filter: brightness(1.2);
             box-shadow: 
                 0 12px 24px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(255, 149, 0, 0.08),
+                0 0 20px rgba(255, 149, 0, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        /* Scientific buttons */
+        /* Scientific buttons - Better interactivity */
         .btn-scientific {
-            background: var(--button-bg);
+            background: linear-gradient(145deg, #1e40af, #1e3a8a);
+            color: #dbeafe;
             font-size: 0.9rem;
             font-weight: 600;
-            transition: transform 0.06s linear, box-shadow 0.06s linear, background 100ms ease;
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
         }
 
         .btn-scientific:hover {
-            background: var(--button-hover);
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            background: linear-gradient(145deg, #2563eb, #1e40af);
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.2);
+            box-shadow: 
+                0 10px 20px rgba(37, 99, 235, 0.3),
+                0 0 20px rgba(59, 130, 246, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
 
         .btn-scientific.btn-operator {
-            background: linear-gradient(135deg, var(--operator-bg), #FFA500);
+            background: linear-gradient(145deg, #0891b2, #0e7490);
+            color: #ffffff;
             font-size: 0.85rem;
         }
 
         .btn-scientific.btn-operator:hover {
-            background: linear-gradient(135deg, var(--operator-hover), #FFB84D);
+            background: linear-gradient(145deg, #06b6d4, #0891b2);
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(255, 149, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            filter: brightness(1.25);
+            box-shadow: 
+                0 12px 24px rgba(8, 145, 178, 0.35),
+                0 0 25px rgba(6, 182, 212, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         /* Memory buttons */
@@ -1835,16 +1939,16 @@
             font-size: 1.2rem;
             padding: 6px 10px;
             margin-right: 4px;
-            opacity: 0.85;
+            opacity: 0.45;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: rgba(255, 149, 0, 0);
         }
 
         .theme-toggle-desktop:hover {
-            opacity: 1;
+            opacity: 0.9;
             transform: scale(1.3) rotate(25deg);
-            background: rgba(255, 149, 0, 0.08);
-            box-shadow: 0 0 20px rgba(255, 149, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            background: rgba(255, 149, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 149, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .theme-toggle-desktop:active {
@@ -2126,7 +2230,7 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.08);
+                transform: scale(1.12);
             }
             100% {
                 transform: scale(1);
