@@ -852,12 +852,28 @@
         }
 
         .btn.keyboard-active {
+            animation: keyboardPress 100ms ease-out;
             transform: scale(0.92);
             filter: brightness(1.15);
             box-shadow: 
                 inset 4px 4px 10px rgba(0, 0, 0, 0.8),
                 inset -2px -2px 4px rgba(255, 255, 255, 0.03),
-                0 0 15px rgba(255, 149, 0, 0.3);
+                0 0 20px rgba(255, 149, 0, 0.4);
+        }
+
+        @keyframes keyboardPress {
+            0% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% {
+                transform: scale(0.88);
+                filter: brightness(1.2);
+            }
+            100% {
+                transform: scale(0.92);
+                filter: brightness(1.15);
+            }
         }
 
         .btn:focus-visible {
@@ -1395,6 +1411,20 @@
             -webkit-user-select: none;
             font-size: 1rem;
             filter: drop-shadow(0 0 8px rgba(255, 149, 0, 0));
+        }
+
+        /* Desktop theme toggle in header */
+        .theme-toggle-desktop {
+            font-size: 1.2rem;
+            padding: 4px 8px;
+            margin-right: 4px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .theme-toggle-desktop:hover {
+            opacity: 1;
+            transform: scale(1.25) rotate(25deg);
         }
 
         .theme-toggle:hover {
@@ -2236,9 +2266,8 @@
         </div>
 
         <!-- Theme toggle -->
-        <button class="theme-toggle" id="themeToggle" title="Toggle themes: Dark, Light, Ocean, Sunset, Forest, Spring, Summer, Autumn, Winter, Blossom, Tropical, Midnight" aria-label="Toggle themes">
-            <span class="theme-icon" id="themeIcon">🌙</span>
-        </button>
+        <!-- Moved to desktop app-header for better visibility -->
+
     </div>
 
     <!-- Timer Panel (Floating) -->
@@ -2272,6 +2301,11 @@
         </div>
     </div>
 
+    <!-- Audio for keyboard feedback -->
+    <audio id="clickSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQoGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" type="audio/wav">
+    </audio>
+
     <!-- Main calculator -->
     <div class="calculator-container">
         <!-- Window-style header -->
@@ -2282,6 +2316,10 @@
                 <div class="window-control maximize"></div>
             </div>
             <span style="flex-grow: 1; text-align: center;">NEXUS CALCULATOR</span>
+            <!-- Theme toggle on desktop -->
+            <button class="theme-toggle theme-toggle-desktop" id="themeToggle" title="Toggle themes: Dark, Light, Ocean, Sunset, Forest, Spring, Summer, Autumn, Winter, Blossom, Tropical, Midnight" aria-label="Toggle themes">
+                <span class="theme-icon" id="themeIcon">🌙</span>
+            </button>
         </div>
 
         <!-- Display -->
@@ -3599,74 +3637,107 @@
                 }
             });
 
-            // ====== FULL KEYBOARD SUPPORT (DESKTOP PRO-LEVEL UX) ======
-            document.addEventListener('keydown', (e) => {
-                const key = e.key;
+            // ====== INPUT BUFFERING SYSTEM (PREVENTS LAG & DOUBLE INPUTS) ======
+            let inputQueue = [];
+            let isProcessing = false;
+            const BUFFER_DELAY = 50; // milliseconds between inputs
+
+            // Sound feedback system
+            function playSound() {
+                const audio = document.getElementById('clickSound');
+                if (audio) {
+                    audio.currentTime = 0;
+                    audio.volume = 0.15;
+                    audio.play().catch(() => {}); // Silently fail on browsers that block audio
+                }
+            }
+
+            // Highlight button animation
+            function animateButton(selector, duration = 100) {
+                const btn = document.querySelector(selector);
+                if (btn) {
+                    btn.classList.add('keyboard-active');
+                    setTimeout(() => {
+                        btn.classList.remove('keyboard-active');
+                    }, duration);
+                }
+            }
+
+            // Add input to queue
+            function queueInput(key) {
+                inputQueue.push(key);
+                processQueue();
+            }
+
+            // Process inputs from queue
+            function processQueue() {
+                if (isProcessing || inputQueue.length === 0) return;
+
+                isProcessing = true;
+                const key = inputQueue.shift();
 
                 // Helper to trigger button action and feedback
                 const triggerButton = (selector, highlightDuration = 100) => {
                     const btn = document.querySelector(selector);
                     if (btn) {
                         btn.click();
-                        // Visual keyboard feedback
-                        btn.classList.add('keyboard-active');
-                        setTimeout(() => {
-                            btn.classList.remove('keyboard-active');
-                        }, highlightDuration);
-                        e.preventDefault();
+                        animateButton(selector, highlightDuration);
+                        playSound();
                     }
                 };
 
                 // Number keys (0-9)
                 if (!isNaN(key) && key !== ' ') {
                     triggerButton(`[data-number="${key}"]`);
-                    return;
                 }
-
                 // Decimal point
-                if (key === '.') {
+                else if (key === '.') {
                     triggerButton('[data-number="."]');
-                    return;
                 }
-
                 // Operators
-                if (key === '+') {
+                else if (key === '+') {
                     triggerButton('[data-operator="+"]');
-                    return;
                 }
-                if (key === '-') {
+                else if (key === '-') {
                     triggerButton('[data-operator="-"]');
-                    return;
                 }
-                if (key === '*') {
+                else if (key === '*') {
                     triggerButton('[data-operator="*"]');
-                    return;
                 }
-                if (key === '/') {
+                else if (key === '/') {
                     triggerButton('[data-operator="/"]');
-                    e.preventDefault(); // Prevent search
-                    return;
                 }
-
-                // Equals (Enter or =)
-                if (key === 'Enter' || key === '=') {
+                // Equals
+                else if (key === 'Enter' || key === '=') {
                     triggerButton('[data-action="equals"]', 150);
-                    e.preventDefault();
-                    return;
                 }
-
-                // Backspace (delete last digit)
-                if (key === 'Backspace') {
+                // Backspace
+                else if (key === 'Backspace') {
                     triggerButton('[data-action="backspace"]', 100);
-                    e.preventDefault();
-                    return;
+                }
+                // Clear
+                else if (key === 'Escape' || key.toLowerCase() === 'c') {
+                    triggerButton('[data-action="clear"]', 100);
                 }
 
-                // Clear (Escape or C)
-                if (key === 'Escape' || key.toLowerCase() === 'c') {
-                    triggerButton('[data-action="clear"]', 100);
+                // Schedule next input processing
+                setTimeout(() => {
+                    isProcessing = false;
+                    processQueue();
+                }, BUFFER_DELAY);
+            }
+
+            // ====== FULL KEYBOARD SUPPORT (BUFFERED) ======
+            document.addEventListener('keydown', (e) => {
+                const allowedKeys = [
+                    '0','1','2','3','4','5','6','7','8','9',
+                    '+','-','*','/','.',
+                    'Enter','Backspace','Escape','c','C'
+                ];
+
+                if (allowedKeys.includes(e.key)) {
                     e.preventDefault();
-                    return;
+                    queueInput(e.key);
                 }
             });
 
