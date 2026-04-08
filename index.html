@@ -621,43 +621,57 @@
             backdrop-filter: blur(20px);
         }
 
-        /* Window-style header (minimal) */
+        /* Window-style header (premium desktop) */
         .app-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 5px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 4px;
-            font-size: 9px;
-            color: rgba(232, 240, 255, 0.5);
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 8px;
+            font-size: 11px;
+            color: rgba(232, 240, 255, 0.6);
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0));
+            transition: background 0.4s ease;
         }
 
         .window-controls {
             display: flex;
-            gap: 8px;
+            gap: 10px;
+            align-items: center;
         }
 
         .window-control {
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: background 150ms ease;
+            background: rgba(255, 255, 255, 0.25);
+            transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .window-control:hover {
+            transform: scale(1.15);
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15);
         }
 
         .window-control.close:hover {
             background: #ff6b6b;
+            box-shadow: 0 0 12px rgba(255, 107, 107, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
         }
 
         .window-control.minimize:hover {
             background: #ffd93d;
+            box-shadow: 0 0 12px rgba(255, 217, 61, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
         }
 
         .window-control.maximize:hover {
             background: #6bcf7f;
+            box-shadow: 0 0 12px rgba(107, 207, 127, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
         }
 
         /* ====== DESKTOP HISTORY PANEL ====== */
@@ -791,7 +805,7 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.05s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.05s cubic-bezier(0.34, 1.56, 0.64, 1), background 100ms ease;
+            transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.08s cubic-bezier(0.34, 1.56, 0.64, 1), background 120ms ease, filter 120ms ease;
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
@@ -847,6 +861,38 @@
                     -2px -2px 8px rgba(255, 255, 255, 0.08),
                     0 0 30px rgba(255, 149, 0, 0.15),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+
+            .btn:hover::after {
+                opacity: 1;
+            }
+        }
+
+        /* Keyboard shortcut indicator for desktop */
+        .btn::after {
+            content: attr(data-key);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: rgba(255, 149, 0, 0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+            pointer-events: none;
+            font-weight: 700;
+            padding: 3px 8px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+            border: 1px solid rgba(255, 149, 0, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Show keyboard shortcuts only on desktop */
+        @media (min-width: 1024px) {
+            .btn[data-key] {
+                position: relative;
             }
         }
 
@@ -1763,17 +1809,91 @@
 
         /* ====== ULTRAWIDE OPTIMIZATION (1400px+) ====== */
         @media (min-width: 1400px) {
+            body {
+                padding: 50px 40px;
+            }
+
             .calculator-container {
-                max-width: 620px;
+                width: 480px;
+                max-width: 85vw;
+                box-shadow: 
+                    0 40px 100px rgba(0, 0, 0, 0.6),
+                    inset 0 0 40px rgba(255, 255, 255, 0.06),
+                    0 0 80px rgba(255, 149, 0, 0.12);
+            }
+
+            .display {
+                padding: 28px 20px 20px 20px;
+                min-height: 160px;
             }
 
             .display-value {
-                font-size: 52px;
+                font-size: 60px;
+                letter-spacing: -1.5px;
+            }
+
+            .display-calculation {
+                font-size: 16px;
+            }
+
+            .button-grid {
+                gap: 14px;
             }
 
             .btn {
-                min-height: 62px;
-                font-size: 16px;
+                min-height: 68px;
+                font-size: 18px;
+                border-radius: 18px;
+            }
+
+            .window-control {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        /* ====== 4K DISPLAY OPTIMIZATION (2560px+) ====== */
+        @media (min-width: 2560px) {
+            body {
+                padding: 80px 60px;
+            }
+
+            .calculator-container {
+                width: 620px;
+                padding: 28px;
+                box-shadow: 
+                    0 60px 140px rgba(0, 0, 0, 0.7),
+                    inset 0 0 50px rgba(255, 255, 255, 0.08),
+                    0 0 100px rgba(255, 149, 0, 0.15);
+            }
+
+            .display {
+                padding: 36px 28px 28px 28px;
+                min-height: 200px;
+            }
+
+            .display-value {
+                font-size: 80px;
+                letter-spacing: -2px;
+            }
+
+            .display-calculation {
+                font-size: 20px;
+            }
+
+            .button-grid {
+                gap: 18px;
+            }
+
+            .btn {
+                min-height: 80px;
+                font-size: 22px;
+                border-radius: 22px;
+            }
+
+            .app-header {
+                padding: 16px 24px;
+                font-size: 14px;
             }
         }
 
@@ -1796,12 +1916,67 @@
             user-select: none;
         }
 
-        /* Desktop Layout - Centered */
+        /* Desktop Layout - Centered - Premium Large */
         @media (min-width: 1024px) {
+            body {
+                padding: 40px 20px;
+            }
+
             .calculator-container {
-                width: 380px;
+                width: 420px;
                 max-width: 90vw;
-                aspect-ratio: 1 / 1.45;
+                aspect-ratio: 1 / 1.5;
+                padding: 18px;
+                box-shadow: 
+                    0 30px 80px rgba(0, 0, 0, 0.5),
+                    inset 0 0 30px rgba(255, 255, 255, 0.05),
+                    0 0 60px rgba(255, 149, 0, 0.1);
+            }
+
+            .app-header {
+                padding: 12px 18px;
+                margin-bottom: 12px;
+                gap: 16px;
+            }
+
+            .display {
+                padding: 24px 18px 18px 18px;
+                min-height: 140px;
+                margin-bottom: 8px;
+                gap: 10px;
+            }
+
+            .display-value {
+                font-size: 52px;
+                font-weight: 700;
+                letter-spacing: -1px;
+            }
+
+            .display-calculation {
+                font-size: 15px;
+                opacity: 0.7;
+            }
+
+            .button-grid {
+                gap: 12px;
+                margin-top: 8px;
+            }
+
+            .btn {
+                min-height: 64px;
+                font-size: 17px;
+                border-radius: 16px;
+            }
+
+            .btn-operator {
+                min-height: 64px;
+                font-size: 18px;
+            }
+
+            .btn-mode-toggle {
+                margin: 6px 0;
+                padding: 8px 16px;
+                font-size: 0.75rem;
             }
         }
 
@@ -2412,33 +2587,33 @@
         <!-- Button grid -->
         <div class="button-grid">
             <!-- Row 1 -->
-            <button class="btn btn-clear" data-action="clear" aria-label="Clear" title="Clear all (C)">C</button>
-            <button class="btn btn-backspace" data-action="backspace" aria-label="Backspace" title="Delete last digit (Backspace)">⌫</button>
-            <button class="btn btn-operator" data-operator="%" aria-label="Percentage" title="Calculate percentage (%)">%</button>
-            <button class="btn btn-operator" data-operator="/" aria-label="Divide" title="Divide (÷)">÷</button>
+            <button class="btn btn-clear" data-action="clear" data-key="C" aria-label="Clear" title="Clear all (C)">C</button>
+            <button class="btn btn-backspace" data-action="backspace" data-key="⌫" aria-label="Backspace" title="Delete last digit (Backspace)">⌫</button>
+            <button class="btn btn-operator" data-operator="%" data-key="%" aria-label="Percentage" title="Calculate percentage (%)">%</button>
+            <button class="btn btn-operator" data-operator="/" data-key="/" aria-label="Divide" title="Divide (÷)">÷</button>
 
             <!-- Row 2 -->
-            <button class="btn" data-number="7" aria-label="Seven" title="7">7</button>
-            <button class="btn" data-number="8" aria-label="Eight" title="8">8</button>
-            <button class="btn" data-number="9" aria-label="Nine" title="9">9</button>
-            <button class="btn btn-operator" data-operator="*" aria-label="Multiply" title="Multiply (×)">×</button>
+            <button class="btn" data-number="7" data-key="7" aria-label="Seven" title="7">7</button>
+            <button class="btn" data-number="8" data-key="8" aria-label="Eight" title="8">8</button>
+            <button class="btn" data-number="9" data-key="9" aria-label="Nine" title="9">9</button>
+            <button class="btn btn-operator" data-operator="*" data-key="*" aria-label="Multiply" title="Multiply (×)">×</button>
 
             <!-- Row 3 -->
-            <button class="btn" data-number="4" aria-label="Four" title="4">4</button>
-            <button class="btn" data-number="5" aria-label="Five" title="5">5</button>
-            <button class="btn" data-number="6" aria-label="Six" title="6">6</button>
-            <button class="btn btn-operator" data-operator="-" aria-label="Subtract" title="Subtract (−)">−</button>
+            <button class="btn" data-number="4" data-key="4" aria-label="Four" title="4">4</button>
+            <button class="btn" data-number="5" data-key="5" aria-label="Five" title="5">5</button>
+            <button class="btn" data-number="6" data-key="6" aria-label="Six" title="6">6</button>
+            <button class="btn btn-operator" data-operator="-" data-key="−" aria-label="Subtract" title="Subtract (−)">−</button>
 
             <!-- Row 4 -->
-            <button class="btn" data-number="1" aria-label="One" title="1">1</button>
-            <button class="btn" data-number="2" aria-label="Two" title="2">2</button>
-            <button class="btn" data-number="3" aria-label="Three" title="3">3</button>
-            <button class="btn btn-operator" data-operator="+" aria-label="Add" title="Add (+)">+</button>
+            <button class="btn" data-number="1" data-key="1" aria-label="One" title="1">1</button>
+            <button class="btn" data-number="2" data-key="2" aria-label="Two" title="2">2</button>
+            <button class="btn" data-number="3" data-key="3" aria-label="Three" title="3">3</button>
+            <button class="btn btn-operator" data-operator="+" data-key="+" aria-label="Add" title="Add (+)">+</button>
 
             <!-- Row 5 -->
-            <button class="btn" data-number="0" style="grid-column: span 2;" aria-label="Zero" title="0">0</button>
-            <button class="btn" data-number="." aria-label="Decimal point" title="Decimal (.)">.</button>
-            <button class="btn btn-equals" data-action="equals" aria-label="Equals" title="Calculate result (=)">=</button>
+            <button class="btn" data-number="0" data-key="0" style="grid-column: span 2;" aria-label="Zero" title="0">0</button>
+            <button class="btn" data-number="." data-key="." aria-label="Decimal point" title="Decimal (.)">.</button>
+            <button class="btn btn-equals" data-action="equals" data-key="=" aria-label="Equals" title="Calculate result (=)">=</button>
         </div>
     </div>
 
