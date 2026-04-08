@@ -3080,31 +3080,6 @@
                     });
                 }
 
-                // Keyboard support
-                document.addEventListener('keydown', (e) => {
-                    if (e.key >= '0' && e.key <= '9') {
-                        this.logic.append(e.key);
-                    } else if (e.key === '.') {
-                        this.logic.addDecimal();
-                    } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
-                        this.logic.setOperation(e.key);
-                    } else if (e.key === '^') {
-                        this.logic.setOperation('^');
-                    } else if (e.key === 'Enter' || e.key === '=') {
-                        this.logic.calculate();
-                    } else if (e.key === 'Backspace') {
-                        this.logic.backspace();
-                    } else if (e.key.toLowerCase() === 'c') {
-                        this.logic.clear();
-                    } else if (e.key.toLowerCase() === 'h') {
-                        const historyPanel = document.getElementById('historyPanel');
-                        historyPanel.classList.toggle('show');
-                    } else if (e.key.toLowerCase() === 's') {
-                        this.toggleScientificMode();
-                    }
-                    this.updateDisplay();
-                });
-
                 // Copy to clipboard on display click
                 const displayValue = document.getElementById('displayValue');
                 if (displayValue) {
