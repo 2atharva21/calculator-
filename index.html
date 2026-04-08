@@ -4189,21 +4189,6 @@
                 window.URL.revokeObjectURL(url);
                 this.announceToScreenReader(`Downloaded ${filename}`);
             }
-                const ripple = document.createElement('div');
-                ripple.className = 'ripple-effect';
-                const rect = element.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height) * 0.5;
-
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = (element.clientWidth - size) / 2 + 'px';
-                ripple.style.top = (element.clientHeight - size) / 2 + 'px';
-
-                element.style.position = 'relative';
-                element.style.overflow = 'hidden';
-                element.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 400);
-            }
 
             // Haptic feedback for button clicks - Enhanced for real device feel
             vibrateClick() {
