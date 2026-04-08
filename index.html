@@ -818,6 +818,204 @@
             border-bottom: none;
         }
 
+        /* Activity Panel - NEW */
+        .activity-panel {
+            display: none;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 400px;
+            background: var(--primary-bg);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            box-shadow: -8px 0 32px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 300ms ease-out;
+        }
+
+        .activity-panel.show {
+            display: flex;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--display-text);
+        }
+
+        .activity-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--display-text);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 200ms ease;
+        }
+
+        .activity-close:hover {
+            opacity: 1;
+        }
+
+        .activity-filters {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            overflow-x: auto;
+        }
+
+        .activity-filter {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--display-text);
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            transition: all 200ms ease;
+        }
+
+        .activity-filter:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-filter.active {
+            background: var(--operator-bg);
+            border-color: var(--operator-bg);
+            color: #ffffff;
+        }
+
+        .activity-stats {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+            color: var(--display-text);
+            opacity: 0.8;
+        }
+
+        .activity-stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .activity-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .activity-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: var(--display-text);
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .activity-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .activity-item-type {
+            display: inline-block;
+            background: var(--operator-bg);
+            color: #ffffff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .activity-item-time {
+            opacity: 0.6;
+            font-size: 0.75rem;
+        }
+
+        .activity-item-detail {
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .activity-actions {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--display-text);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 200ms ease;
+        }
+
+        .activity-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .activity-btn.danger {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .activity-btn.danger:hover {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        @media (max-width: 767px) {
+            .activity-panel {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
         /* Display - Premium Typography (Compact) */
         .display {
             background: transparent;
@@ -1324,14 +1522,25 @@
         /* Memory display */
         #memoryDisplay {
             position: fixed;
-            bottom: max(340px, calc(env(safe-area-inset-bottom) + 340px));
-            left: max(25px, env(safe-area-inset-left));
-            font-size: 0.8rem;
+            bottom: max(20px, env(safe-area-inset-bottom));
+            left: max(20px, env(safe-area-inset-left));
+            font-size: 0.75rem;
             color: var(--display-text);
-            opacity: 0.3;
+            opacity: 0.4;
             transition: opacity 150ms ease;
             pointer-events: none;
             font-weight: 600;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            z-index: 45;
+        }
+
+        @media (max-width: 767px) {
+            #memoryDisplay {
+                bottom: max(80px, calc(env(safe-area-inset-bottom) + 80px));
+                font-size: 0.7rem;
+            }
         }
 
         /* Scientific buttons grid */
@@ -1578,6 +1787,28 @@
 
         .theme-toggle-desktop:active {
             transform: scale(1.15) rotate(25deg);
+        }
+
+        /* Activity History Button in Header */
+        .activity-btn-header {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            margin-right: 8px;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+
+        .activity-btn-header:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-btn-header:active {
+            transform: scale(0.9);
         }
 
         .theme-toggle:hover {
@@ -2563,8 +2794,32 @@
         <div id="historyList" class="history-empty">No history</div>
     </div>
 
+    <!-- Activity History Panel (NEW) -->
+    <div class="activity-panel" id="activityPanel" role="dialog" aria-label="Activity history">
+        <div class="activity-header">
+            <h3>📊 Activity History</h3>
+            <button class="activity-close" id="activityClose" aria-label="Close activity panel">×</button>
+        </div>
+        <div class="activity-filters">
+            <button class="activity-filter active" data-filter="all">All</button>
+            <button class="activity-filter" data-filter="calculation">Calculations</button>
+            <button class="activity-filter" data-filter="scientific">Scientific</button>
+            <button class="activity-filter" data-filter="memory">Memory</button>
+        </div>
+        <div class="activity-stats" id="activityStats"></div>
+        <div class="activity-list" id="activityList"></div>
+        <div class="activity-actions">
+            <button id="exportJSON" class="activity-btn" title="Export as JSON">📥 JSON</button>
+            <button id="exportCSV" class="activity-btn" title="Export as CSV">📥 CSV</button>
+            <button id="clearActivities" class="activity-btn danger" title="Clear all activities">🗑️ Clear</button>
+        </div>
+    </div>
+
     <!-- Memory display -->
-    <div id="memoryDisplay"></div>
+    <div id="memoryDisplay" aria-label="Memory value"></div>
+
+    <!-- Screen Reader Live Region (Accessibility) -->
+    <div id="screenReaderAnnouncements" aria-live="assertive" aria-atomic="true" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;"></div>
 
     <!-- Mobile Status Bar -->
     <div class="mobile-status-bar">
@@ -2628,6 +2883,8 @@
                 <div class="window-control maximize"></div>
             </div>
             <span style="flex-grow: 1; text-align: center;">NEXUS CALCULATOR</span>
+            <!-- Activity History Button -->
+            <button class="activity-btn-header" id="activityToggle" title="View activity history" aria-label="Activity history">📊</button>
             <!-- Theme toggle on desktop -->
             <button class="theme-toggle theme-toggle-desktop" id="themeToggle" title="Toggle themes: Dark, Light, Ocean, Sunset, Forest, Spring, Summer, Autumn, Winter, Blossom, Tropical, Midnight" aria-label="Toggle themes">
                 <span class="theme-icon" id="themeIcon">🌙</span>
@@ -2711,6 +2968,116 @@
 
     <script>
         // ===== CALCULATOR LOGIC =====
+        class ActivityLogger {
+            constructor() {
+                this.activities = [];
+                this.sessionStart = new Date();
+                this.loadActivities();
+            }
+
+            logActivity(type, operation, input, result, duration = 0) {
+                const activity = {
+                    timestamp: Date.now(),
+                    datetime: new Date().toLocaleString(),
+                    type: type, // 'calculation', 'scientific', 'memory', 'theme', 'mode'
+                    operation: operation, // e.g., '+', 'sin', 'M+', 'dark'
+                    input: input,
+                    result: result,
+                    duration: duration // milliseconds
+                };
+
+                this.activities.unshift(activity);
+                if (this.activities.length > 200) {
+                    this.activities.pop();
+                }
+                this.saveActivities();
+                return activity;
+            }
+
+            saveActivities() {
+                localStorage.setItem('calculator-activities', JSON.stringify(this.activities));
+            }
+
+            loadActivities() {
+                const saved = localStorage.getItem('calculator-activities');
+                if (saved) try {
+                    this.activities = JSON.parse(saved);
+                } catch (e) {
+                    this.activities = [];
+                }
+            }
+
+            clearActivities() {
+                this.activities = [];
+                localStorage.removeItem('calculator-activities');
+            }
+
+            getActivityStats() {
+                const stats = {
+                    totalActivities: this.activities.length,
+                    calculationCount: this.activities.filter(a => a.type === 'calculation').length,
+                    scientificCount: this.activities.filter(a => a.type === 'scientific').length,
+                    memoryCount: this.activities.filter(a => a.type === 'memory').length,
+                    operationTypes: {},
+                    avgDuration: 0
+                };
+
+                if (this.activities.length === 0) return stats;
+
+                // Count operation types
+                this.activities.forEach(a => {
+                    if (!stats.operationTypes[a.operation]) {
+                        stats.operationTypes[a.operation] = 0;
+                    }
+                    stats.operationTypes[a.operation]++;
+                });
+
+                // Calculate average duration
+                const withDuration = this.activities.filter(a => a.duration > 0);
+                if (withDuration.length > 0) {
+                    stats.avgDuration = Math.round(
+                        withDuration.reduce((sum, a) => sum + a.duration, 0) / withDuration.length
+                    );
+                }
+
+                return stats;
+            }
+
+            filterActivities(type) {
+                if (!type) return this.activities;
+                return this.activities.filter(a => a.type === type);
+            }
+
+            timeAgo(timestamp) {
+                const seconds = Math.floor((Date.now() - timestamp) / 1000);
+                if (seconds < 60) return 'just now';
+                const minutes = Math.floor(seconds / 60);
+                if (minutes < 60) return `${minutes}m ago`;
+                const hours = Math.floor(minutes / 60);
+                if (hours < 24) return `${hours}h ago`;
+                const days = Math.floor(hours / 24);
+                return `${days}d ago`;
+            }
+
+            exportAsJSON() {
+                return JSON.stringify(this.activities, null, 2);
+            }
+
+            exportAsCSV() {
+                const headers = ['Timestamp', 'Type', 'Operation', 'Input', 'Result', 'Duration (ms)'];
+                const rows = this.activities.map(a => [
+                    a.datetime,
+                    a.type,
+                    a.operation,
+                    a.input,
+                    a.result,
+                    a.duration
+                ]);
+
+                return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+            }
+        }
+
         class CalculatorLogic {
             constructor() {
                 this.displayValue = '0';
@@ -2723,6 +3090,7 @@
                 this.angleMode = 'deg'; // 'deg' or 'rad'
                 this.scientificMode = false;
                 this.lastResult = 0;      // For ANS button
+                this.activityLogger = new ActivityLogger(); // Activity tracking
                 this.loadHistory();       // Load saved history
             }
 
@@ -2773,6 +3141,7 @@
             memoryAdd() {
                 this.memory += parseFloat(this.displayValue) || 0;
                 this.displayValue = this.memory.toString();
+                this.activityLogger.logActivity('memory', 'M+', this.displayValue, this.memory.toString());
                 this.waitingForNewValue = true;
                 return this.displayValue;
             }
@@ -2780,6 +3149,7 @@
             memorySubtract() {
                 this.memory -= parseFloat(this.displayValue) || 0;
                 this.displayValue = this.memory.toString();
+                this.activityLogger.logActivity('memory', 'M−', this.displayValue, this.memory.toString());
                 this.waitingForNewValue = true;
                 return this.displayValue;
             }
@@ -2787,11 +3157,13 @@
             memoryRecall() {
                 this.displayValue = this.memory.toString();
                 this.waitingForNewValue = true;
+                this.activityLogger.logActivity('memory', 'MR', '', this.memory.toString());
                 return this.displayValue;
             }
 
             memoryClear() {
                 this.memory = 0;
+                this.activityLogger.logActivity('memory', 'MC', '', '0');
                 return this.displayValue;
             }
 
@@ -2816,6 +3188,7 @@
                 } else {
                     this.displayValue = this.formatNumber(Math.sqrt(num));
                     this.addToHistory(`√${num} = ${this.displayValue}`);
+                    this.activityLogger.logActivity('scientific', 'sqrt', `√${num}`, this.displayValue);
                 }
                 this.waitingForNewValue = true;
                 return this.displayValue;
@@ -2825,6 +3198,7 @@
                 const num = parseFloat(this.displayValue);
                 this.displayValue = this.formatNumber(num * num);
                 this.addToHistory(`${num}² = ${this.displayValue}`);
+                this.activityLogger.logActivity('scientific', 'square', `${num}²`, this.displayValue);
                 this.waitingForNewValue = true;
                 return this.displayValue;
             }
@@ -3002,7 +3376,7 @@
                             }
                             break;
                         case '%':
-                            result = (current / this.previousValue) * 100;
+                            result = (this.previousValue * current) / 100;
                             break;
                         case '^':
                             if (this.previousValue === 0 && current < 0) {
@@ -3019,7 +3393,10 @@
                         this.displayValue = this.formatNumber(result);
                         this.errorState = false;
                         this.lastResult = result;
-                        this.addToHistory(`${this.previousValue} ${this.operation} ${current} = ${this.displayValue}`);
+                        const historyEntry = `${this.previousValue} ${this.operation} ${current} = ${this.displayValue}`;
+                        this.addToHistory(historyEntry);
+                        // Log to activity tracker
+                        this.activityLogger.logActivity('calculation', this.operation, `${this.previousValue} ${this.operation} ${current}`, this.displayValue);
                     }
                 } catch (e) {
                     this.displayValue = 'ERROR: ' + e.message;
@@ -3115,6 +3492,7 @@
                 this.audioContext = null;
                 this.setupEventListeners();
                 this.setupThemeToggle();
+                this.setupActivityPanel();
                 this.loadPreferences();
                 this.updateDisplay();
                 this.initializeAudioContext();
@@ -3682,7 +4060,135 @@
                 }
             }
 
-            createRipple(element) {
+            // Activity Panel Management
+            toggleActivityPanel() {
+                const panel = document.getElementById('activityPanel');
+                panel.classList.toggle('show');
+                if (panel.classList.contains('show')) {
+                    this.updateActivityPanel();
+                }
+            }
+
+            closeActivityPanel() {
+                document.getElementById('activityPanel').classList.remove('show');
+            }
+
+            updateActivityPanel() {
+                const activities = this.logic.activityLogger.activities;
+                const activityList = document.getElementById('activityList');
+                const activityStats = document.getElementById('activityStats');
+                const currentFilter = document.querySelector('.activity-filter.active').dataset.filter;
+
+                // Filter activities
+                const filtered = currentFilter === 'all' ? activities : activities.filter(a => a.type === currentFilter);
+
+                // Update stats
+                const stats = this.logic.activityLogger.getActivityStats();
+                if (stats) {
+                    activityStats.innerHTML = `
+                        <div class="activity-stat-item">
+                            <span>Total Activities:</span>
+                            <strong>${stats.totalActivities}</strong>
+                        </div>
+                        <div class="activity-stat-item">
+                            <span>Calculations:</span>
+                            <strong>${stats.calculationCount}</strong>
+                        </div>
+                        <div class="activity-stat-item">
+                            <span>Scientific:</span>
+                            <strong>${stats.scientificCount}</strong>
+                        </div>
+                        <div class="activity-stat-item">
+                            <span>Memory:</span>
+                            <strong>${stats.memoryCount}</strong>
+                        </div>
+                    `;
+                }
+
+                // Update activity list
+                if (filtered.length === 0) {
+                    activityList.innerHTML = '<div style="text-align: center; padding: 32px 16px; opacity: 0.5;">No activities yet</div>';
+                } else {
+                    activityList.innerHTML = filtered.map(activity => `
+                        <div class="activity-item">
+                            <div class="activity-item-header">
+                                <span class="activity-item-type">${activity.type.toUpperCase()}</span>
+                                <span class="activity-item-time">${this.logic.activityLogger.timeAgo(activity.timestamp)}</span>
+                            </div>
+                            <div class="activity-item-detail">
+                                <strong>${activity.operation}</strong>: ${activity.input || '(input)'} = ${activity.result}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            setupActivityPanel() {
+                const activityToggle = document.getElementById('activityToggle');
+                const activityClose = document.getElementById('activityClose');
+                const exportJSON = document.getElementById('exportJSON');
+                const exportCSV = document.getElementById('exportCSV');
+                const clearActivities = document.getElementById('clearActivities');
+                const filters = document.querySelectorAll('.activity-filter');
+
+                // Toggle panel
+                if (activityToggle) {
+                    activityToggle.addEventListener('click', () => this.toggleActivityPanel());
+                }
+
+                // Close panel
+                if (activityClose) {
+                    activityClose.addEventListener('click', () => this.closeActivityPanel());
+                }
+
+                // Filter activities
+                filters.forEach(filter => {
+                    filter.addEventListener('click', () => {
+                        document.querySelectorAll('.activity-filter').forEach(f => f.classList.remove('active'));
+                        filter.classList.add('active');
+                        this.updateActivityPanel();
+                    });
+                });
+
+                // Export handlers
+                if (exportJSON) {
+                    exportJSON.addEventListener('click', () => {
+                        const data = this.logic.activityLogger.exportAsJSON();
+                        this.downloadFile(data, 'activity-history.json', 'application/json');
+                    });
+                }
+
+                if (exportCSV) {
+                    exportCSV.addEventListener('click', () => {
+                        const data = this.logic.activityLogger.exportAsCSV();
+                        this.downloadFile(data, 'activity-history.csv', 'text/csv');
+                    });
+                }
+
+                // Clear activities
+                if (clearActivities) {
+                    clearActivities.addEventListener('click', () => {
+                        if (confirm('Are you sure you want to clear all activity history?')) {
+                            this.logic.activityLogger.clearActivities();
+                            this.updateActivityPanel();
+                            this.announceToScreenReader('Activity history cleared');
+                        }
+                    });
+                }
+            }
+
+            downloadFile(content, filename, type) {
+                const blob = new Blob([content], { type: type });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                this.announceToScreenReader(`Downloaded ${filename}`);
+            }
                 const ripple = document.createElement('div');
                 ripple.className = 'ripple-effect';
                 const rect = element.getBoundingClientRect();
@@ -3720,28 +4226,17 @@
 
             // Screen reader announcement functionality
             announceToScreenReader(message) {
-                // Create or update aria-live region for announcements
-                let liveRegion = document.getElementById('screenReaderAnnouncements');
-                if (!liveRegion) {
-                    liveRegion = document.createElement('div');
-                    liveRegion.id = 'screenReaderAnnouncements';
-                    liveRegion.setAttribute('aria-live', 'assertive');
-                    liveRegion.setAttribute('aria-atomic', 'true');
-                    liveRegion.style.position = 'absolute';
-                    liveRegion.style.left = '-10000px';
-                    liveRegion.style.width = '1px';
-                    liveRegion.style.height = '1px';
-                    liveRegion.style.overflow = 'hidden';
-                    document.body.appendChild(liveRegion);
+                // Use the pre-existing aria-live region for accessibility announcements
+                const liveRegion = document.getElementById('screenReaderAnnouncements');
+                if (liveRegion) {
+                    // Clear previous announcement
+                    liveRegion.textContent = '';
+                    
+                    // Announce the message
+                    setTimeout(() => {
+                        liveRegion.textContent = message;
+                    }, 100);
                 }
-
-                // Clear previous announcement
-                liveRegion.textContent = '';
-                
-                // Announce the message
-                setTimeout(() => {
-                    liveRegion.textContent = message;
-                }, 100);
             }
         }
 
